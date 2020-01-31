@@ -24,8 +24,10 @@
     <div class="main main-raised">
       <div class="section">
         <div class="container">
+          <!-- Section: Latest Offers -->
           <h2 class="section-title">Latest Offers</h2>
           <div class="row">
+            <!-- Repeat after this line -->
             <div class="col-md-4">
               <div class="card card-product card-plain">
                 <div class="card-header card-header-image">
@@ -56,7 +58,7 @@
           </div>
         </div>
       </div>
-      <!-- section -->
+      <!-- section: Product List -->
       <div class="section">
         <div class="container">
           <h2 class="section-title">Find what you need</h2>
@@ -67,35 +69,43 @@
             <div class="col-md-9">
               <div class="row">
                 <!-- Whoever is doing the front, display multiple of 3 products -->
-                <div class="col-md-4">
-                  <div class="card card-product card-plain no-shadow" data-colored-shadow="false">
-                    <div class="card-header card-header-image">
-                      <a href="#">
-                        <img src="../assets/img/examples/suit-1.jpg" alt="..." />
-                      </a>
-                    </div>
-                    <div class="card-body">
-                      <a href="#">
-                        <h4 class="card-title">Polo Ralph Lauren</h4>
-                      </a>
-                      <p class="description">
-                        Impeccably tailored in Italy from lightweight navy wool.
-                      </p>
-                    </div>
-                    <div class="card-footer justify-content-between">
-                      <div class="price-container">
-                        <span class="price"> € 800</span>
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="card card-product card-plain no-shadow" data-colored-shadow="false">
+                        <div class="card-header card-header-image">
+                          <a href="#">
+                            <img src="../assets/img/examples/suit-1.jpg" alt="..." />
+                          </a>
+                        </div>
+                        <div class="card-body">
+                          <a href="#">
+                            <h4 class="card-title">Polo Ralph Lauren</h4>
+                          </a>
+                          <p class="description">
+                            Impeccably tailored in Italy from lightweight navy wool.
+                          </p>
+                        </div>
+                        <div class="card-footer justify-content-between">
+                          <div class="price-container">
+                            <span class="price"> € 800</span>
+                          </div>
+                          <md-button class="md-rose md-just-icon md-simple"><md-icon>favorite</md-icon></md-button>
+                          <md-button class="md-rose md-just-icon md-simple"><md-icon>favorite_border</md-icon></md-button>
+                        </div>
                       </div>
-                      <md-button class="md-rose md-just-icon md-simple"><md-icon>favorite</md-icon></md-button>
-                      <md-button class="md-rose md-just-icon md-simple"><md-icon>favorite_border</md-icon></md-button>
+                      <!-- end card -->
                     </div>
                   </div>
-                  <!-- end card -->
                 </div>
-                <div class="col-md-3 ml-auto mr-auto">
-                  <md-button rel="tooltip" class="md-rose md-round">
-                    Load more...
-                  </md-button>
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-3 ml-auto mr-auto">
+                      <md-button rel="tooltip" class="md-rose md-round">
+                        Load more...
+                      </md-button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

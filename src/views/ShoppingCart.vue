@@ -32,6 +32,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <!-- Iterate over this -->
                   <tr>
                     <td>
                       <div class="img-container">
@@ -68,6 +69,7 @@
                       </md-button>
                     </td>
                   </tr>
+                  <!-- End of iteration -->
                   <tr>
                     <td colspan="3"></td>
                     <td class="td-total">
@@ -82,12 +84,6 @@
                       </md-button>
                     </td>
                   </tr>
-                  <!-- <tr>
-                  <td colspan="6"></td>
-                  <td colspan="2" class="text-right">
-                    <md-button type="button" class=" md-info md-round">Complete Purchase <i class="material-icons">keyboard_arrow_right</i></md-button>
-                  </td>
-                </tr> -->
                 </tbody>
               </table>
             </div>
