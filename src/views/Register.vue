@@ -3,9 +3,7 @@
     <div class="section page-header header-filter" :style="headerStyle">
       <div class="container">
         <div class="md-layout">
-          <div
-            class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
-          >
+          <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Register</h4>
               <md-field class="md-form-group" slot="inputs">
@@ -67,6 +65,9 @@ export default {
         backgroundImage: `url(${this.header})`
       };
     }
+  },
+  updated() {
+    console.log(this.firstname, this.lastname);
   }
 };
 </script>

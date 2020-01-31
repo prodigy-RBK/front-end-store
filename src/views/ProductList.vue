@@ -1,11 +1,10 @@
 <template>
   <div class="wrapper">
-    <div
+    <parallax
       class="page-header header-filter header-small"
-      data-parallax="true"
-      :style="{
-        'background-image': `url(${require('../assets/img/examples/clark-street-merc.jpg')})`
-      }"
+      filter-color="rose"
+      parallax-active="true"
+      :style="{ 'background-image': `url(${require('../assets/img/examples/clark-street-merc.jpg')})` }"
     >
       <div class="container">
         <div class="row">
@@ -20,7 +19,8 @@
           </div>
         </div>
       </div>
-    </div>
+    </parallax>
+
     <div class="main main-raised">
       <div class="section">
         <div class="container">
@@ -340,7 +340,7 @@
 import { FilterSection } from "@/components";
 export default {
   name: "shopping-cart",
-  bodyClass: "index-page",
+  bodyClass: "product-page",
   props: {
     image: {
       type: String,
@@ -878,12 +878,6 @@ label {
   line-height: 1.42857;
   color: #aaaaaa;
   font-weight: 400;
-}
-
-.main-raised {
-  margin: -60px 30px 0px;
-  border-radius: 6px;
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .animation-transition-fast,

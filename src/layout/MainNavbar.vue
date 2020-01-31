@@ -68,6 +68,10 @@
                 <p>Register</p>
                 <md-tooltip md-direction="bottom">Register</md-tooltip>
               </md-list-item>
+              <md-list-item href="/ShoppingCart" style="margin-top: -6px">
+                <md-tooltip md-direction="bottom">Shopping Cart</md-tooltip>
+                <md-button class="md-white float-right"><i class="material-icons">shopping_cart</i> 0 Items</md-button>
+              </md-list-item>
             </md-list>
           </div>
         </div>

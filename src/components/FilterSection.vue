@@ -111,6 +111,9 @@ export default {
     toggleAccordion: function(arg) {
       this.control[arg] = !this.control[arg];
     }
+  },
+  updated() {
+    console.log(this.categories, this.tags);
   }
 };
 </script>
