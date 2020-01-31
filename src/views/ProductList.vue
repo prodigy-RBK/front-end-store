@@ -355,6 +355,7 @@
 </template>
 <script>
 import { FilterSection } from "@/components";
+import { mapMutations, mapGetters } from "vuex";
 import { Pagination } from "@/components";
 import axios from "axios";
 
@@ -393,7 +394,9 @@ export default {
     };
   },
   methods: {
+    ...mapGetters(["auth"]),
     leafActive() {
+      console.log(this.auth());
       if (window.innerWidth < 768) {
         this.leafShow = false;
       } else {

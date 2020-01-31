@@ -17,6 +17,7 @@ import App from "./App.vue";
 import router from "./router";
 
 import MaterialKit from "./plugins/material-kit";
+import store from "./store";
 
 Vue.config.productionTip = false;
 
@@ -35,5 +36,6 @@ Vue.mixin({
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");
