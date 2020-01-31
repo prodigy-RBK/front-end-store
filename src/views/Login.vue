@@ -17,6 +17,15 @@
               <md-button slot="buttons" href="#" class="md-just-icon md-simple md-white">
                 <i class="fab fa-twitter"></i>
               </md-button>
+              <facebook-login
+                slot="buttons"
+                class="button"
+                appId="1"
+                @login="getUserData"
+                @logout="onLogout"
+                @get-initial-status="getUserData"
+              ></facebook-login>
+              <br />
               <GoogleLogin
                 slot="buttons"
                 :params="params"
@@ -39,7 +48,6 @@
                 <md-input v-model="password"></md-input>
               </md-field>
               <md-button slot="footer" @click="submit" class="md-simple md-success md-lg">Log In</md-button>
-              <p>rtttrytryt</p>
             </login-card>
           </div>
         </div>
@@ -51,12 +59,15 @@
 <script>
 import GoogleLogin from "vue-google-login";
 import { LoginCard } from "@/components";
+import facebookLogin from "facebook-login-vuejs";
 import router from "../router";
 import { mapMutations, mapGetters } from "vuex";
 import axios from "axios";
+
 export default {
   components: {
-    LoginCard
+    LoginCard,
+    facebookLogin
   },
   bodyClass: "login-page",
   data() {
@@ -125,7 +136,7 @@ export default {
 </script>
 
 <style lang="css">
-#google-signin-btn-0 {
+#google-signin-btn-4 {
   height: 50px;
   width: 50px;
   color: burlywood;
