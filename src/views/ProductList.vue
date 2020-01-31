@@ -68,34 +68,32 @@
           <h2 class="section-title">Find what you need</h2>
           <div class="row">
             <div class="col-md-3">
-              <filter-section></filter-section>
+              <filter-section :data.sync="query"></filter-section>
             </div>
             <div class="col-md-9">
               <div class="row">
                 <!-- Whoever is doing the front, display multiple of 3 products -->
                 <div class="col-md-12">
                   <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4" v-for="product in pageProducts" :key="product._id">
                       <div
                         class="card card-product card-plain no-shadow"
                         data-colored-shadow="false"
                       >
                         <div class="card-header card-header-image">
                           <a href="#">
-                            <img src="../assets/img/examples/suit-1.jpg" alt="..." />
+                            <img :src="product.images[0]" alt="..." />
                           </a>
                         </div>
                         <div class="card-body">
                           <a href="#">
-                            <h4 class="card-title">Polo Ralph Lauren</h4>
+                            <h4 class="card-title">{{product.title}}</h4>
                           </a>
-                          <p
-                            class="description"
-                          >Impeccably tailored in Italy from lightweight navy wool.</p>
+                          <p class="description">{{product.description}}</p>
                         </div>
                         <div class="card-footer justify-content-between">
                           <div class="price-container">
-                            <span class="price">€ 800</span>
+                            <span class="price">€ {{product.price}}</span>
                           </div>
                           <md-button class="md-rose md-just-icon md-simple">
                             <md-icon>favorite</md-icon>
@@ -112,7 +110,13 @@
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-3 ml-auto mr-auto">
-                      <md-button rel="tooltip" class="md-rose md-round">Load more...</md-button>
+                      <pagination
+                        class="pagination-info"
+                        v-model="infoPagination"
+                        with-text
+                        :value="1"
+                        :page-count="pageCount"
+                      ></pagination>
                     </div>
                   </div>
                 </div>
@@ -352,6 +356,9 @@
 <script>
 import { FilterSection } from "@/components";
 import { mapMutations, mapGetters } from "vuex";
+import { Pagination } from "@/components";
+import axios from "axios";
+
 export default {
   name: "shopping-cart",
   bodyClass: "index-page",
@@ -375,9 +382,14 @@ export default {
   },
   data() {
     return {
+      infoPagination: 1,
       firstname: null,
+      pageCount: 1,
+      products: null,
+      pageProducts: null,
       email: null,
       password: null,
+      query: null,
       leafShow: false
     };
   },
@@ -390,6 +402,12 @@ export default {
       } else {
         this.leafShow = true;
       }
+    },
+    changePage(page) {
+      let max = page * 9;
+      let min = max - 9;
+      this.pageProducts = this.products.slice(min, max);
+      console.log(this.pageProducts, this.products);
     }
   },
   computed: {
@@ -404,12 +422,32 @@ export default {
       };
     }
   },
+  async beforeMount() {
+    let { data } = await axios.get(
+      `http://127.0.0.1:3000/api/products/allproducts`
+    );
+    console.log(data);
+    this.pageCount = Math.ceil(data.length / 9);
+    this.products = data;
+    this.pageProducts = data.slice(0, 9);
+  },
   mounted() {
     this.leafActive();
     window.addEventListener("resize", this.leafActive);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.leafActive);
+  },
+  watch: {
+    infoPagination: async function() {
+      console.log(typeof this.infoPagination);
+      this.changePage(this.infoPagination);
+      // let { data } = await this.getProducts(this.infoPagination);
+      // this.products = data.docs;
+    },
+    query: function() {
+      console.log(this.query);
+    }
   }
 };
 </script>
