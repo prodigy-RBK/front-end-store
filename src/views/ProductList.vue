@@ -32,25 +32,29 @@
               <div class="card card-product card-plain">
                 <div class="card-header card-header-image">
                   <a href="#pablo">
-                    <img src="../assets/img/examples/gucci.jpg" alt="" />
+                    <img src="../assets/img/examples/gucci.jpg" alt />
                   </a>
                 </div>
                 <div class="card-body text-center">
                   <h4 class="card-title">
                     <a href="#pablo">Gucci</a>
                   </h4>
-                  <p class="card-description">
-                    The structured shoulders and sleek detailing ensure a sharp silhouette. Team it with a silk pocket square and leather loafers.
-                  </p>
+                  <p
+                    class="card-description"
+                  >The structured shoulders and sleek detailing ensure a sharp silhouette. Team it with a silk pocket square and leather loafers.</p>
                 </div>
                 <div class="card-footer">
                   <div class="price-container">
-                    <span class="price price-old"> €1,430</span>
-                    <span class="price price-new"> €743</span>
+                    <span class="price price-old">€1,430</span>
+                    <span class="price price-new">€743</span>
                   </div>
                   <div class="stats ml-auto">
-                    <md-button class="md-rose md-just-icon md-simple"><md-icon>favorite</md-icon></md-button>
-                    <md-button class="md-rose md-just-icon md-simple"><md-icon>favorite_border</md-icon></md-button>
+                    <md-button class="md-rose md-just-icon md-simple">
+                      <md-icon>favorite</md-icon>
+                    </md-button>
+                    <md-button class="md-rose md-just-icon md-simple">
+                      <md-icon>favorite_border</md-icon>
+                    </md-button>
                   </div>
                 </div>
               </div>
@@ -64,34 +68,39 @@
           <h2 class="section-title">Find what you need</h2>
           <div class="row">
             <div class="col-md-3">
-              <filter-section></filter-section>
+              <filter-section :data.sync="query"></filter-section>
             </div>
             <div class="col-md-9">
               <div class="row">
                 <!-- Whoever is doing the front, display multiple of 3 products -->
                 <div class="col-md-12">
                   <div class="row">
-                    <div class="col-md-4">
-                      <div class="card card-product card-plain no-shadow" data-colored-shadow="false">
+                    <div class="col-md-4" v-for="product in pageProducts" :key="product._id">
+                      <div
+                        class="card card-product card-plain no-shadow"
+                        data-colored-shadow="false"
+                      >
                         <div class="card-header card-header-image">
                           <a href="#">
-                            <img src="../assets/img/examples/suit-1.jpg" alt="..." />
+                            <img :src="product.images[0]" alt="..." />
                           </a>
                         </div>
                         <div class="card-body">
                           <a href="#">
-                            <h4 class="card-title">Polo Ralph Lauren</h4>
+                            <h4 class="card-title">{{product.title}}</h4>
                           </a>
-                          <p class="description">
-                            Impeccably tailored in Italy from lightweight navy wool.
-                          </p>
+                          <p class="description">{{product.description}}</p>
                         </div>
                         <div class="card-footer justify-content-between">
                           <div class="price-container">
-                            <span class="price"> € 800</span>
+                            <span class="price">€ {{product.price}}</span>
                           </div>
-                          <md-button class="md-rose md-just-icon md-simple"><md-icon>favorite</md-icon></md-button>
-                          <md-button class="md-rose md-just-icon md-simple"><md-icon>favorite_border</md-icon></md-button>
+                          <md-button class="md-rose md-just-icon md-simple">
+                            <md-icon>favorite</md-icon>
+                          </md-button>
+                          <md-button class="md-rose md-just-icon md-simple">
+                            <md-icon>favorite_border</md-icon>
+                          </md-button>
                         </div>
                       </div>
                       <!-- end card -->
@@ -101,9 +110,13 @@
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-3 ml-auto mr-auto">
-                      <md-button rel="tooltip" class="md-rose md-round">
-                        Load more...
-                      </md-button>
+                      <pagination
+                        class="pagination-info"
+                        v-model="infoPagination"
+                        with-text
+                        :value="1"
+                        :page-count="pageCount"
+                      ></pagination>
                     </div>
                   </div>
                 </div>
@@ -129,7 +142,9 @@
                     Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick
                     Owens’ bed design but the back is...
                   </p>
-                  <md-button href="#pablo" class="md-white md-round"> <i class="material-icons">subject</i> Read </md-button>
+                  <md-button href="#pablo" class="md-white md-round">
+                    <i class="material-icons">subject</i> Read
+                  </md-button>
                 </div>
               </div>
               <!-- end card -->
@@ -143,14 +158,14 @@
               >
                 <div class="card-body">
                   <h6 class="card-category text-info">Fashion News</h6>
-                  <h3 class="card-title">
-                    Kanye joins the Yeezy team at Adidas
-                  </h3>
+                  <h3 class="card-title">Kanye joins the Yeezy team at Adidas</h3>
                   <p class="card-description">
                     Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick
                     Owens’ bed design but the back is...
                   </p>
-                  <md-button href="#pablo" class="md-white md-round"> <i class="material-icons">subject</i> Read </md-button>
+                  <md-button href="#pablo" class="md-white md-round">
+                    <i class="material-icons">subject</i> Read
+                  </md-button>
                 </div>
               </div>
               <!-- end card -->
@@ -165,15 +180,15 @@
                 <div class="card-body">
                   <h6 class="card-category text-info">Productivy Apps</h6>
                   <a href="#pablo">
-                    <h3 class="card-title">
-                      Learn how to use the new colors of 2017
-                    </h3>
+                    <h3 class="card-title">Learn how to use the new colors of 2017</h3>
                   </a>
                   <p class="card-description">
                     Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick
                     Owens’ bed design but the back is...
                   </p>
-                  <md-button href="#pablo" class="md-white md-round"> <i class="material-icons">subject</i> Read </md-button>
+                  <md-button href="#pablo" class="md-white md-round">
+                    <i class="material-icons">subject</i> Read
+                  </md-button>
                 </div>
               </div>
               <!-- end card -->
@@ -194,7 +209,9 @@
                     Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick
                     Owens’ bed design but the back is...
                   </p>
-                  <md-button href="#pablo" class="md-white md-round"> <i class="material-icons">subject</i> Read </md-button>
+                  <md-button href="#pablo" class="md-white md-round">
+                    <i class="material-icons">subject</i> Read
+                  </md-button>
                 </div>
               </div>
               <!-- end card -->
@@ -215,7 +232,9 @@
                     Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick
                     Owens’ bed design but the back is...
                   </p>
-                  <md-button href="#pablo" class="md-white md-round"> <i class="material-icons">subject</i> Read </md-button>
+                  <md-button href="#pablo" class="md-white md-round">
+                    <i class="material-icons">subject</i> Read
+                  </md-button>
                 </div>
               </div>
               <!-- end card -->
@@ -234,7 +253,7 @@
             <div class="card card-blog">
               <div class="card-header card-header-image">
                 <a href="#pablo">
-                  <img src="../assets/img/dg6.jpg" alt="" />
+                  <img src="../assets/img/dg6.jpg" alt />
                 </a>
               </div>
               <div class="card-body">
@@ -253,7 +272,7 @@
             <div class="card card-blog">
               <div class="card-header card-header-image">
                 <a href="#pablo">
-                  <img src="../assets/img/dg10.jpg" alt="" />
+                  <img src="../assets/img/dg10.jpg" alt />
                 </a>
               </div>
               <div class="card-body">
@@ -272,7 +291,7 @@
             <div class="card card-blog">
               <div class="card-header card-header-image">
                 <a href="#pablo">
-                  <img src="../assets/img/dg9.jpg" alt="" />
+                  <img src="../assets/img/dg9.jpg" alt />
                 </a>
               </div>
               <div class="card-body">
@@ -303,13 +322,13 @@
           <div class="col-md-6 ml-auto mr-auto">
             <div class="text-center">
               <h3 class="title">Subscribe to our Newsletter</h3>
-              <p class="description">
-                Join our newsletter and get news in your inbox every week! We hate spam too, so no worries about this.
-              </p>
+              <p
+                class="description"
+              >Join our newsletter and get news in your inbox every week! We hate spam too, so no worries about this.</p>
             </div>
             <div class="card card-raised card-form-horizontal">
               <div class="card-body">
-                <form method="" action="">
+                <form method action>
                   <div class="row">
                     <div class="col-sm-8">
                       <div class="input-group">
@@ -322,9 +341,7 @@
                       </div>
                     </div>
                     <div class="col-sm-4">
-                      <md-button class="md-rose md-block">
-                        Subscribe
-                      </md-button>
+                      <md-button class="md-rose md-block">Subscribe</md-button>
                     </div>
                   </div>
                 </form>
@@ -338,6 +355,9 @@
 </template>
 <script>
 import { FilterSection } from "@/components";
+import { Pagination } from "@/components";
+import axios from "axios";
+
 export default {
   name: "shopping-cart",
   bodyClass: "index-page",
@@ -361,9 +381,14 @@ export default {
   },
   data() {
     return {
+      infoPagination: 1,
       firstname: null,
+      pageCount: 1,
+      products: null,
+      pageProducts: null,
       email: null,
       password: null,
+      query: null,
       leafShow: false
     };
   },
@@ -374,6 +399,12 @@ export default {
       } else {
         this.leafShow = true;
       }
+    },
+    changePage(page) {
+      let max = page * 9;
+      let min = max - 9;
+      this.pageProducts = this.products.slice(min, max);
+      console.log(this.pageProducts, this.products);
     }
   },
   computed: {
@@ -388,12 +419,32 @@ export default {
       };
     }
   },
+  async beforeMount() {
+    let { data } = await axios.get(
+      `http://127.0.0.1:3000/api/products/allproducts`
+    );
+    console.log(data);
+    this.pageCount = Math.ceil(data.length / 9);
+    this.products = data;
+    this.pageProducts = data.slice(0, 9);
+  },
   mounted() {
     this.leafActive();
     window.addEventListener("resize", this.leafActive);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.leafActive);
+  },
+  watch: {
+    infoPagination: async function() {
+      console.log(typeof this.infoPagination);
+      this.changePage(this.infoPagination);
+      // let { data } = await this.getProducts(this.infoPagination);
+      // this.products = data.docs;
+    },
+    query: function() {
+      console.log(this.query);
+    }
   }
 };
 </script>
@@ -412,7 +463,8 @@ export default {
   border: 1px solid #d2d2d2;
   border-radius: 0;
   box-shadow: none;
-  -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 .form-control::-ms-expand {
@@ -786,10 +838,18 @@ export default {
   .card-group > .card:not(:first-child):not(:last-child):not(:only-child) {
     border-radius: 0;
   }
-  .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-img-top,
-  .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-img-bottom,
-  .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-header,
-  .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-footer {
+  .card-group
+    > .card:not(:first-child):not(:last-child):not(:only-child)
+    .card-img-top,
+  .card-group
+    > .card:not(:first-child):not(:last-child):not(:only-child)
+    .card-img-bottom,
+  .card-group
+    > .card:not(:first-child):not(:last-child):not(:only-child)
+    .card-header,
+  .card-group
+    > .card:not(:first-child):not(:last-child):not(:only-child)
+    .card-footer {
     border-radius: 0;
   }
 }
@@ -883,7 +943,8 @@ label {
 .main-raised {
   margin: -60px 30px 0px;
   border-radius: 6px;
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .animation-transition-fast,
@@ -982,7 +1043,8 @@ fieldset[disabled] .form-group.is-focused .form-check .form-check-label {
   width: 0;
   color: #fff;
   height: 0;
-  box-shadow: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0 inset;
+  box-shadow: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0,
+    0 0 0 0 inset;
   -webkit-animation: checkbox-off 0.3s forwards;
   animation: checkbox-off 0.3s forwards;
 }
@@ -994,7 +1056,8 @@ fieldset[disabled] .form-group.is-focused .form-check .form-check-label {
 }
 .form-check .form-check-input:checked ~ .form-check-sign .check:before {
   color: #ffffff;
-  box-shadow: 0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+  box-shadow: 0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px,
+    -5px 5px 0 10px, 20px -12px 0 11px;
   -webkit-animation: checkbox-on 0.3s forwards;
   animation: checkbox-on 0.3s forwards;
 }
@@ -1187,15 +1250,22 @@ form {
 
 .form-control,
 .is-focused .form-control {
-  background-image: linear-gradient(to top, #9c27b0 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
+  background-image: linear-gradient(
+      to top,
+      #9c27b0 2px,
+      rgba(156, 39, 176, 0) 2px
+    ),
+    linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
 }
 
 .bmd-form-group {
   position: relative;
   padding-top: 27px;
 }
-.bmd-form-group:not(.has-success):not(.has-danger) [class^="bmd-label"].bmd-label-floating,
-.bmd-form-group:not(.has-success):not(.has-danger) [class*=" bmd-label"].bmd-label-floating {
+.bmd-form-group:not(.has-success):not(.has-danger)
+  [class^="bmd-label"].bmd-label-floating,
+.bmd-form-group:not(.has-success):not(.has-danger)
+  [class*=" bmd-label"].bmd-label-floating {
   color: #aaaaaa;
 }
 .bmd-form-group [class^="bmd-label"],
@@ -1309,7 +1379,8 @@ form {
 .bmd-form-group.is-focused .bmd-form-group .form-control.form-control-danger {
   padding-right: 0;
   background-repeat: no-repeat, no-repeat;
-  background-position: center bottom, center calc(100% - 1px), center right 0.46875rem;
+  background-position: center bottom, center calc(100% - 1px),
+    center right 0.46875rem;
 }
 .bmd-form-group .form-control.form-control-success:focus,
 .bmd-form-group.is-focused .bmd-form-group .form-control.form-control-success,
@@ -1377,23 +1448,36 @@ form {
 }
 .bmd-form-group.bmd-form-group-sm .form-control.form-control-success,
 .bmd-form-group.bmd-form-group-sm .form-control.form-control-success:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-sm .form-control.form-control-success,
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-sm
+  .form-control.form-control-success,
 .bmd-form-group.bmd-form-group-sm .form-control.form-control-warning,
 .bmd-form-group.bmd-form-group-sm .form-control.form-control-warning:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-sm .form-control.form-control-warning,
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-sm
+  .form-control.form-control-warning,
 .bmd-form-group.bmd-form-group-sm .form-control.form-control-danger,
 .bmd-form-group.bmd-form-group-sm .form-control.form-control-danger:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-sm .form-control.form-control-danger {
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-sm
+  .form-control.form-control-danger {
   padding-right: 0;
   background-repeat: no-repeat, no-repeat;
-  background-position: center bottom, center calc(100% - 1px), center right 0.34375rem;
+  background-position: center bottom, center calc(100% - 1px),
+    center right 0.34375rem;
 }
 .bmd-form-group.bmd-form-group-sm .form-control.form-control-success:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-sm .form-control.form-control-success,
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-sm
+  .form-control.form-control-success,
 .bmd-form-group.bmd-form-group-sm .form-control.form-control-warning:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-sm .form-control.form-control-warning,
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-sm
+  .form-control.form-control-warning,
 .bmd-form-group.bmd-form-group-sm .form-control.form-control-danger:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-sm .form-control.form-control-danger {
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-sm
+  .form-control.form-control-danger {
   background-size: 100% 100%, 100% 100%, 0.6875rem 0.6875rem;
 }
 .bmd-form-group.bmd-form-group-lg input::-webkit-input-placeholder {
@@ -1454,23 +1538,36 @@ form {
 }
 .bmd-form-group.bmd-form-group-lg .form-control.form-control-success,
 .bmd-form-group.bmd-form-group-lg .form-control.form-control-success:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-lg .form-control.form-control-success,
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-lg
+  .form-control.form-control-success,
 .bmd-form-group.bmd-form-group-lg .form-control.form-control-warning,
 .bmd-form-group.bmd-form-group-lg .form-control.form-control-warning:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-lg .form-control.form-control-warning,
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-lg
+  .form-control.form-control-warning,
 .bmd-form-group.bmd-form-group-lg .form-control.form-control-danger,
 .bmd-form-group.bmd-form-group-lg .form-control.form-control-danger:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-lg .form-control.form-control-danger {
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-lg
+  .form-control.form-control-danger {
   padding-right: 0;
   background-repeat: no-repeat, no-repeat;
-  background-position: center bottom, center calc(100% - 1px), center right 0.59375rem;
+  background-position: center bottom, center calc(100% - 1px),
+    center right 0.59375rem;
 }
 .bmd-form-group.bmd-form-group-lg .form-control.form-control-success:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-lg .form-control.form-control-success,
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-lg
+  .form-control.form-control-success,
 .bmd-form-group.bmd-form-group-lg .form-control.form-control-warning:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-lg .form-control.form-control-warning,
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-lg
+  .form-control.form-control-warning,
 .bmd-form-group.bmd-form-group-lg .form-control.form-control-danger:focus,
-.bmd-form-group.is-focused .bmd-form-group.bmd-form-group-lg .form-control.form-control-danger {
+.bmd-form-group.is-focused
+  .bmd-form-group.bmd-form-group-lg
+  .form-control.form-control-danger {
   background-size: 100% 100%, 100% 100%, 1.1875rem 1.1875rem;
 }
 
@@ -1566,7 +1663,8 @@ label {
 }
 .page-header .iframe-container iframe {
   width: 100%;
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .header-filter {
@@ -1739,7 +1837,8 @@ b {
   color: rgba(0, 0, 0, 0.87);
   background: #fff;
   width: 100%;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .card .card-category:not([class*="text-"]) {
   color: #999999;
@@ -1798,7 +1897,8 @@ b {
   font-size: 18px;
 }
 .card.bmd-card-raised {
-  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
 }
 @media (min-width: 992px) {
   .card.bmd-card-flat {
@@ -1818,7 +1918,8 @@ b {
   color: #fff;
 }
 .card .card-header:not([class*="header-"]) {
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .card .card-header .nav-tabs {
   padding: 0;
@@ -1839,7 +1940,8 @@ b {
   width: 100%;
   border-radius: 6px;
   pointer-events: none;
-  box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .card .card-header.card-header-image .card-title {
   position: absolute;
@@ -1868,7 +1970,8 @@ b {
   box-shadow: none;
 }
 .card .card-header.card-header-image.no-shadow.shadow-normal {
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .card .card-header.card-header-image.no-shadow .colored-shadow {
   display: none !important;
@@ -1910,22 +2013,28 @@ b {
   background: linear-gradient(60deg, #ec407a, #c2185b);
 }
 .card .card-header-primary {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(156, 39, 176, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(156, 39, 176, 0.6);
 }
 .card .card-header-danger {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(244, 67, 54, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(244, 67, 54, 0.6);
 }
 .card .card-header-rose {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(233, 30, 99, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(233, 30, 99, 0.6);
 }
 .card .card-header-warning {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(255, 152, 0, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(255, 152, 0, 0.6);
 }
 .card .card-header-info {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(0, 188, 212, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(0, 188, 212, 0.6);
 }
 .card .card-header-success {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(76, 175, 80, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(76, 175, 80, 0.6);
 }
 .card [class*="header-"],
 .card[class*="bg-"] {
@@ -2314,7 +2423,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
   transition: all 0.2s ease-out;
   border: 1px solid #9c27b0;
   background: #fff;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
 .noUi-target {
@@ -2352,7 +2462,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
   transition: all 0.2s ease-out;
   border: 1px solid;
   background: #fff;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
 .noUi-active {
@@ -2444,7 +2555,12 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
   margin-bottom: 0;
 }
 
-.ecommerce-page .card-refine .checkbox input[type="checkbox"]:checked + .checkbox-material .check {
+.ecommerce-page
+  .card-refine
+  .checkbox
+  input[type="checkbox"]:checked
+  + .checkbox-material
+  .check {
   background: #e91e63;
 }
 
