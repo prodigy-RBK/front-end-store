@@ -3,7 +3,9 @@
     <div class="section page-header header-filter" :style="headerStyle">
       <div class="container">
         <div class="md-layout">
-          <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
+          <div
+            class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
+          >
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Login</h4>
               <md-button slot="buttons" href="#" class="md-just-icon md-simple md-white">
@@ -15,6 +17,15 @@
               <md-button slot="buttons" href="#" class="md-just-icon md-simple md-white">
                 <i class="fab fa-google-plus-g"></i>
               </md-button>
+              <facebook-login
+                slot="buttons"
+                class="button"
+                appId="1"
+                @login="getUserData"
+                @logout="onLogout"
+                @get-initial-status="getUserData"
+              ></facebook-login>
+
               <p slot="description" class="description">Or Be Classical</p>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>email</md-icon>
@@ -26,9 +37,7 @@
                 <label>Password...</label>
                 <md-input v-model="password"></md-input>
               </md-field>
-              <md-button slot="footer" class="md-simple md-success md-lg">
-                Log In
-              </md-button>
+              <md-button slot="footer" class="md-simple md-success md-lg">Log In</md-button>
             </login-card>
           </div>
         </div>
@@ -39,10 +48,12 @@
 
 <script>
 import { LoginCard } from "@/components";
+import facebookLogin from "facebook-login-vuejs";
 
 export default {
   components: {
-    LoginCard
+    LoginCard,
+    facebookLogin
   },
   bodyClass: "login-page",
   data() {
@@ -67,4 +78,5 @@ export default {
 };
 </script>
 
-<style lang="css"></style>
+<style lang="css">
+</style>
