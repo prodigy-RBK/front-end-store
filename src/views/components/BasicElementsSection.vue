@@ -163,8 +163,8 @@
     <div class="space-70"></div>
 
     <!-- Progress/Pagination -->
-    <div id="progress-pagination">
-      <div class="md-layout">
+    <md-progress-bar id="progress-pagination">
+      <md-progress-bar class="md-layout">
         <md-progress-bar class="md-layout-item md-size-50 md-xsmall-size-100">
           <div class="title">
             <h3>Progress</h3>
@@ -177,7 +177,7 @@
             :md-value="buffer"
             :md-buffer="buffer"
           ></md-progress-bar>
-        </div>
+        </md-progress-bar>
         <div class="md-layout-item md-size-50 md-xsmall-size-100">
           <div class="title">
             <h3>Pagination</h3>
@@ -187,8 +187,8 @@
             <pagination class="pagination-info" v-model="infoPagination" with-text :page-count="5"></pagination>
           </div>
         </div>
-      </div>
-    </div>
+      </md-progress-bar>
+    </md-progress-bar>
     <!-- end progress/pagination -->
 
     <div class="space-50"></div>

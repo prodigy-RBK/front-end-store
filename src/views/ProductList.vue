@@ -68,14 +68,14 @@
           <h2 class="section-title">Find what you need</h2>
           <div class="row">
             <div class="col-md-3">
-              <filter-section></filter-section>
+              <filter-section :data.sync="query"></filter-section>
             </div>
             <div class="col-md-9">
               <div class="row">
                 <!-- Whoever is doing the front, display multiple of 3 products -->
                 <div class="col-md-12">
                   <div class="row">
-                    <div class="col-md-4" v-for="product in products" :key="product._id">
+                    <div class="col-md-4" v-for="product in pageProducts" :key="product._id">
                       <div
                         class="card card-product card-plain no-shadow"
                         data-colored-shadow="false"
@@ -109,7 +109,7 @@
                 </div>
                 <div class="col-md-12">
                   <div class="row">
-                    <div class="col-md-3 ml-auto mr-auto" @click="page">
+                    <div class="col-md-3 ml-auto mr-auto">
                       <pagination
                         class="pagination-info"
                         v-model="infoPagination"
@@ -356,8 +356,8 @@
 <script>
 import { FilterSection } from "@/components";
 import { Pagination } from "@/components";
-
 import axios from "axios";
+
 export default {
   name: "shopping-cart",
   bodyClass: "index-page",
@@ -385,8 +385,10 @@ export default {
       firstname: null,
       pageCount: 1,
       products: null,
+      pageProducts: null,
       email: null,
       password: null,
+      query: null,
       leafShow: false
     };
   },
@@ -398,14 +400,11 @@ export default {
         this.leafShow = true;
       }
     },
-    async page() {
-      let { data } = await this.getProducts(this.infoPagination);
-      this.products = data.docs;
-      console.log("Clicked!!");
-      console.log(this.products);
-    },
-    getProducts(page) {
-      return axios.get(`http://127.0.0.1:3000/api/products/page/${page}`);
+    changePage(page) {
+      let max = page * 9;
+      let min = max - 9;
+      this.pageProducts = this.products.slice(min, max);
+      console.log(this.pageProducts, this.products);
     }
   },
   computed: {
@@ -420,16 +419,32 @@ export default {
       };
     }
   },
-  async mounted() {
+  async beforeMount() {
+    let { data } = await axios.get(
+      `http://127.0.0.1:3000/api/products/allproducts`
+    );
+    console.log(data);
+    this.pageCount = Math.ceil(data.length / 9);
+    this.products = data;
+    this.pageProducts = data.slice(0, 9);
+  },
+  mounted() {
     this.leafActive();
     window.addEventListener("resize", this.leafActive);
-    let { data } = await this.getProducts(1);
-    this.pageCount = data.pages;
-    this.products = data.docs;
-    console.log(this.products);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.leafActive);
+  },
+  watch: {
+    infoPagination: async function() {
+      console.log(typeof this.infoPagination);
+      this.changePage(this.infoPagination);
+      // let { data } = await this.getProducts(this.infoPagination);
+      // this.products = data.docs;
+    },
+    query: function() {
+      console.log(this.query);
+    }
   }
 };
 </script>
