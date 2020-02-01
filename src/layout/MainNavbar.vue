@@ -37,7 +37,7 @@
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                          <a href="/productList">
+                          <a href="/products">
                             <i class="material-icons">view_day</i>
                             <p>Products</p>
                           </a>
