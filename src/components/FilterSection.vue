@@ -174,6 +174,9 @@ export default {
       console.log(this.categoriesQuery);
       this.$emit("update:data", this.categoriesQuery);
     }
+  },
+  updated() {
+    console.log(this.categories, this.tags);
   }
 };
 </script>

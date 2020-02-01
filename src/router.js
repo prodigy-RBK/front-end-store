@@ -49,7 +49,7 @@ const router = new Router({
         footer: MainFooter
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" }
       }
     },
