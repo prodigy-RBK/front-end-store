@@ -81,12 +81,12 @@
                         data-colored-shadow="false"
                       >
                         <div class="card-header card-header-image">
-                          <a href="#">
+                          <a :href="'/products/' + product._id">
                             <img :src="product.images[0]" alt="..." />
                           </a>
                         </div>
                         <div class="card-body">
-                          <a href="#">
+                          <a :href="'/products/' + product._id">
                             <h4 class="card-title">{{product.title}}</h4>
                           </a>
                           <p class="description">{{product.description}}</p>
@@ -426,7 +426,7 @@ export default {
     let { data } = await axios.get(
       `http://127.0.0.1:3000/api/products/allproducts`
     );
-    console.log(data);
+    console.log(data[0]._id);
     this.pageCount = Math.ceil(data.length / 9);
     this.products = data;
     this.pageProducts = data.slice(0, 9);
