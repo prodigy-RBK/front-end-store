@@ -11,10 +11,11 @@ import ShoppingCart from "./views/ShoppingCart.vue";
 import Register from "./views/Register.vue";
 import ProductDetails from "./views/ProductDetails.vue";
 import ProductList from "./views/ProductList.vue";
+import Confirmation from "./views/Confirmation.vue";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   routes: [
     {
@@ -48,7 +49,7 @@ export default new Router({
         footer: MainFooter
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" }
       }
     },
@@ -107,6 +108,18 @@ export default new Router({
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" }
       }
+    },
+    {
+      path: "/login/confirmation",
+      name: "confirmation",
+      components: {
+        default: Confirmation,
+        header: MainNavbar,
+        footer: MainFooter
+      },
+      props: {
+        header: { colorOnScroll: 400 }
+      }
     }
   ],
   scrollBehavior: to => {
@@ -117,3 +130,9 @@ export default new Router({
     }
   }
 });
+
+// router.beforeEach((to, from, next) => {
+//   next(true);
+//   return;
+// });
+export default router;

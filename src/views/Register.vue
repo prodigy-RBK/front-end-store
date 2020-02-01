@@ -3,9 +3,7 @@
     <div class="section page-header header-filter" :style="headerStyle">
       <div class="container">
         <div class="md-layout">
-          <div
-            class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
-          >
+          <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Register</h4>
               <md-field class="md-form-group" slot="inputs">
@@ -16,7 +14,7 @@
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>face</md-icon>
                 <label>Last Name...</label>
-                <md-input v-model="lastname"></md-input>
+                <md-input v-model="lastName"></md-input>
               </md-field>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>email</md-icon>
@@ -28,9 +26,7 @@
                 <label>Password...</label>
                 <md-input v-model="password"></md-input>
               </md-field>
-              <md-button slot="footer" class="md-simple md-success md-lg">
-                Get Started
-              </md-button>
+              <md-button v-on:click="submit" slot="footer" class="md-simple md-success md-lg">Get Started</md-button>
             </login-card>
           </div>
         </div>
@@ -41,7 +37,9 @@
 
 <script>
 import { LoginCard } from "@/components";
+import router from "../router";
 
+import axios from "axios";
 export default {
   components: {
     LoginCard
@@ -50,7 +48,7 @@ export default {
   data() {
     return {
       firstname: null,
-      lastname: null,
+      lastName: null,
       email: null,
       password: null
     };
@@ -66,6 +64,26 @@ export default {
       return {
         backgroundImage: `url(${this.header})`
       };
+    }
+  },
+  methods: {
+    submit: function(e, next) {
+      axios
+        .post("http://localhost:3000/api/user/signUp", {
+          firstName: this.firstname,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password
+        })
+        .then(function(response) {
+          console.log(response);
+          if (response.data.status === "success") {
+            router.push({ name: "confirmation" });
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };

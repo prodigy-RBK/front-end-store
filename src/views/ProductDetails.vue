@@ -1,17 +1,17 @@
 <template>
   <div class="wrapper">
-    <div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('../assets/img/bg6.jpg');">
-      <div class="container">
-        <div class="row title-row">
-          <div class="col-md-4 ml-auto">
-            <md-button class="md-white float-right"><i class="material-icons">shopping_cart</i> 0 Items</md-button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <parallax
+      class="page-header header-filter header-small"
+      filter-color="rose"
+      parallax-active="true"
+      :style="{ 'background-image': `url(${require('../assets/img/bg6.jpg')})` }"
+    >
+      <div class="container"></div>
+    </parallax>
+
     <div class="section">
       <div class="container">
-        <div class="main main-raised main-product">
+        <div class="main main-raised-custom main-product">
           <div class="row">
             <div class="col-md-6 col-sm-6">
               <div class="col-md-10 mr-auto ml-auto">
