@@ -18,16 +18,17 @@
                 <i class="fab fa-twitter"></i>
               </md-button>
               <facebook-login
-                slot="buttons"
                 class="button"
-                appId="1"
+                slot="buttons"
+                appId="2456751817987713"
                 @login="getUserData"
                 @logout="onLogout"
+                @sdk-loaded="sdkLoaded"
                 @get-initial-status="getUserData"
               ></facebook-login>
-              <br />
               <GoogleLogin
                 slot="buttons"
+                class="button"
                 :params="params"
                 :renderParams="renderParams"
                 :onSuccess="onSuccess"
@@ -74,6 +75,7 @@ export default {
     return {
       email: null,
       password: null,
+      FB: null,
       params: {
         client_id: "xxxxxx"
       },
@@ -99,6 +101,20 @@ export default {
     }
   },
   methods: {
+    getUserData() {
+      this.FB.api("/me", "GET", { fields: "id,name,email,picture" }, user => {
+        console.log(user);
+        // this.personalID = user.id;
+        // this.email = user.email;
+        // this.name = user.name;
+        // this.picture = user.picture.data.url;
+      });
+    },
+    sdkLoaded(payload) {
+      this.isConnected = payload.isConnected;
+      this.FB = payload.FB;
+      if (this.isConnected) this.getUserData();
+    },
     ...mapGetters(["auth"]),
     ...mapMutations(["UPDATE_LOGIN", "UPDATE_ACTIVATE"]),
     submit: function(e) {

@@ -394,9 +394,9 @@ export default {
     };
   },
   methods: {
-    ...mapGetters(["auth"]),
+    ...mapMutations(["ADD_PRODUCTS"]),
+    ...mapGetters(["auth", "getProducts"]),
     leafActive() {
-      console.log(this.auth());
       if (window.innerWidth < 768) {
         this.leafShow = false;
       } else {
@@ -407,7 +407,6 @@ export default {
       let max = page * 9;
       let min = max - 9;
       this.pageProducts = this.products.slice(min, max);
-      console.log(this.pageProducts, this.products);
     }
   },
   computed: {
@@ -426,7 +425,7 @@ export default {
     let { data } = await axios.get(
       `http://127.0.0.1:3000/api/products/allproducts`
     );
-    console.log(data);
+    this.ADD_PRODUCTS(data);
     this.pageCount = Math.ceil(data.length / 9);
     this.products = data;
     this.pageProducts = data.slice(0, 9);
@@ -440,10 +439,7 @@ export default {
   },
   watch: {
     infoPagination: async function() {
-      console.log(typeof this.infoPagination);
       this.changePage(this.infoPagination);
-      // let { data } = await this.getProducts(this.infoPagination);
-      // this.products = data.docs;
     },
     query: function() {
       console.log(this.query);

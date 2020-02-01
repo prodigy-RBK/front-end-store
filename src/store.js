@@ -4,23 +4,30 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-	state: {
-		user: {
-			loggedIn: localStorage.getItem("x-token") ? true : false,
-			isActivated: false
-		}
+  state: {
+    user: {
+      loggedIn: localStorage.getItem("x-token") ? true : false,
+      isActivated: false
+    },
+    products: []
+  },
+  getters: {
+    auth(state) {
+      return state.user;
+    },
+    getProducts(state) {
+      return state.products;
+    }
+  },
+  mutations: {
+    UPDATE_LOGIN: state => {
+      state.user.loggedIn = true;
+    },
+    UPDATE_ACTIVATE: state => {
+      state.user.isActivated = true;
 	},
-	getters: {
-		auth(state) {
-			return state.user;
-		}
-	},
-	mutations: {
-		UPDATE_LOGIN: state => {
-			state.user.loggedIn = true;
-		},
-		UPDATE_ACTIVATE: state => {
-			state.user.isActivated = true;
-		}
+	ADD_PRODUCTS: (state, prods) =>{
+		state.products = prods
 	}
+  }
 });
