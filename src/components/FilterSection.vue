@@ -3,12 +3,7 @@
     <md-card-content>
       <h4 class="card-title">
         Refine
-        <md-button
-          class="md-just-icon md-simple pull-right"
-          rel="tooltip"
-          title
-          data-original-title="Reset Filter"
-        >
+        <md-button class="md-just-icon md-simple pull-right" rel="tooltip" title data-original-title="Reset Filter">
           <i class="material-icons">cached</i>
         </md-button>
       </h4>
@@ -26,16 +21,8 @@
           <div id="collapseOne" class="message-body">
             <slider v-model="sliders.rangeSlider" type="info" :connect="true"></slider>
             <div slot="sliderFooter" class="card-body card-refine">
-              <span
-                id="price-left"
-                class="price-left pull-left"
-                data-currency="€"
-              >{{ this.sliders.rangeSlider[0] }}</span>
-              <span
-                id="price-right"
-                class="price-right pull-right"
-                data-currency="€"
-              >{{ this.sliders.rangeSlider[1] }}</span>
+              <span id="price-left" class="price-left pull-left" data-currency="€">{{ this.sliders.rangeSlider[0] }}</span>
+              <span id="price-right" class="price-right pull-right" data-currency="€">{{ this.sliders.rangeSlider[1] }}</span>
             </div>
           </div>
         </div>
@@ -50,12 +37,7 @@
             </h5>
           </div>
           <div id="collapseTwo" class="message-body">
-            <md-checkbox
-              v-model="brandsQuery"
-              :value="brand.name"
-              v-for="brand in brands"
-              :key="brand._id"
-            >{{brand.name}}</md-checkbox>
+            <md-checkbox v-model="brandsQuery" :value="brand.name" v-for="brand in brands" :key="brand._id">{{ brand.name }}</md-checkbox>
           </div>
         </div>
         <!-- Section: Category filter -->
@@ -69,12 +51,7 @@
             </h5>
           </div>
           <div id="collapseThree" class="message-body">
-            <md-checkbox
-              v-model="categoriesQuery"
-              :value="category"
-              v-for="(category, index) in categories"
-              :key="index"
-            >{{category}}</md-checkbox>
+            <md-checkbox v-model="categoriesQuery" :value="category" v-for="(category, index) in categories" :key="index">{{ category }}</md-checkbox>
           </div>
         </div>
         <!-- Section: Tags filter -->
@@ -88,12 +65,7 @@
             </h5>
           </div>
           <div id="collapseFour" class="message-body">
-            <md-checkbox
-              v-model="tagsQuery"
-              :value="tag"
-              v-for="(tag, index) in tags"
-              :key="index"
-            >{{tag}}</md-checkbox>
+            <md-checkbox v-model="tagsQuery" :value="tag" v-for="(tag, index) in tags" :key="index">{{ tag }}</md-checkbox>
           </div>
         </div>
       </div>
@@ -141,29 +113,21 @@ export default {
       });
     },
     getTags(gender) {
-      return axios
-        .get(`http://127.0.0.1:3000/api/products/tags/${gender}`)
-        .then(({ data }) => {
-          this.tags = data;
-        });
+      return axios.get(`http://127.0.0.1:3000/api/products/tags/${gender}`).then(({ data }) => {
+        this.tags = data;
+      });
     },
     getCategories(gender) {
-      return axios
-        .get(`http://127.0.0.1:3000/api/products/categories/${gender}`)
-        .then(({ data }) => {
-          this.categories = data;
-        });
+      return axios.get(`http://127.0.0.1:3000/api/products/categories/${gender}`).then(({ data }) => {
+        this.categories = data;
+      });
     },
     emitData() {}
   },
   async beforeMount() {
     // let gender = window.location.pathname.split("/")[1];
     let gender = "Men";
-    await Promise.all([
-      this.getCategories(gender),
-      this.getBrands(gender),
-      this.getTags(gender)
-    ]);
+    await Promise.all([this.getCategories(gender), this.getBrands(gender), this.getTags(gender)]);
   },
   watch: {
     brandsQuery: function() {
@@ -174,9 +138,6 @@ export default {
       console.log(this.categoriesQuery);
       this.$emit("update:data", this.categoriesQuery);
     }
-  },
-  updated() {
-    console.log(this.categories, this.tags);
   }
 };
 </script>
@@ -193,6 +154,7 @@ export default {
   max-height: 10em;
   overflow: hidden;
   transition: 0.3s ease all;
+  overflow-y: auto;
 }
 .is-closed .message-body {
   max-height: 0;
