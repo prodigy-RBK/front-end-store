@@ -6,7 +6,6 @@ import { VPopover } from "v-tooltip";
 import { Tabs } from "../components";
 import GoogleLogin from "vue-google-login";
 import { Pagination } from "@/components";
-
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
  */

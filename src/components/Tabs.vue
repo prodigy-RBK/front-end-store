@@ -20,7 +20,7 @@
           :key="item"
           :class="[{ active: isActivePanel(tabImages[index]) }, { [getColorButton(colorButton)]: isActivePanel(tabImages[index]) }]"
         >
-          <img class="img" :src="require('@/assets/img/examples/' + tabImages[index])" />
+          <img class="img" :src="tabImages[index]" />
         </md-list-item>
       </md-list>
     </md-card-content>

@@ -12,16 +12,46 @@ import Register from "./views/Register.vue";
 import ProductDetails from "./views/ProductDetails.vue";
 import ProductList from "./views/ProductList.vue";
 import Confirmation from "./views/Confirmation.vue";
+import auth from "./middleware/auth";
+import store from "./store";
 
 Vue.use(Router);
 
 const router = new Router({
   mode: "history",
+  // routes: [
+  //   {
+  //     path: "/",
+  //     name: "index",
+  //     components: { default: Index, header: MainNavbar, footer: MainFooter },
+  //     props: {
+  //       header: { colorOnScroll: 400 },
+  //       footer: { backgroundColor: "black" }
+  //     }
+  //   },
   routes: [
     {
       path: "/",
       name: "index",
-      components: { default: Index, header: MainNavbar, footer: MainFooter },
+      components: { default: ProductList, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
+      }
+    },
+    {
+      path: "/men",
+      name: "men",
+      components: { default: ProductList, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
+      }
+    },
+    {
+      path: "/women",
+      name: "women",
+      components: { default: ProductList, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" }
@@ -41,7 +71,7 @@ const router = new Router({
       }
     },
     {
-      path: "/productDetails",
+      path: "/products/:id",
       name: "productDetails",
       components: {
         default: ProductDetails,
@@ -49,12 +79,12 @@ const router = new Router({
         footer: MainFooter
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" }
       }
     },
     {
-      path: "/productList",
+      path: "/products",
       name: "productList",
       components: {
         default: ProductList,
@@ -64,6 +94,9 @@ const router = new Router({
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" }
+      },
+      meta: {
+        middleware: [auth]
       }
     },
     {
@@ -131,8 +164,19 @@ const router = new Router({
   }
 });
 
-// router.beforeEach((to, from, next) => {
-//   next(true);
-//   return;
-// });
+router.beforeEach((to, from, next) => {
+  if (!to.meta.middleware) {
+    return next();
+  }
+  const middleware = to.meta.middleware;
+  const context = {
+    to,
+    from,
+    next,
+    store
+  };
+  return middleware[0]({
+    ...context
+  });
+});
 export default router;
