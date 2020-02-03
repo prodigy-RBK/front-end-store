@@ -38,23 +38,7 @@ export default {
       };
     }
   },
-  methods: {
-    submit: function(e) {
-      axios
-        .post("http://localhost:3000/api/user/signUp", {
-          firstName: this.firstname,
-          lastName: this.lastName,
-          email: this.email,
-          password: this.password
-        })
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    }
-  }
+  methods: {}
 };
 </script>
 
