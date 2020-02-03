@@ -68,7 +68,7 @@
           <h2 class="section-title">Find what you need</h2>
           <div class="row">
             <div class="col-md-3">
-              <filter-section :data.sync="query"></filter-section>
+              <filter-section></filter-section>
             </div>
             <div class="col-md-9">
               <div class="row">
@@ -389,14 +389,13 @@ export default {
       pageProducts: null,
       email: null,
       password: null,
-      query: null,
       leafShow: false
     };
   },
   methods: {
-    ...mapGetters(["auth"]),
+    ...mapMutations(["ADD_PRODUCTS", "DISPLAY_PRODUCTS"]),
+    ...mapGetters(["auth", "getProducts", "getDisplayedProducts"]),
     leafActive() {
-      console.log(this.auth());
       if (window.innerWidth < 768) {
         this.leafShow = false;
       } else {
@@ -406,8 +405,7 @@ export default {
     changePage(page) {
       let max = page * 9;
       let min = max - 9;
-      this.pageProducts = this.products.slice(min, max);
-      console.log(this.pageProducts, this.products);
+      this.pageProducts = this.getDisplayedProducts().slice(min, max);
     }
   },
   computed: {
@@ -420,16 +418,17 @@ export default {
       return {
         backgroundImage: `url(${this.signup})`
       };
+    },
+    displayedProducts() {
+      return this.getDisplayedProducts();
     }
   },
   async beforeMount() {
     let { data } = await axios.get(
       `http://127.0.0.1:3000/api/products/allproducts`
     );
-    console.log(data[0]._id);
-    this.pageCount = Math.ceil(data.length / 9);
-    this.products = data;
-    this.pageProducts = data.slice(0, 9);
+    this.ADD_PRODUCTS(data);
+    this.DISPLAY_PRODUCTS(data);
   },
   mounted() {
     this.leafActive();
@@ -440,13 +439,11 @@ export default {
   },
   watch: {
     infoPagination: async function() {
-      console.log(typeof this.infoPagination);
       this.changePage(this.infoPagination);
-      // let { data } = await this.getProducts(this.infoPagination);
-      // this.products = data.docs;
     },
-    query: function() {
-      console.log(this.query);
+    displayedProducts: function() {
+      this.pageProducts = this.getDisplayedProducts().slice(0, 9);
+      this.pageCount = Math.ceil(this.getDisplayedProducts().length / 9);
     }
   }
 };
