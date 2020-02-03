@@ -3,9 +3,7 @@
     <div class="section page-header header-filter" :style="headerStyle">
       <div class="container">
         <div class="md-layout">
-          <div
-            class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
-          >
+          <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Register</h4>
               <md-field class="md-form-group" slot="inputs">
@@ -28,11 +26,7 @@
                 <label>Password...</label>
                 <md-input v-model="password"></md-input>
               </md-field>
-              <md-button
-                v-on:click="submit"
-                slot="footer"
-                class="md-simple md-success md-lg"
-              >Get Started</md-button>
+              <md-button v-on:click="submit" slot="footer" class="md-simple md-success md-lg">Get Started</md-button>
             </login-card>
           </div>
         </div>

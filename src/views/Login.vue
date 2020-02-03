@@ -8,26 +8,30 @@
           >
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Login</h4>
-              <md-button slot="buttons" href="#" class="md-just-icon md-simple md-white">
-                <i class="fab fa-facebook-square"></i>
-              </md-button>
-              <md-button slot="buttons" href="#" class="md-just-icon md-simple md-white">
-                <i class="fab fa-google-plus-g"></i>
-              </md-button>
-              <md-button slot="buttons" href="#" class="md-just-icon md-simple md-white">
-                <i class="fab fa-twitter"></i>
-              </md-button>
-              <facebook-login
-                slot="buttons"
-                class="button"
-                appId="1"
-                @login="getUserData"
-                @logout="onLogout"
-                @get-initial-status="getUserData"
-              ></facebook-login>
-              <br />
               <GoogleLogin
                 slot="buttons"
+                class="fab fa-google btn btn-simple btn-google"
+                style="width: 90%; color: grey; background-color: white"
+                :params="params"
+                :onSuccess="onSuccess"
+                :onFailure="onFailure"
+              >
+                <span
+                  style="margin-left: 20%; margin-right: 20%; font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif; text-transform: none"
+                >Log in with Google</span>
+              </GoogleLogin>
+              <facebook-login
+                class="button"
+                slot="buttons"
+                appId="2456751817987713"
+                @login="getUserData"
+                @logout="onLogout"
+                @sdk-loaded="sdkLoaded"
+                @get-initial-status="getUserData"
+              ></facebook-login>
+              <GoogleLogin
+                slot="buttons"
+                class="button"
                 :params="params"
                 :renderParams="renderParams"
                 :onSuccess="onSuccess"
@@ -35,6 +39,8 @@
               >
                 <i class="fab fa-google-plus-g"></i>
               </GoogleLogin>
+              <br />
+              <div id="test" slot="buttons"></div>
 
               <p slot="description" class="description">Or Be Classical</p>
               <md-field class="md-form-group" slot="inputs">
@@ -74,6 +80,7 @@ export default {
     return {
       email: null,
       password: null,
+      FB: null,
       params: {
         client_id: "xxxxxx"
       },
@@ -99,8 +106,22 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["auth"]),
     ...mapMutations(["UPDATE_LOGIN", "UPDATE_ACTIVATE"]),
+    ...mapGetters(["auth"]),
+    getUserData() {
+      this.FB.api("/me", "GET", { fields: "id,name,email,picture" }, user => {
+        console.log(user);
+        // this.personalID = user.id;
+        // this.email = user.email;
+        // this.name = user.name;
+        // this.picture = user.picture.data.url;
+      });
+    },
+    sdkLoaded(payload) {
+      this.isConnected = payload.isConnected;
+      this.FB = payload.FB;
+      if (this.isConnected) this.getUserData();
+    },
     submit: function(e) {
       axios
         .post("http://localhost:3000/api/user/login", {
@@ -136,10 +157,8 @@ export default {
 </script>
 
 <style lang="css">
-#google-signin-btn-4 {
-  height: 50px;
-  width: 50px;
-  color: burlywood;
-  background-color: black;
+.custom {
+  font-size: 1.3em !important;
+  padding: 4px 10px !important;
 }
 </style>

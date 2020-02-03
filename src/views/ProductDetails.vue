@@ -1,47 +1,38 @@
 <template>
   <div class="wrapper">
-    <div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('../assets/img/bg6.jpg');">
-      <div class="container">
-        <div class="row title-row">
-          <div class="col-md-4 ml-auto">
-            <md-button class="md-white float-right"><i class="material-icons">shopping_cart</i> 0 Items</md-button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <parallax
+      class="page-header header-filter header-small"
+      filter-color="rose"
+      parallax-active="true"
+      :style="{ 'background-image': `url(${require('../assets/img/bg6.jpg')})` }"
+    >
+      <div class="container"></div>
+    </parallax>
+
     <div class="section">
       <div class="container">
-        <div class="main main-raised main-product">
+        <div class="main main-raised-custom main-product">
           <div class="row">
             <div class="col-md-6 col-sm-6">
               <div class="col-md-10 mr-auto ml-auto">
-                <tabs :tab-images="['product1.jpg', 'product2.jpg', 'product3.jpg', 'product4.jpg']" plain nav-pills-images color-button="primary">
+                <tabs :tab-images="images" plain nav-pills-images color-button="primary">
                   <!-- here you can add your content for tab-content -->
-                  <template slot="tab-pane-1">
-                    <img src="../assets/img/examples/product1.jpg" />
-                  </template>
-                  <template slot="tab-pane-2">
-                    <img src="../assets/img/examples/product2.jpg" />
-                  </template>
-                  <template slot="tab-pane-3">
-                    <img src="../assets/img/examples/product3.jpg" />
-                  </template>
-                  <template slot="tab-pane-4">
-                    <img src="../assets/img/examples/product4.jpg" />
-                  </template>
+                  
+                  <div :slot="'tab-pane-' +(index + 1)" v-for="(image, index) in images" :key="index">
+                    <img :src="image" />
+                  </div>
                 </tabs>
               </div>
             </div>
             <div class="col-md-6 col-sm-6">
-              <h2 class="title">Product title</h2>
-              <h4>Brand name or logo</h4>
-              <h3 class="main-price">$ Product price</h3>
+              <h2 class="title">{{product.title}}</h2>
+              <!-- <h4>{{brand.name}}</h4> -->
+              <img :src="brand.image" style="width: 100px"/>
+              <h3 class="main-price">$ {{product.price}}</h3>
               <h3 class="title">Description</h3>
 
               <md-card-content>
-                Eres&apos; daring &apos;Grigri Fortune&apos; swimsuit has the fit and coverage of a bikini in a one-piece silhouette. This fuchsia style is
-                crafted from the label&apos;s sculpting peau douce fabric and has flattering cutouts through the torso and back. Wear yours with mirrored
-                sunglasses on vacation.
+                {{product.description}}
               </md-card-content>
               <div class="row pick-size">
                 <div class="col-md-6 col-sm-6">
@@ -53,26 +44,13 @@
                           <md-icon>keyboard_arrow_down</md-icon></md-button
                         >
                         <md-menu-content>
-                          <md-menu-item
+                          <md-menu-item v-for="size in sizes"
                             @click="
                               activeSize = true;
-                              selectedSize = 'Size1';
+                              selectedSize = size ;
                             "
-                            >Size 1</md-menu-item
-                          >
-                          <md-menu-item
-                            @click="
-                              activeSize = true;
-                              selectedSize = 'Size2';
-                            "
-                            >Size 2</md-menu-item
-                          >
-                          <md-menu-item
-                            @click="
-                              activeSize = true;
-                              selectedSize = 'Size3';
-                            "
-                            >Size 3</md-menu-item
+                            :key ="size"
+                            >{{size}}</md-menu-item
                           >
                         </md-menu-content>
                       </md-menu>
@@ -88,26 +66,13 @@
                           <md-icon>keyboard_arrow_down</md-icon></md-button
                         >
                         <md-menu-content>
-                          <md-menu-item
+                          <md-menu-item v-for="color in colors"
                             @click="
                               activeColor = true;
-                              selectedColor = 'Color1';
+                              selectedColor = color ;
                             "
-                            >Color 1</md-menu-item
-                          >
-                          <md-menu-item
-                            @click="
-                              activeColor = true;
-                              selectedColor = 'Color2';
-                            "
-                            >Color 2</md-menu-item
-                          >
-                          <md-menu-item
-                            @click="
-                              activeColor = true;
-                              selectedColor = 'Color3';
-                            "
-                            >Color 3</md-menu-item
+                            :key ="color"
+                            >{{color}}</md-menu-item
                           >
                         </md-menu-content>
                       </md-menu>
@@ -284,6 +249,7 @@
 </template>
 <script>
 import { Tabs } from "@/components";
+import axios from "axios";
 export default {
   name: "product-details",
   bodyClass: "product-page",
@@ -310,7 +276,11 @@ export default {
       selectedSize: "Select size",
       selectedColor: "Select color",
       activeSize: false,
-      activeColor: false
+      activeColor: false,
+      product: null,
+      images: [],
+      sizes: [],
+      colors: []
     };
   },
   methods: {
@@ -335,7 +305,26 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.leafActive);
-  }
+  },
+  async beforeMount() {
+    let productId = window.location.pathname.slice(10)
+    let { data } = await axios.get(
+      `http://127.0.0.1:3000/api/products/${productId}`
+    );
+    
+    data.availability.map(elem => {
+      if(!this.colors.includes(elem.color)) {
+        this.colors.push(elem.color)
+      }
+      if(!this.sizes.includes(elem.size)) {
+        this.sizes.push(elem.size)
+      }
+    });
+    this.brand = data.brand
+    this.images = [data.images[0], "https://media.gettyimages.com/photos/colorful-powder-explosion-in-all-directions-in-a-nice-composition-picture-id890147976?s=612x612"]
+    // this.images = data.images
+    this.product = data;
+  },
 };
 </script>
 

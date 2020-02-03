@@ -1,17 +1,17 @@
 <template>
   <div class="wrapper">
-    <parallax class="page-header product-page" :style="headerStyle">
+    <parallax class="page-header header-filter header-small" filter-color="rose" parallax-active="true" :style="headerStyle">
       <div class="md-layout">
         <div class="md-layout-item">
-          <div class="image-wrapper">
+          <div class="image-wrapper index-page">
             <div class="brand">
-              <h1>Shopping Cart</h1>
+              <h1 style="margin-top: 0;">Shopping Cart</h1>
             </div>
           </div>
         </div>
       </div>
     </parallax>
-    <div class="main main-raised">
+    <div class="main main-raised-cart">
       <div class="container">
         <div class="card card-plain">
           <div class="card-body">
@@ -33,6 +33,114 @@
                 </thead>
                 <tbody>
                   <!-- Iterate over this -->
+                  <tr>
+                    <td>
+                      <div class="img-container">
+                        <img src="../assets/img/product2.jpg" alt="..." />
+                      </div>
+                    </td>
+                    <td class="td-name">
+                      <a href="#pants">Short Pants</a>
+                      <br />
+                      <small>by Pucci</small>
+                    </td>
+                    <td>
+                      Purple
+                    </td>
+                    <td>
+                      M
+                    </td>
+                    <td class="td-number"><small>&euro;</small>499</td>
+                    <td class="td-number">
+                      2
+                      <div class="md-group md-group-sm">
+                        <md-button class=" md-round md-info">
+                          <i class="material-icons">remove</i>
+                        </md-button>
+                        <md-button class=" md-round md-info">
+                          <i class="material-icons">add</i>
+                        </md-button>
+                      </div>
+                    </td>
+                    <td class="td-number"><small>&euro;</small>998</td>
+                    <td class="td-actions">
+                      <md-button rel="tooltip" data-placement="left" title="Remove item" class=" md-simple">
+                        <i class="material-icons">close</i>
+                      </md-button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="img-container">
+                        <img src="../assets/img/product2.jpg" alt="..." />
+                      </div>
+                    </td>
+                    <td class="td-name">
+                      <a href="#pants">Short Pants</a>
+                      <br />
+                      <small>by Pucci</small>
+                    </td>
+                    <td>
+                      Purple
+                    </td>
+                    <td>
+                      M
+                    </td>
+                    <td class="td-number"><small>&euro;</small>499</td>
+                    <td class="td-number">
+                      2
+                      <div class="md-group md-group-sm">
+                        <md-button class=" md-round md-info">
+                          <i class="material-icons">remove</i>
+                        </md-button>
+                        <md-button class=" md-round md-info">
+                          <i class="material-icons">add</i>
+                        </md-button>
+                      </div>
+                    </td>
+                    <td class="td-number"><small>&euro;</small>998</td>
+                    <td class="td-actions">
+                      <md-button rel="tooltip" data-placement="left" title="Remove item" class=" md-simple">
+                        <i class="material-icons">close</i>
+                      </md-button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="img-container">
+                        <img src="../assets/img/product2.jpg" alt="..." />
+                      </div>
+                    </td>
+                    <td class="td-name">
+                      <a href="#pants">Short Pants</a>
+                      <br />
+                      <small>by Pucci</small>
+                    </td>
+                    <td>
+                      Purple
+                    </td>
+                    <td>
+                      M
+                    </td>
+                    <td class="td-number"><small>&euro;</small>499</td>
+                    <td class="td-number">
+                      2
+                      <div class="md-group md-group-sm">
+                        <md-button class=" md-round md-info">
+                          <i class="material-icons">remove</i>
+                        </md-button>
+                        <md-button class=" md-round md-info">
+                          <i class="material-icons">add</i>
+                        </md-button>
+                      </div>
+                    </td>
+                    <td class="td-number"><small>&euro;</small>998</td>
+                    <td class="td-actions">
+                      <md-button rel="tooltip" data-placement="left" title="Remove item" class=" md-simple">
+                        <i class="material-icons">close</i>
+                      </md-button>
+                    </td>
+                  </tr>
                   <tr>
                     <td>
                       <div class="img-container">
@@ -96,7 +204,7 @@
 <script>
 export default {
   name: "shopping-cart",
-  bodyClass: "index-page",
+  bodyClass: "product-page",
   props: {
     image: {
       type: String,
@@ -520,12 +628,6 @@ a {
   background: #ffffff;
   position: relative;
   z-index: 3;
-}
-
-.main-raised {
-  margin: -60px 30px 0px;
-  border-radius: 6px;
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .page-header {

@@ -1,11 +1,10 @@
 <template>
   <div class="wrapper">
-    <div
+    <parallax
       class="page-header header-filter header-small"
-      data-parallax="true"
-      :style="{
-        'background-image': `url(${require('../assets/img/examples/clark-street-merc.jpg')})`
-      }"
+      filter-color="rose"
+      parallax-active="true"
+      :style="{ 'background-image': `url(${require('../assets/img/examples/clark-street-merc.jpg')})` }"
     >
       <div class="container">
         <div class="row">
@@ -20,7 +19,8 @@
           </div>
         </div>
       </div>
-    </div>
+    </parallax>
+
     <div class="main main-raised">
       <div class="section">
         <div class="container">
@@ -68,7 +68,7 @@
           <h2 class="section-title">Find what you need</h2>
           <div class="row">
             <div class="col-md-3">
-              <filter-section :data.sync="query"></filter-section>
+              <filter-section></filter-section>
             </div>
             <div class="col-md-9">
               <div class="row">
@@ -81,12 +81,12 @@
                         data-colored-shadow="false"
                       >
                         <div class="card-header card-header-image">
-                          <a href="#">
+                          <a :href="'/products/' + product._id">
                             <img :src="product.images[0]" alt="..." />
                           </a>
                         </div>
                         <div class="card-body">
-                          <a href="#">
+                          <a :href="'/products/' + product._id">
                             <h4 class="card-title">{{product.title}}</h4>
                           </a>
                           <p class="description">{{product.description}}</p>
@@ -361,7 +361,7 @@ import axios from "axios";
 
 export default {
   name: "shopping-cart",
-  bodyClass: "index-page",
+  bodyClass: "product-page",
   props: {
     image: {
       type: String,
@@ -389,14 +389,13 @@ export default {
       pageProducts: null,
       email: null,
       password: null,
-      query: null,
       leafShow: false
     };
   },
   methods: {
-    ...mapGetters(["auth"]),
+    ...mapMutations(["ADD_PRODUCTS", "DISPLAY_PRODUCTS"]),
+    ...mapGetters(["auth", "getProducts", "getDisplayedProducts"]),
     leafActive() {
-      console.log(this.auth());
       if (window.innerWidth < 768) {
         this.leafShow = false;
       } else {
@@ -406,8 +405,7 @@ export default {
     changePage(page) {
       let max = page * 9;
       let min = max - 9;
-      this.pageProducts = this.products.slice(min, max);
-      console.log(this.pageProducts, this.products);
+      this.pageProducts = this.getDisplayedProducts().slice(min, max);
     }
   },
   computed: {
@@ -420,16 +418,17 @@ export default {
       return {
         backgroundImage: `url(${this.signup})`
       };
+    },
+    displayedProducts() {
+      return this.getDisplayedProducts();
     }
   },
   async beforeMount() {
     let { data } = await axios.get(
       `http://127.0.0.1:3000/api/products/allproducts`
     );
-    console.log(data);
-    this.pageCount = Math.ceil(data.length / 9);
-    this.products = data;
-    this.pageProducts = data.slice(0, 9);
+    this.ADD_PRODUCTS(data);
+    this.DISPLAY_PRODUCTS(data);
   },
   mounted() {
     this.leafActive();
@@ -440,13 +439,11 @@ export default {
   },
   watch: {
     infoPagination: async function() {
-      console.log(typeof this.infoPagination);
       this.changePage(this.infoPagination);
-      // let { data } = await this.getProducts(this.infoPagination);
-      // this.products = data.docs;
     },
-    query: function() {
-      console.log(this.query);
+    displayedProducts: function() {
+      this.pageProducts = this.getDisplayedProducts().slice(0, 9);
+      this.pageCount = Math.ceil(this.getDisplayedProducts().length / 9);
     }
   }
 };
@@ -941,13 +938,6 @@ label {
   line-height: 1.42857;
   color: #aaaaaa;
   font-weight: 400;
-}
-
-.main-raised {
-  margin: -60px 30px 0px;
-  border-radius: 6px;
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
-    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .animation-transition-fast,

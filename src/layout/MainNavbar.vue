@@ -12,6 +12,35 @@
         </md-button>
 
         <div class="md-collapse">
+          <div class="md-autocomplete" style="display: flex; width: 500px !important;">
+            <md-autocomplete
+              :class="{ toggled: toggledClass }"
+              v-model="selectedProduct"
+              :md-options="products"
+              :md-open-on-focus="false"
+              :md-fuzzy-search="false"
+              style="display: flex; width: 500px !important;"
+            >
+              <label>Search...</label>
+
+              <template slot="md-autocomplete-item" slot-scope="{ item, term }">
+                <a class="anchorCustom" :md-term="term" :href="'/products/' + item._id">
+                  <div style="display: flex;">
+                    <div class="imageDiv">
+                      <img :src="item.images[0]" />
+                    </div>
+                    <div class="itemDiv">
+                      <h6>{{ item.title }}</h6>
+                      <p>{{ item.description }}</p>
+                      <h6 class="detailsDiv">$ {{ item.price }}</h6>
+                    </div>
+                  </div>
+                </a>
+              </template>
+
+              <template slot="md-autocomplete-empty" slot-scope="{ term }"> No items matching "{{ term }}" were found. </template>
+            </md-autocomplete>
+          </div>
           <div class="md-collapse-wrapper">
             <mobile-menu nav-mobile-section-start="false">
               <!-- Here you can add your items from the section-start of your toolbar -->
@@ -37,7 +66,7 @@
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                          <a href="/productList">
+                          <a href="/products">
                             <i class="material-icons">view_day</i>
                             <p>Products</p>
                           </a>
@@ -68,6 +97,10 @@
                 <p>Register</p>
                 <md-tooltip md-direction="bottom">Register</md-tooltip>
               </md-list-item>
+              <md-list-item href="/ShoppingCart" style="margin-top: -6px">
+                <md-tooltip md-direction="bottom">Shopping Cart</md-tooltip>
+                <md-button class="md-white float-right"><i class="material-icons">shopping_cart</i> 0 Items</md-button>
+              </md-list-item>
             </md-list>
           </div>
         </div>
@@ -77,6 +110,7 @@
 </template>
 
 <script>
+import axios from "axios";
 let resizeTimeout;
 function resizeThrottler(actualResizeHandler) {
   // ignore resize events as long as an actualResizeHandler execution is in the queue
@@ -111,8 +145,14 @@ export default {
   data() {
     return {
       extraNavClasses: "",
-      toggledClass: false
+      toggledClass: false,
+      selectedProduct: "",
+      products: []
     };
+  },
+  async beforeMount() {
+    let { data } = await axios.get(`http://127.0.0.1:3000/api/products/allproducts`);
+    this.products = data;
   },
   methods: {
     bodyClick() {
@@ -167,3 +207,23 @@ export default {
   }
 };
 </script>
+<style>
+.imageDiv {
+  padding-right: 10px;
+  width: 100px !important;
+  place-self: center;
+}
+
+.itemDiv {
+  padding-left: 10px;
+  width: 350px !important;
+}
+
+.detailsDiv {
+  float: right;
+}
+
+.anchorCustom {
+  display: block !important;
+}
+</style>

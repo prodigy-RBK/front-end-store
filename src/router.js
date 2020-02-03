@@ -17,11 +17,39 @@ Vue.use(Router);
 
 const router = new Router({
   mode: "history",
+  // routes: [
+  //   {
+  //     path: "/",
+  //     name: "index",
+  //     components: { default: Index, header: MainNavbar, footer: MainFooter },
+  //     props: {
+  //       header: { colorOnScroll: 400 },
+  //       footer: { backgroundColor: "black" }
+  //     }
+  //   },
   routes: [
     {
       path: "/",
       name: "index",
-      components: { default: Index, header: MainNavbar, footer: MainFooter },
+      components: { default: ProductList, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
+      }
+    },
+    {
+      path: "/men",
+      name: "men",
+      components: { default: ProductList, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
+      }
+    },
+    {
+      path: "/women",
+      name: "women",
+      components: { default: ProductList, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" }
@@ -41,7 +69,7 @@ const router = new Router({
       }
     },
     {
-      path: "/productDetails",
+      path: "/products/:id",
       name: "productDetails",
       components: {
         default: ProductDetails,
@@ -49,12 +77,12 @@ const router = new Router({
         footer: MainFooter
       },
       props: {
-        header: { colorOnScroll: 400 },
+        header: { colorOnScroll: 100 },
         footer: { backgroundColor: "black" }
       }
     },
     {
-      path: "/productList",
+      path: "/products",
       name: "productList",
       components: {
         default: ProductList,
