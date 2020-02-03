@@ -9,7 +9,8 @@ export default new Vuex.Store({
       loggedIn: localStorage.getItem("x-token") ? true : false,
       isActivated: false
     },
-    products: []
+    products: [],
+    filters: {}
   },
   getters: {
     auth(state) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     getProducts(state) {
       return state.products;
+    },
+    getFilters(state) {
+      return state.filters;
     }
   },
   mutations: {
@@ -25,9 +29,9 @@ export default new Vuex.Store({
     },
     UPDATE_ACTIVATE: state => {
       state.user.isActivated = true;
-	},
-	ADD_PRODUCTS: (state, prods) =>{
-		state.products = prods
-	}
+    },
+    ADD_PRODUCTS: (state, prods) => {
+      state.products = prods;
+    }
   }
 });
