@@ -51,11 +51,11 @@
           </div>
           <div id="collapseTwo" class="message-body">
             <md-checkbox
-              v-model="brandsQuery"
-              :value="brand.name"
+              v-model="filters.brandsQuery"
+              :value="brand._id"
               v-for="brand in brands"
               :key="brand._id"
-            >{{brand.name}}</md-checkbox>
+            >{{ brand.name }}</md-checkbox>
           </div>
         </div>
         <!-- Section: Category filter -->
@@ -70,11 +70,11 @@
           </div>
           <div id="collapseThree" class="message-body">
             <md-checkbox
-              v-model="categoriesQuery"
+              v-model="filters.categoriesQuery"
               :value="category"
               v-for="(category, index) in categories"
               :key="index"
-            >{{category}}</md-checkbox>
+            >{{ category }}</md-checkbox>
           </div>
         </div>
         <!-- Section: Tags filter -->
@@ -89,11 +89,11 @@
           </div>
           <div id="collapseFour" class="message-body">
             <md-checkbox
-              v-model="tagsQuery"
+              v-model="filters.tagsQuery"
               :value="tag"
               v-for="(tag, index) in tags"
               :key="index"
-            >{{tag}}</md-checkbox>
+            >{{ tag }}</md-checkbox>
           </div>
         </div>
       </div>
@@ -103,19 +103,25 @@
 
 <script>
 import { Slider } from "@/components";
+import { mapMutations } from "vuex";
 import axios from "axios";
+import debounce from "lodash.debounce";
 
 export default {
   name: "RegularCheckboxes",
   data: () => ({
-    categoriesQuery: [],
-    tagsQuery: [],
-    brandsQuery: [],
+    filters: {
+      brandsQuery: [],
+      categoriesQuery: [],
+      tagsQuery: [],
+      priceRange: [],
+      priceRange: [0, 1000]
+    },
     categories: [],
     tags: [],
     brands: [],
     sliders: {
-      rangeSlider: [0, 100]
+      rangeSlider: [0, 1000]
     },
     control: {
       isOpenOne: true,
@@ -125,6 +131,7 @@ export default {
     }
   }),
   methods: {
+    ...mapMutations(["UPDATE_FILTERS"]),
     accordionClass: function(arg) {
       return {
         "is-closed": !this.control[arg],
@@ -138,6 +145,10 @@ export default {
     getBrands(gender) {
       return axios.get(`http://127.0.0.1:3000/api/brand`).then(({ data }) => {
         this.brands = data;
+        this.$store.commit("UPDATE_FILTERS", {
+          filter: "brands",
+          values: data
+        });
       });
     },
     getTags(gender) {
@@ -145,6 +156,10 @@ export default {
         .get(`http://127.0.0.1:3000/api/products/tags/${gender}`)
         .then(({ data }) => {
           this.tags = data;
+          this.$store.commit("UPDATE_FILTERS", {
+            filter: "tags",
+            values: data
+          });
         });
     },
     getCategories(gender) {
@@ -152,9 +167,27 @@ export default {
         .get(`http://127.0.0.1:3000/api/products/categories/${gender}`)
         .then(({ data }) => {
           this.categories = data;
+          this.$store.commit("UPDATE_FILTERS", {
+            filter: "categories",
+            values: data
+          });
         });
     },
-    emitData() {}
+    updatePriceRange() {
+      this.filters.priceRange = this.sliders.rangeSlider;
+      this.$store.dispatch("UPDATE_DISPLAYED_PRODUCTS", this.filters);
+      console.log(this.filters.priceRange);
+    }
+  },
+  created: function() {
+    // _.debounce is a function provided by lodash to limit how
+    // often a particularly expensive operation can be run.
+    // In this case, we want to limit how often we access
+    // yesno.wtf/api, waiting until the user has completely
+    // finished typing before making the ajax request. To learn
+    // more about the _.debounce function (and its cousin
+    // _.throttle), visit: https://lodash.com/docs#debounce
+    this.debouncedupdatePriceRange = debounce(this.updatePriceRange, 1000);
   },
   async beforeMount() {
     // let gender = window.location.pathname.split("/")[1];
@@ -166,17 +199,18 @@ export default {
     ]);
   },
   watch: {
-    brandsQuery: function() {
-      console.log(this.brandsQuery);
-      this.$emit("update:data", this.brandsQuery);
+    "filters.brandsQuery": function() {
+      this.$store.dispatch("UPDATE_DISPLAYED_PRODUCTS", this.filters);
     },
-    categoriesQuery: function() {
-      console.log(this.categoriesQuery);
-      this.$emit("update:data", this.categoriesQuery);
+    "filters.categoriesQuery": function() {
+      this.$store.dispatch("UPDATE_DISPLAYED_PRODUCTS", this.filters);
+    },
+    "filters.tagsQuery": function() {
+      this.$store.dispatch("UPDATE_DISPLAYED_PRODUCTS", this.filters);
+    },
+    "sliders.rangeSlider": function() {
+      this.debouncedupdatePriceRange();
     }
-  },
-  updated() {
-    console.log(this.categories, this.tags);
   }
 };
 </script>
@@ -193,6 +227,7 @@ export default {
   max-height: 10em;
   overflow: hidden;
   transition: 0.3s ease all;
+  overflow-y: auto;
 }
 .is-closed .message-body {
   max-height: 0;

@@ -29,13 +29,23 @@
                 :onSuccess="onSuccess"
               >Logout</GoogleLogin>
               <facebook-login
-                slot="buttons"
                 class="button"
                 appId="2678136558938821"
                 @login="getUserData"
                 @logout="onLogout"
+                @sdk-loaded="sdkLoaded"
                 @get-initial-status="getUserData"
               ></facebook-login>
+              <GoogleLogin
+                slot="buttons"
+                class="button"
+                :params="params"
+                :renderParams="renderParams"
+                :onSuccess="onSuccess"
+                :onFailure="onFailure"
+              >
+                <i class="fab fa-google-plus-g"></i>
+              </GoogleLogin>
               <br />
               <div id="test" slot="buttons"></div>
               <p slot="description" class="description">Or Be Classical</p>
@@ -76,7 +86,6 @@ export default {
     return {
       email: null,
       password: null,
-
       params: {
         client_id:
           "533129668624-0iiemq738iusdp6tdq5791thhiks11fq.apps.googleusercontent.com"
