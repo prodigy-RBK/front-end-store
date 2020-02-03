@@ -1,9 +1,6 @@
 <template>
   <ul class="pagination" :class="paginationClass">
-    <li
-      class="page-item prev-page"
-      :class="{ disabled: value === 1, 'no-arrows': noArrows }"
-    >
+    <li class="page-item prev-page" :class="{ disabled: value === 1, 'no-arrows': noArrows }">
       <a class="page-link" aria-label="Previous" @click="prevPage">
         <template v-if="withText">Prev</template>
         <i class="fas fa-angle-double-left" v-else></i>

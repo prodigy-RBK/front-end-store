@@ -68,7 +68,7 @@
           <h2 class="section-title">Find what you need</h2>
           <div class="row">
             <div class="col-md-3">
-              <filter-section :data.sync="query"></filter-section>
+              <filter-section></filter-section>
             </div>
             <div class="col-md-9">
               <div class="row">
@@ -389,13 +389,12 @@ export default {
       pageProducts: null,
       email: null,
       password: null,
-      query: null,
       leafShow: false
     };
   },
   methods: {
-    ...mapMutations(["ADD_PRODUCTS"]),
-    ...mapGetters(["auth", "getProducts"]),
+    ...mapMutations(["ADD_PRODUCTS", "DISPLAY_PRODUCTS"]),
+    ...mapGetters(["auth", "getProducts", "getDisplayedProducts"]),
     leafActive() {
       if (window.innerWidth < 768) {
         this.leafShow = false;
@@ -406,7 +405,7 @@ export default {
     changePage(page) {
       let max = page * 9;
       let min = max - 9;
-      this.pageProducts = this.products.slice(min, max);
+      this.pageProducts = this.getDisplayedProducts().slice(min, max);
     }
   },
   computed: {
@@ -419,6 +418,9 @@ export default {
       return {
         backgroundImage: `url(${this.signup})`
       };
+    },
+    displayedProducts() {
+      return this.getDisplayedProducts();
     }
   },
   async beforeMount() {
@@ -426,10 +428,7 @@ export default {
       `http://127.0.0.1:3000/api/products/allproducts`
     );
     this.ADD_PRODUCTS(data);
-    console.log(data[0]._id);
-    this.pageCount = Math.ceil(data.length / 9);
-    this.products = data;
-    this.pageProducts = data.slice(0, 9);
+    this.DISPLAY_PRODUCTS(data);
   },
   mounted() {
     this.leafActive();
@@ -442,8 +441,9 @@ export default {
     infoPagination: async function() {
       this.changePage(this.infoPagination);
     },
-    query: function() {
-      console.log(this.query);
+    displayedProducts: function() {
+      this.pageProducts = this.getDisplayedProducts().slice(0, 9);
+      this.pageCount = Math.ceil(this.getDisplayedProducts().length / 9);
     }
   }
 };
