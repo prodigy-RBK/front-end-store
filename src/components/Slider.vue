@@ -22,7 +22,7 @@ export default {
       default: () => {
         return {
           min: 0,
-          max: 100
+          max: 1000
         };
       }
     },
@@ -68,7 +68,10 @@ export default {
       const sliderValue = slider.get();
       if (newValue !== oldValue && sliderValue !== newValue) {
         if (Array.isArray(sliderValue) && Array.isArray(newValue)) {
-          if (oldValue.length === newValue.length && oldValue.every((v, i) => v === newValue[i])) {
+          if (
+            oldValue.length === newValue.length &&
+            oldValue.every((v, i) => v === newValue[i])
+          ) {
             slider.set(newValue);
           }
         } else {
