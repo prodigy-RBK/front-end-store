@@ -88,19 +88,46 @@
                   </div>
                 </a>
               </li>
-
-              <md-list-item href="/login">
-                <p>Login</p>
-                <md-tooltip md-direction="bottom">Login</md-tooltip>
+              <li class="md-list-item">
+                <a href="javascript:void(0)" class="md-list-item-router md-list-item-container md-button-clean dropdown">
+                  <div class="md-list-item-content">
+                    <drop-down direction="down">
+                      <md-button slot="title" class="md-button md-button-link md-white md-simple dropdown-toggle" data-toggle="dropdown">
+                        <i class="material-icons">person</i>
+                      </md-button>
+                      <ul class="dropdown-menu dropdown-with-icons">
+                        <li>
+                          <a href="/account">
+                            <i class="material-icons">view_day</i>
+                            <p>Account</p>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="/login">
+                            <i class="material-icons">fingerprint</i>
+                            <p>Login</p>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="/register">
+                            <i class="material-icons">account_circle</i>
+                            <p>Register</p>
+                          </a>
+                        </li>
+                      </ul>
+                    </drop-down>
+                  </div>
+                </a>
+              </li>
+              <md-list-item href="/wishlist">
+                <i class="material-icons">favorite</i>
               </md-list-item>
-              <md-list-item href="/register">
-                <p>Register</p>
-                <md-tooltip md-direction="bottom">Register</md-tooltip>
-              </md-list-item>
-              <md-list-item href="/ShoppingCart" style="margin-top: -6px">
-                <md-tooltip md-direction="bottom">Shopping Cart</md-tooltip>
-                <md-button class="md-white float-right"><i class="material-icons">shopping_cart</i> 0 Items</md-button>
-              </md-list-item>
+              <md-badge class="md-primary" md-position="top" md-content="12">
+                <md-list-item href="/shoppingCart">
+                  <i class="material-icons">shopping_cart</i>
+                  <p>0</p>
+                </md-list-item>
+              </md-badge>
             </md-list>
           </div>
         </div>
@@ -153,6 +180,7 @@ export default {
   async beforeMount() {
     let { data } = await axios.get(`http://127.0.0.1:3000/api/products/allproducts`);
     this.products = data;
+    // this.products = this.$store.state.products;
   },
   methods: {
     bodyClick() {
