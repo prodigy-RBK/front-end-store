@@ -14,6 +14,9 @@ import ProductList from "./views/ProductList.vue";
 import Confirmation from "./views/Confirmation.vue";
 import auth from "./middleware/auth";
 import store from "./store";
+import Account from "./views/Account.vue";
+import OrderDetails from "./views/OrderDetails.vue";
+import Wishlist from "./views/Wishlist.vue";
 
 Vue.use(Router);
 
@@ -62,6 +65,45 @@ const router = new Router({
       name: "shoppingCart",
       components: {
         default: ShoppingCart,
+        header: MainNavbar,
+        footer: MainFooter
+      },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
+      }
+    },
+    {
+      path: "/account",
+      name: "account",
+      components: {
+        default: Account,
+        header: MainNavbar,
+        footer: MainFooter
+      },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
+      }
+    },
+    {
+      path: "/account/:id",
+      name: "orderDetails",
+      components: {
+        default: OrderDetails,
+        header: MainNavbar,
+        footer: MainFooter
+      },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
+      }
+    },
+    {
+      path: "/wishlist",
+      name: "wishlist",
+      components: {
+        default: Wishlist,
         header: MainNavbar,
         footer: MainFooter
       },

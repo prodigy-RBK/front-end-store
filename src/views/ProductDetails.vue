@@ -17,22 +17,22 @@
               <div class="col-md-10 mr-auto ml-auto">
                 <tabs :tab-images="images" plain nav-pills-images color-button="primary">
                   <!-- here you can add your content for tab-content -->
-                  
-                  <div :slot="'tab-pane-' +(index + 1)" v-for="(image, index) in images" :key="index">
+
+                  <div :slot="'tab-pane-' + (index + 1)" v-for="(image, index) in images" :key="index">
                     <img :src="image" />
                   </div>
                 </tabs>
               </div>
             </div>
             <div class="col-md-6 col-sm-6">
-              <h2 class="title">{{product.title}}</h2>
+              <h2 class="title">{{ product.title }}</h2>
               <!-- <h4>{{brand.name}}</h4> -->
-              <img :src="brand.image" style="width: 100px"/>
-              <h3 class="main-price">$ {{product.price}}</h3>
+              <img :src="brand.image" style="width: 100px" />
+              <h3 class="main-price">$ {{ product.price }}</h3>
               <h3 class="title">Description</h3>
 
               <md-card-content>
-                {{product.description}}
+                {{ product.description }}
               </md-card-content>
               <div class="row pick-size">
                 <div class="col-md-6 col-sm-6">
@@ -44,13 +44,14 @@
                           <md-icon>keyboard_arrow_down</md-icon></md-button
                         >
                         <md-menu-content>
-                          <md-menu-item v-for="size in sizes"
+                          <md-menu-item
+                            v-for="size in sizes"
                             @click="
                               activeSize = true;
-                              selectedSize = size ;
+                              selectedSize = size;
                             "
-                            :key ="size"
-                            >{{size}}</md-menu-item
+                            :key="size"
+                            >{{ size }}</md-menu-item
                           >
                         </md-menu-content>
                       </md-menu>
@@ -66,13 +67,14 @@
                           <md-icon>keyboard_arrow_down</md-icon></md-button
                         >
                         <md-menu-content>
-                          <md-menu-item v-for="color in colors"
+                          <md-menu-item
+                            v-for="color in colors"
                             @click="
                               activeColor = true;
-                              selectedColor = color ;
+                              selectedColor = color;
                             "
-                            :key ="color"
-                            >{{color}}</md-menu-item
+                            :key="color"
+                            >{{ color }}</md-menu-item
                           >
                         </md-menu-content>
                       </md-menu>
@@ -307,24 +309,25 @@ export default {
     window.removeEventListener("resize", this.leafActive);
   },
   async beforeMount() {
-    let productId = window.location.pathname.slice(10)
-    let { data } = await axios.get(
-      `http://127.0.0.1:3000/api/products/${productId}`
-    );
-    
+    let productId = window.location.pathname.slice(10);
+    let { data } = await axios.get(`http://127.0.0.1:3000/api/products/${productId}`);
+
     data.availability.map(elem => {
-      if(!this.colors.includes(elem.color)) {
-        this.colors.push(elem.color)
+      if (!this.colors.includes(elem.color)) {
+        this.colors.push(elem.color);
       }
-      if(!this.sizes.includes(elem.size)) {
-        this.sizes.push(elem.size)
+      if (!this.sizes.includes(elem.size)) {
+        this.sizes.push(elem.size);
       }
     });
-    this.brand = data.brand
-    this.images = [data.images[0], "https://media.gettyimages.com/photos/colorful-powder-explosion-in-all-directions-in-a-nice-composition-picture-id890147976?s=612x612"]
+    this.brand = data.brand;
+    this.images = [
+      data.images[0],
+      "https://media.gettyimages.com/photos/colorful-powder-explosion-in-all-directions-in-a-nice-composition-picture-id890147976?s=612x612"
+    ];
     // this.images = data.images
     this.product = data;
-  },
+  }
 };
 </script>
 
