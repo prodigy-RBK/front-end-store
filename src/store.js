@@ -55,7 +55,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    UPDATE_DISPLAYED_PRODUCTS: function(state, payload) {
+    UPDATE_DISPLAYED_PRODUCTS: function (state, payload) {
       let { brandsQuery, categoriesQuery, tagsQuery, priceRange, page } = payload;
       if (!brandsQuery.length) brandsQuery = this.state.filters.brands.map(elm => elm._id);
       if (!categoriesQuery.length) categoriesQuery = this.state.filters.categories;

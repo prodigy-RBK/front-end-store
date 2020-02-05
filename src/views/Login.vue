@@ -6,29 +6,7 @@
           <div
             class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
           >
-            <login-card header-color="green">
-              <h4 slot="title" class="card-title">Login</h4>
-              <GoogleLogin
-                slot="buttons"
-                class="fab fa-google btn btn-simple btn-google"
-                style="width: 90%; color: grey; background-color: white"
-                :params="params"
-                :logoutButton="logoutButton"
-                :onSuccess="onSuccess"
-                :onFailure="onFailure"
-              >
-                <span
-                  style="margin-left: 20%; margin-right: 20%; font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif; text-transform: none"
-                >Log in with Google</span>
-              </GoogleLogin>
-              <GoogleLogin
-                slot="buttons"
-                class="fab fa-google btn btn-simple btn-google"
-                style="width: 90%; color: grey; background-color: white"
-                :params="params"
-                :onSuccess="onSuccess"
-              >Logout</GoogleLogin>
-              <facebook-login
+           <facebook-login
                 class="button"
                 appId="2678136558938821"
                 @login="getUserData"
@@ -36,6 +14,10 @@
                 @sdk-loaded="sdkLoaded"
                 @get-initial-status="getUserData"
               ></facebook-login>
+            <login-card header-color="green">
+              <h4 slot="title" class="card-title">Login</h4>
+
+             
               <GoogleLogin
                 slot="buttons"
                 class="button"
