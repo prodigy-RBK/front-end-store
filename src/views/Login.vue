@@ -6,18 +6,18 @@
           <div
             class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
           >
-           <facebook-login
+            <login-card header-color="green">
+              <h4 slot="title" class="card-title">Login</h4>
+
+              <facebook-login
                 class="button"
+                slot="buttons"
                 appId="2678136558938821"
                 @login="getUserData"
                 @logout="onLogout"
                 @sdk-loaded="sdkLoaded"
                 @get-initial-status="getUserData"
               ></facebook-login>
-            <login-card header-color="green">
-              <h4 slot="title" class="card-title">Login</h4>
-
-             
               <GoogleLogin
                 slot="buttons"
                 class="button"
@@ -25,9 +25,7 @@
                 :renderParams="renderParams"
                 :onSuccess="onSuccess"
                 :onFailure="onFailure"
-              >
-                <i class="fab fa-google-plus-g"></i>
-              </GoogleLogin>
+              ></GoogleLogin>
               <br />
               <div id="test" slot="buttons"></div>
               <p slot="description" class="description">Or Be Classical</p>

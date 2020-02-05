@@ -79,11 +79,7 @@
                 <!-- Whoever is doing the front, display multiple of 3 products -->
                 <div class="col-md-12">
                   <div class="row">
-                    <div
-                      class="col-md-4"
-                      v-for="product in pageProducts"
-                      :key="product._id"
-                    >
+                    <div class="col-md-4" v-for="product in pageProducts" :key="product._id">
                       <div
                         class="card card-product card-plain no-shadow"
                         data-colored-shadow="false"
@@ -167,9 +163,7 @@
               >
                 <div class="card-body">
                   <h6 class="card-category text-info">Fashion News</h6>
-                  <h3 class="card-title">
-                    Kanye joins the Yeezy team at Adidas
-                  </h3>
+                  <h3 class="card-title">Kanye joins the Yeezy team at Adidas</h3>
                   <p class="card-description">
                     Don't be scared of the truth because we need to restart the
                     human foundation in truth And I love you like Kanye loves
@@ -192,9 +186,7 @@
                 <div class="card-body">
                   <h6 class="card-category text-info">Productivy Apps</h6>
                   <a href="#pablo">
-                    <h3 class="card-title">
-                      Learn how to use the new colors of 2017
-                    </h3>
+                    <h3 class="card-title">Learn how to use the new colors of 2017</h3>
                   </a>
                   <p class="card-description">
                     Don't be scared of the truth because we need to restart the
@@ -276,9 +268,7 @@
               <div class="card-body">
                 <h6 class="card-category text-rose">Trends</h6>
                 <h4 class="card-title">
-                  <a href="#pablo"
-                    >Learn how to wear your scarf with a floral print shirt</a
-                  >
+                  <a href="#pablo">Learn how to wear your scarf with a floral print shirt</a>
                 </h4>
                 <p class="card-description">
                   Don't be scared of the truth because we need to restart the
@@ -298,9 +288,7 @@
               <div class="card-body">
                 <h6 class="card-category text-rose">Fashion week</h6>
                 <h4 class="card-title">
-                  <a href="#pablo"
-                    >Katy Perry was wearing a Dolce &amp; Gabanna arc dress</a
-                  >
+                  <a href="#pablo">Katy Perry was wearing a Dolce &amp; Gabanna arc dress</a>
                 </h4>
                 <p class="card-description">
                   Don't be scared of the truth because we need to restart the
@@ -320,9 +308,7 @@
               <div class="card-body">
                 <h6 class="card-category text-rose">Fashion week</h6>
                 <h4 class="card-title">
-                  <a href="#pablo"
-                    >Check the latest fashion events and which are the trends</a
-                  >
+                  <a href="#pablo">Check the latest fashion events and which are the trends</a>
                 </h4>
                 <p class="card-description">
                   Don't be scared of the truth because we need to restart the
@@ -352,6 +338,9 @@
                 Join our newsletter and get news in your inbox every week! We
                 hate spam too, so no worries about this.
               </p>
+              <p
+                class="description"
+              >Join our newsletter and get news in your inbox every week! We hate spam too, so no worries about this.</p>>>>>>>> 16e875e15e014f2b2455504e55a97bf50d7f2a9a
             </div>
             <div class="card card-raised card-form-horizontal">
               <div class="card-body">
@@ -364,11 +353,7 @@
                             <i class="material-icons">mail</i>
                           </span>
                         </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="Your Email..."
-                        />
+                        <input type="text" class="form-control" placeholder="Your Email..." />
                       </div>
                     </div>
                     <div class="col-sm-4">
@@ -460,13 +445,6 @@ export default {
     );
     this.ADD_PRODUCTS(data);
     this.DISPLAY_PRODUCTS(data);
-  },
-  mounted() {
-    this.leafActive();
-    window.addEventListener("resize", this.leafActive);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.leafActive);
   },
   watch: {
     infoPagination: async function() {

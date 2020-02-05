@@ -17,7 +17,12 @@
           <div class="row">
             <div class="col-md-6 col-sm-6">
               <div class="col-md-10 mr-auto ml-auto">
-                <tabs :tab-images="images" plain nav-pills-images color-button="primary">
+                <tabs
+                  :tab-images="images"
+                  plain
+                  nav-pills-images
+                  color-button="primary"
+                >
                   <!-- here you can add your content for tab-content -->
 
                   <div
@@ -50,7 +55,8 @@
                                 ? { color: 'black' }
                                 : { color: 'grey' }
                             ]"
-                          >{{ selectedSize }}</span>
+                            >{{ selectedSize }}</span
+                          >
                           <md-icon>keyboard_arrow_down</md-icon>
                         </md-button>
                         <md-menu-content>
@@ -61,7 +67,8 @@
                               selectedSize = size;
                             "
                             :key="size"
-                          >{{ size }}</md-menu-item>
+                            >{{ size }}</md-menu-item
+                          >
                         </md-menu-content>
                       </md-menu>
                     </div>
@@ -78,7 +85,8 @@
                                 ? { color: 'black' }
                                 : { color: 'grey' }
                             ]"
-                          >{{ selectedColor }}</span>
+                            >{{ selectedColor }}</span
+                          >
                           <md-icon>keyboard_arrow_down</md-icon>
                         </md-button>
                         <md-menu-content>
@@ -89,7 +97,8 @@
                               selectedColor = color;
                             "
                             :key="color"
-                          >{{ color }}</md-menu-item>
+                            >{{ color }}</md-menu-item
+                          >
                         </md-menu-content>
                       </md-menu>
                     </div>
@@ -155,7 +164,10 @@
               <div class="card card-product">
                 <div class="md-card-header card-image">
                   <a href="#pablo">
-                    <img class="img" src="../assets/img/examples/card-product1.jpg" />
+                    <img
+                      class="img"
+                      src="../assets/img/examples/card-product1.jpg"
+                    />
                   </a>
                 </div>
                 <div class="card-body">
@@ -188,7 +200,10 @@
               <div class="card card-product">
                 <div class="md-card-header card-image">
                   <a href="#pablo">
-                    <img class="img" src="../assets/img/examples/card-product3.jpg" />
+                    <img
+                      class="img"
+                      src="../assets/img/examples/card-product3.jpg"
+                    />
                   </a>
                 </div>
                 <div class="card-body">
@@ -222,7 +237,10 @@
               <div class="card card-product">
                 <div class="md-card-header card-image">
                   <a href="#pablo">
-                    <img class="img" src="../assets/img/examples/card-product4.jpg" />
+                    <img
+                      class="img"
+                      src="../assets/img/examples/card-product4.jpg"
+                    />
                   </a>
                 </div>
                 <div class="card-body">
@@ -255,7 +273,10 @@
               <div class="card card-product">
                 <div class="md-card-header card-image">
                   <a href="#pablo">
-                    <img class="img" src="../assets/img/examples/card-product2.jpg" />
+                    <img
+                      class="img"
+                      src="../assets/img/examples/card-product2.jpg"
+                    />
                   </a>
                 </div>
                 <div class="card-body">
