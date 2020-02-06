@@ -40,15 +40,12 @@
                 <div class="card-body text-center">
                   <h4 class="card-title">
                     <a href="#pablo">Gucci</a>
-                  </h4><<<<<<< HEAD
+                  </h4>
                   <p class="card-description">
                     The structured shoulders and sleek detailing ensure a sharp
                     silhouette. Team it with a silk pocket square and leather
                     loafers.
-                  </p>=======
-                  <p
-                    class="card-description"
-                  >The structured shoulders and sleek detailing ensure a sharp silhouette. Team it with a silk pocket square and leather loafers.</p>>>>>>>> 44abaab5d2058e4ecd71bc2007fd57e145a41579
+                  </p>
                 </div>
                 <div class="card-footer">
                   <div class="price-container">
