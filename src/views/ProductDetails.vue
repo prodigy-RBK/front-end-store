@@ -106,14 +106,7 @@
                 </div>
               </div>
               <div style="text-align-last: end;">
-<<<<<<< HEAD
                 <md-button @click="addToCart" class="float-left md-rose md-round">Add to Cart &#xA0;<i class="material-icons">shopping_cart</i></md-button>
-=======
-                <md-button @click="test" class="float-left md-rose md-round">
-                  Add to Cart &#xA0;
-                  <i class="material-icons">shopping_cart</i>
-                </md-button>
->>>>>>> 6d032ac30484db742fc750e25f6c4900484640d7
               </div>
             </div>
           </div>

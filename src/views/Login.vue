@@ -105,11 +105,7 @@ export default {
           })
           .then(response => {
             this.UPDATE_LOGIN();
-<<<<<<< HEAD
             localStorage.setItem("x-token", this.token);
-=======
-            this.UPDATE_ACTIVATE();
->>>>>>> 6d032ac30484db742fc750e25f6c4900484640d7
             router.push({ name: "index" });
           });
       });
@@ -123,11 +119,7 @@ export default {
         })
         .then(response => {
           this.UPDATE_LOGIN();
-<<<<<<< HEAD
           localStorage.setItem("x-token", googleUser.getAuthResponse().id_token);
-=======
-          this.UPDATE_ACTIVATE();
->>>>>>> 6d032ac30484db742fc750e25f6c4900484640d7
           router.push({ name: "index" });
         });
     },
