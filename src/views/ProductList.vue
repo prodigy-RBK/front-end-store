@@ -4,7 +4,9 @@
       class="page-header header-filter header-small"
       filter-color="rose"
       parallax-active="true"
-      :style="{ 'background-image': `url(${require('../assets/img/examples/clark-street-merc.jpg')})` }"
+      :style="{
+        'background-image': `url(${require('../assets/img/examples/clark-street-merc.jpg')})`
+      }"
     >
       <div class="container">
         <div class="row">
@@ -39,9 +41,11 @@
                   <h4 class="card-title">
                     <a href="#pablo">Gucci</a>
                   </h4>
-                  <p
-                    class="card-description"
-                  >The structured shoulders and sleek detailing ensure a sharp silhouette. Team it with a silk pocket square and leather loafers.</p>
+                  <p class="card-description">
+                    The structured shoulders and sleek detailing ensure a sharp
+                    silhouette. Team it with a silk pocket square and leather
+                    loafers.
+                  </p>
                 </div>
                 <div class="card-footer">
                   <div class="price-container">
@@ -87,13 +91,13 @@
                         </div>
                         <div class="card-body">
                           <a :href="'/products/' + product._id">
-                            <h4 class="card-title">{{product.title}}</h4>
+                            <h4 class="card-title">{{ product.title }}</h4>
                           </a>
-                          <p class="description">{{product.description}}</p>
+                          <p class="description">{{ product.description }}</p>
                         </div>
                         <div class="card-footer justify-content-between">
                           <div class="price-container">
-                            <span class="price">€ {{product.price}}</span>
+                            <span class="price">€ {{ product.price }}</span>
                           </div>
                           <md-button class="md-rose md-just-icon md-simple">
                             <md-icon>favorite</md-icon>
@@ -139,8 +143,9 @@
                     <h3 class="card-title">The best trends in fashion 2017</h3>
                   </a>
                   <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick
-                    Owens’ bed design but the back is...
+                    Don't be scared of the truth because we need to restart the
+                    human foundation in truth And I love you like Kanye loves
+                    Kanye I love Rick Owens’ bed design but the back is...
                   </p>
                   <md-button href="#pablo" class="md-white md-round">
                     <i class="material-icons">subject</i> Read
@@ -160,8 +165,9 @@
                   <h6 class="card-category text-info">Fashion News</h6>
                   <h3 class="card-title">Kanye joins the Yeezy team at Adidas</h3>
                   <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick
-                    Owens’ bed design but the back is...
+                    Don't be scared of the truth because we need to restart the
+                    human foundation in truth And I love you like Kanye loves
+                    Kanye I love Rick Owens’ bed design but the back is...
                   </p>
                   <md-button href="#pablo" class="md-white md-round">
                     <i class="material-icons">subject</i> Read
@@ -183,8 +189,9 @@
                     <h3 class="card-title">Learn how to use the new colors of 2017</h3>
                   </a>
                   <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick
-                    Owens’ bed design but the back is...
+                    Don't be scared of the truth because we need to restart the
+                    human foundation in truth And I love you like Kanye loves
+                    Kanye I love Rick Owens’ bed design but the back is...
                   </p>
                   <md-button href="#pablo" class="md-white md-round">
                     <i class="material-icons">subject</i> Read
@@ -206,8 +213,9 @@
                     <h3 class="card-title">Trending colors of 2017</h3>
                   </a>
                   <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick
-                    Owens’ bed design but the back is...
+                    Don't be scared of the truth because we need to restart the
+                    human foundation in truth And I love you like Kanye loves
+                    Kanye I love Rick Owens’ bed design but the back is...
                   </p>
                   <md-button href="#pablo" class="md-white md-round">
                     <i class="material-icons">subject</i> Read
@@ -229,8 +237,9 @@
                     <h3 class="card-title">Fashion &amp; Style 2017</h3>
                   </a>
                   <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick
-                    Owens’ bed design but the back is...
+                    Don't be scared of the truth because we need to restart the
+                    human foundation in truth And I love you like Kanye loves
+                    Kanye I love Rick Owens’ bed design but the back is...
                   </p>
                   <md-button href="#pablo" class="md-white md-round">
                     <i class="material-icons">subject</i> Read
@@ -262,8 +271,9 @@
                   <a href="#pablo">Learn how to wear your scarf with a floral print shirt</a>
                 </h4>
                 <p class="card-description">
-                  Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’
-                  bed design but the back is...
+                  Don't be scared of the truth because we need to restart the
+                  human foundation in truth And I love you like Kanye loves
+                  Kanye I love Rick Owens’ bed design but the back is...
                 </p>
               </div>
             </div>
@@ -281,8 +291,9 @@
                   <a href="#pablo">Katy Perry was wearing a Dolce &amp; Gabanna arc dress</a>
                 </h4>
                 <p class="card-description">
-                  Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’
-                  bed design but the back is...
+                  Don't be scared of the truth because we need to restart the
+                  human foundation in truth And I love you like Kanye loves
+                  Kanye I love Rick Owens’ bed design but the back is...
                 </p>
               </div>
             </div>
@@ -300,8 +311,9 @@
                   <a href="#pablo">Check the latest fashion events and which are the trends</a>
                 </h4>
                 <p class="card-description">
-                  Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’
-                  bed design but the back is...
+                  Don't be scared of the truth because we need to restart the
+                  human foundation in truth And I love you like Kanye loves
+                  Kanye I love Rick Owens’ bed design but the back is...
                 </p>
               </div>
             </div>
@@ -322,6 +334,7 @@
           <div class="col-md-6 ml-auto mr-auto">
             <div class="text-center">
               <h3 class="title">Subscribe to our Newsletter</h3>
+
               <p
                 class="description"
               >Join our newsletter and get news in your inbox every week! We hate spam too, so no worries about this.</p>
@@ -424,18 +437,12 @@ export default {
     }
   },
   async beforeMount() {
-    let { data } = await axios.get(
+    let data = await axios.get(
       `http://127.0.0.1:3000/api/products/allproducts`
     );
+    console.log(data);
     this.ADD_PRODUCTS(data);
     this.DISPLAY_PRODUCTS(data);
-  },
-  mounted() {
-    this.leafActive();
-    window.addEventListener("resize", this.leafActive);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.leafActive);
   },
   watch: {
     infoPagination: async function() {
@@ -444,6 +451,7 @@ export default {
     displayedProducts: function() {
       this.pageProducts = this.getDisplayedProducts().slice(0, 9);
       this.pageCount = Math.ceil(this.getDisplayedProducts().length / 9);
+      this.infoPagination = 1;
     }
   }
 };

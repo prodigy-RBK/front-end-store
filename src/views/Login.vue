@@ -8,28 +8,10 @@
           >
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Login</h4>
-              <GoogleLogin
-                slot="buttons"
-                class="fab fa-google btn btn-simple btn-google"
-                style="width: 90%; color: grey; background-color: white"
-                :params="params"
-                :logoutButton="logoutButton"
-                :onSuccess="onSuccess"
-                :onFailure="onFailure"
-              >
-                <span
-                  style="margin-left: 20%; margin-right: 20%; font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif; text-transform: none"
-                >Log in with Google</span>
-              </GoogleLogin>
-              <GoogleLogin
-                slot="buttons"
-                class="fab fa-google btn btn-simple btn-google"
-                style="width: 90%; color: grey; background-color: white"
-                :params="params"
-                :onSuccess="onSuccess"
-              >Logout</GoogleLogin>
+
               <facebook-login
                 class="button"
+                slot="buttons"
                 appId="2678136558938821"
                 @login="getUserData"
                 @logout="onLogout"
@@ -43,9 +25,7 @@
                 :renderParams="renderParams"
                 :onSuccess="onSuccess"
                 :onFailure="onFailure"
-              >
-                <i class="fab fa-google-plus-g"></i>
-              </GoogleLogin>
+              ></GoogleLogin>
               <br />
               <div id="test" slot="buttons"></div>
               <p slot="description" class="description">Or Be Classical</p>
@@ -123,7 +103,8 @@ export default {
             email: response.email
           })
           .then(response => {
-            localStorage.setItem("x-token", this.token);
+            this.UPDATE_LOGIN();
+            this.UPDATE_ACTIVATE();
             router.push({ name: "index" });
           });
       });
@@ -136,10 +117,8 @@ export default {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
-          localStorage.setItem(
-            "x-token",
-            googleUser.getAuthResponse().id_token
-          );
+          this.UPDATE_LOGIN();
+          this.UPDATE_ACTIVATE();
           router.push({ name: "index" });
         });
     },
@@ -151,16 +130,8 @@ export default {
           password: this.password
         })
         .then(response => {
-          console.log("====>", response);
           if (response.data.status === "success") {
-            localStorage.setItem(
-              "x-token",
-              response.data.details.token.refreshToken
-            );
-            localStorage.setItem(
-              "x-refresh-token",
-              response.data.details.token.token
-            );
+            this.UPDATE_LOGIN();
             if (response.data.details.active) {
               this.UPDATE_ACTIVATE();
               router.push({ name: "index" });
