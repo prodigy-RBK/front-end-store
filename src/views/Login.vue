@@ -3,41 +3,29 @@
     <div class="section page-header header-filter" :style="headerStyle">
       <div class="container">
         <div class="md-layout">
-          <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
+          <div
+            class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
+          >
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Login</h4>
-              <GoogleLogin
-                slot="buttons"
-                class="fab fa-google btn btn-simple btn-google"
-                style="width: 90%; color: grey; background-color: white"
-                :params="params"
-                :logoutButton="logoutButton"
-                :onSuccess="onSuccess"
-                :onFailure="onFailure"
-              >
-                <span style="margin-left: 20%; margin-right: 20%; font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif; text-transform: none"
-                  >Log in with Google</span
-                >
-              </GoogleLogin>
-              <GoogleLogin
-                slot="buttons"
-                class="fab fa-google btn btn-simple btn-google"
-                style="width: 90%; color: grey; background-color: white"
-                :params="params"
-                :onSuccess="onSuccess"
-                >Logout</GoogleLogin
-              >
+
               <facebook-login
                 class="button"
+                slot="buttons"
                 appId="2678136558938821"
                 @login="getUserData"
                 @logout="onLogout"
                 @sdk-loaded="sdkLoaded"
                 @get-initial-status="getUserData"
               ></facebook-login>
-              <GoogleLogin slot="buttons" class="button" :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure">
-                <i class="fab fa-google-plus-g"></i>
-              </GoogleLogin>
+              <GoogleLogin
+                slot="buttons"
+                class="button"
+                :params="params"
+                :renderParams="renderParams"
+                :onSuccess="onSuccess"
+                :onFailure="onFailure"
+              ></GoogleLogin>
               <br />
               <div id="test" slot="buttons"></div>
               <p slot="description" class="description">Or Be Classical</p>
@@ -71,6 +59,7 @@ import axios from "axios";
 export default {
   components: {
     LoginCard,
+    GoogleLogin,
     facebookLogin
   },
   bodyClass: "login-page",
@@ -79,7 +68,8 @@ export default {
       email: null,
       password: null,
       params: {
-        client_id: "533129668624-0iiemq738iusdp6tdq5791thhiks11fq.apps.googleusercontent.com"
+        client_id:
+          "533129668624-0iiemq738iusdp6tdq5791thhiks11fq.apps.googleusercontent.com"
       },
       logoutButton: true,
       // only needed if you want to render the button with the google ui
@@ -114,6 +104,7 @@ export default {
             email: response.email
           })
           .then(response => {
+            this.UPDATE_LOGIN();
             localStorage.setItem("x-token", this.token);
             router.push({ name: "index" });
           });
@@ -127,6 +118,7 @@ export default {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
+          this.UPDATE_LOGIN();
           localStorage.setItem("x-token", googleUser.getAuthResponse().id_token);
           router.push({ name: "index" });
         });
@@ -139,12 +131,10 @@ export default {
           password: this.password
         })
         .then(response => {
-          console.log("====>", response);
           if (response.data.status === "success") {
-            localStorage.setItem("x-token", response.data.details.token.refreshToken);
-            localStorage.setItem("x-refresh-token", response.data.details.token.token);
+            this.UPDATE_LOGIN();
             if (response.data.details.active) {
-              this.UPDATE_ACTIVATE();
+              this.UPDATE_LOGIN();
               router.push({ name: "index" });
             } else {
               router.push({ name: "confirmation" });
@@ -159,9 +149,4 @@ export default {
 };
 </script>
 
-<style lang="css">
-.custom {
-  font-size: 1.3em !important;
-  padding: 4px 10px !important;
-}
-</style>
+<style lang="css"></style>
