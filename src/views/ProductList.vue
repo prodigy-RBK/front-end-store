@@ -87,13 +87,13 @@
                         </div>
                         <div class="card-body">
                           <a :href="'/products/' + product._id">
-                            <h4 class="card-title">{{product.title}}</h4>
+                            <h4 class="card-title">{{ product.title }}</h4>
                           </a>
-                          <p class="description">{{product.description}}</p>
+                          <p class="description">{{ product.description }}</p>
                         </div>
                         <div class="card-footer justify-content-between">
                           <div class="price-container">
-                            <span class="price">€ {{product.price}}</span>
+                            <span class="price">€ {{ product.price }}</span>
                           </div>
                           <md-button class="md-rose md-just-icon md-simple">
                             <md-icon>favorite</md-icon>
@@ -430,13 +430,6 @@ export default {
     this.ADD_PRODUCTS(data);
     this.DISPLAY_PRODUCTS(data);
   },
-  mounted() {
-    this.leafActive();
-    window.addEventListener("resize", this.leafActive);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.leafActive);
-  },
   watch: {
     infoPagination: async function() {
       this.changePage(this.infoPagination);
@@ -444,6 +437,7 @@ export default {
     displayedProducts: function() {
       this.pageProducts = this.getDisplayedProducts().slice(0, 9);
       this.pageCount = Math.ceil(this.getDisplayedProducts().length / 9);
+      this.infoPagination = 1;
     }
   }
 };
