@@ -1,51 +1,30 @@
 <template>
-  <div class="wrapper">
-    <div class="section page-header header-filter" :style="headerStyle">
-      <div class="container">
-        <div class="md-layout">
-          <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
-            <login-card header-color="green">
-              <h4 slot="title" class="card-title">Login</h4>
-              <facebook-login
-                slot="buttons"
-                class="button"
-                appId="2678136558938821"
-                @login="getUserData"
-                @logout="onLogout"
-                @sdk-loaded="sdkLoaded"
-                @get-initial-status="getUserData"
-              ></facebook-login>
-              <GoogleLogin
-                slot="buttons"
-                class="button"
-                :params="params"
-                :renderParams="renderParams"
-                :onSuccess="onSuccess"
-                :onFailure="onFailure"
-                style="content: Login with Google !important;"
-              >
-              </GoogleLogin>
-              <br />
-              <p slot="description" class="description">Or Be Classical</p>
-              <md-field class="md-form-group" slot="inputs">
-                <md-icon>email</md-icon>
-                <label>Email...</label>
-                <md-input v-model="email" type="email"></md-input>
-              </md-field>
-              <md-field class="md-form-group" slot="inputs">
-                <md-icon>lock_outline</md-icon>
-                <label>Password...</label>
-                <md-input v-model="password"></md-input>
-              </md-field>
-              <md-button slot="footer" @click="submit" class="md-simple md-success md-lg">Log In</md-button>
-            </login-card>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div>
+    <h4 slot="title" class="card-title">Login</h4>
+    <facebook-login
+      slot="buttons"
+      class="button"
+      appId="2678136558938821"
+      @login="getUserData"
+      @logout="onLogout"
+      @sdk-loaded="sdkLoaded"
+      @get-initial-status="getUserData"
+    ></facebook-login>
+    <GoogleLogin slot="buttons" class="button" :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"> </GoogleLogin>
+    <p slot="description" class="description">Or Be Classical</p>
+    <md-field class="md-form-group" slot="inputs">
+      <md-icon>email</md-icon>
+      <label>Email...</label>
+      <md-input v-model="email" type="email"></md-input>
+    </md-field>
+    <md-field class="md-form-group" slot="inputs">
+      <md-icon>lock_outline</md-icon>
+      <label>Password...</label>
+      <md-input v-model="password"></md-input>
+    </md-field>
+    <md-button slot="footer" @click="submit" class="md-simple md-success md-lg">Log In</md-button>
   </div>
 </template>
-
 <script>
 import GoogleLogin from "vue-google-login";
 import { LoginCard } from "@/components";
@@ -55,12 +34,11 @@ import { mapMutations, mapGetters } from "vuex";
 import axios from "axios";
 
 export default {
+  name: "login-modal",
   components: {
-    LoginCard,
     GoogleLogin,
     facebookLogin
   },
-  bodyClass: "login-page",
   data() {
     return {
       email: null,
@@ -78,16 +56,11 @@ export default {
     };
   },
   props: {
-    header: {
-      type: String,
-      default: require("@/assets/img/profile_city.jpg")
-    }
+    modalCount: Number
   },
   computed: {
-    headerStyle() {
-      return {
-        backgroundImage: `url(${this.header})`
-      };
+    isAuthed() {
+      return this.$store.state.user.loggedIn;
     }
   },
   methods: {
@@ -101,9 +74,10 @@ export default {
             email: response.email
           })
           .then(response => {
+            console.log("hi facebook");
             this.UPDATE_LOGIN();
+            this.$emit("update:isAuthed", true);
             localStorage.setItem("x-token", this.token);
-            router.push({ name: "index" });
           });
       });
     },
@@ -115,12 +89,12 @@ export default {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
+          console.log("hi google");
           this.UPDATE_LOGIN();
+          this.$emit("update:isAuthed", true);
           localStorage.setItem("x-token", googleUser.getAuthResponse().id_token);
-          router.push({ name: "index" });
         });
     },
-
     submit: function(e) {
       axios
         .post("http://localhost:3000/api/user/login", {
@@ -134,7 +108,7 @@ export default {
             localStorage.setItem("x-refresh-token", response.data.details.token.token);
             if (response.data.details.active) {
               this.UPDATE_LOGIN();
-              router.push({ name: "index" });
+              this.$emit("update:isAuthed", true);
             } else {
               router.push({ name: "confirmation" });
             }
@@ -144,8 +118,11 @@ export default {
           console.log(error);
         });
     }
+  },
+  watch: {
+    isAuthed: function() {
+      console.log(this.isAuthed);
+    }
   }
 };
 </script>
-
-<style lang="css"></style>

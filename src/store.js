@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import createPersistedState from "vuex-persistedstate";
+import Cookies from "js-cookie";
 
 Vue.use(Vuex);
 
@@ -17,7 +19,8 @@ export default new Vuex.Store({
       categories: [],
       tags: [],
       priceRange: [0, 1000]
-    }
+    },
+    cart: []
   },
   getters: {
     auth(state) {
@@ -34,6 +37,9 @@ export default new Vuex.Store({
     },
     getFilters(state) {
       return state.filters;
+    },
+    getCart(state) {
+      return state.cart;
     }
   },
   mutations: {
@@ -52,6 +58,15 @@ export default new Vuex.Store({
     UPDATE_FILTERS: (state, payload) => {
       const { filter, values } = payload;
       state.filters[filter] = values;
+    },
+    ADD_TO_CART: (state, product) => {
+      state.cart.push(product);
+    },
+    REMOVE_FROM_CART: (state, index) => {
+      state.cart.splice(index, 1);
+    },
+    DELETE_CART: (state, index) => {
+      state.cart = [];
     }
   },
   actions: {
@@ -71,5 +86,14 @@ export default new Vuex.Store({
         })
         .then(({ data }) => this.commit("DISPLAY_PRODUCTS", data));
     }
-  }
+  },
+  plugins: [
+    createPersistedState({
+      storage: {
+        getItem: key => Cookies.get(key),
+        setItem: (key, value) => Cookies.set(key, value, { expires: 3, secure: true }),
+        removeItem: key => Cookies.remove(key)
+      }
+    })
+  ]
 });

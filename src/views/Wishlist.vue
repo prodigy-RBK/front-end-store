@@ -110,7 +110,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card {
   font-size: 0.875rem;
 }
