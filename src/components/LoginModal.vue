@@ -74,8 +74,7 @@ export default {
             email: response.email
           })
           .then(response => {
-            console.log("hi facebook");
-            this.UPDATE_LOGIN();
+            this.UPDATE_LOGIN(true);
             this.$emit("update:isAuthed", true);
             localStorage.setItem("x-token", this.token);
           });
@@ -89,8 +88,7 @@ export default {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
-          console.log("hi google");
-          this.UPDATE_LOGIN();
+          this.UPDATE_LOGIN(true);
           this.$emit("update:isAuthed", true);
           localStorage.setItem("x-token", googleUser.getAuthResponse().id_token);
         });
@@ -107,7 +105,7 @@ export default {
             localStorage.setItem("x-token", response.data.details.token.refreshToken);
             localStorage.setItem("x-refresh-token", response.data.details.token.token);
             if (response.data.details.active) {
-              this.UPDATE_LOGIN();
+              this.UPDATE_LOGIN(true);
               this.$emit("update:isAuthed", true);
             } else {
               router.push({ name: "confirmation" });

@@ -97,17 +97,15 @@
                               <!-- <register-modal></register-modal> -->
 
                               <delivery-info-modal :deliveryInfo.sync="deliveryInfo" v-if="isAuthed && modalCount === 1"></delivery-info-modal>
-
-                              <payment-info-modal :paymentInfo.sync="paymentInfo" v-if="isAuthed && modalCount === 2"></payment-info-modal>
-
-                              <confirmation-modal :deliveryInfo.sync="deliveryInfo" v-if="isAuthed && modalCount === 3"></confirmation-modal>
+                              <confirmation-modal :deliveryInfo.sync="deliveryInfo" v-if="isAuthed && modalCount === 2"></confirmation-modal>
+                              
                             </template>
 
                             <template slot="footer">
                               <a class="md-simple" href="/register" target="_blank" v-if="!isAuthed">Register</a>
                               <md-button class="md-simple" v-if="isAuthed && modalCount > 1" @click="decModalCount">Back</md-button>
-                              <md-button class="md-simple" v-if="isAuthed && modalCount < 3" @click="incModalCount">Next</md-button>
-                              <md-button class=" md-success md-simple" v-if="isAuthed && modalCount === 3" @click="submit">Submit order</md-button>
+                              <md-button class="md-simple" v-if="isAuthed && modalCount < 2" @click="incModalCount">Next</md-button>
+                              <md-button class=" md-success md-simple" v-if="isAuthed && modalCount === 2" @click="submit">Submit order</md-button>
 
                               <md-button class="md-danger md-simple" @click="classicModalHide">Close</md-button>
                             </template>
@@ -166,16 +164,11 @@ export default {
         phone_number: null,
         payment_method: null
       },
-      paymentInfo: {
-        card_number: null,
-        expiration: null,
-        ccv: null
-      },
       cartPrice: 0
     };
   },
   methods: {
-    ...mapMutations(["REMOVE_FROM_CART"]),
+    ...mapMutations(["REMOVE_FROM_CART", "DELETE_CART"]),
     classicModalShow() {
       this.classicModal = true;
       if (this.modalCount === 0 && this.isAuthed) {
@@ -251,7 +244,7 @@ export default {
         ccv: null
       };
       this.cartPrice = 0;
-      this.DELETE_CART(index);
+      this.DELETE_CART();
     }
   },
   computed: {

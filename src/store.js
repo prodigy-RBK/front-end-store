@@ -43,10 +43,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    UPDATE_LOGIN: state => {
-      state.user.loggedIn = localStorage.getItem("x-token") ? true : false;
+    UPDATE_LOGIN: (state, boo) => {
+      state.user.loggedIn = boo;
     },
-    UPDATE_ACTIVATE: (state) => {
+    UPDATE_ACTIVATE: state => {
       state.user.isActivated = true;
     },
     ADD_PRODUCTS: (state, prods) => {
@@ -65,12 +65,12 @@ export default new Vuex.Store({
     REMOVE_FROM_CART: (state, index) => {
       state.cart.splice(index, 1);
     },
-    DELETE_CART: (state, index) => {
+    DELETE_CART: state => {
       state.cart = [];
     }
   },
   actions: {
-    UPDATE_DISPLAYED_PRODUCTS: function (state, payload) {
+    UPDATE_DISPLAYED_PRODUCTS: function(state, payload) {
       let { brandsQuery, categoriesQuery, tagsQuery, priceRange, page } = payload;
       if (!brandsQuery.length) brandsQuery = this.state.filters.brands.map(elm => elm._id);
       if (!categoriesQuery.length) categoriesQuery = this.state.filters.categories;
