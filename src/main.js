@@ -18,14 +18,31 @@ import router from "./router";
 
 import MaterialKit from "./plugins/material-kit";
 import store from "./store";
-
+import axios from "axios";
 Vue.config.productionTip = false;
 
 Vue.use(MaterialKit);
 const NavbarStore = {
   showNavbar: false
 };
-
+axios.defaults.headers.common["x-token"] = localStorage.getItem("x-token");
+axios.defaults.headers.common["x-refresh-token"] = localStorage.getItem(
+  "x-refresh-token"
+);
+axios.interceptors.response.use(
+  function (response) {
+    console.log(response.headers);
+    if (response.headers['x-token']) {
+      localStorage.setItem('x-token', response.headers['x-token'])
+      localStorage.setItem('x-refresh-token', response.headers['x-refresh-token'])
+    }
+    return response;
+  },
+  function (error) {
+    // Do something with response error
+    return Promise.reject(error);
+  }
+);
 Vue.mixin({
   data() {
     return {

@@ -26,6 +26,7 @@
                 :onFailure="onFailure"
               ></GoogleLogin>
               <br />
+              <div id="test" slot="buttons"></div>
               <p slot="description" class="description">Or Be Classical</p>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>email</md-icon>
@@ -57,6 +58,7 @@ import axios from "axios";
 export default {
   components: {
     LoginCard,
+    GoogleLogin,
     facebookLogin
   },
   bodyClass: "login-page",
@@ -101,6 +103,7 @@ export default {
             email: response.email
           })
           .then(response => {
+            this.UPDATE_LOGIN();
             localStorage.setItem("x-token", this.token);
             router.push({ name: "index" });
           });
@@ -114,6 +117,7 @@ export default {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
+          this.UPDATE_LOGIN();
           localStorage.setItem(
             "x-token",
             googleUser.getAuthResponse().id_token
@@ -129,18 +133,10 @@ export default {
           password: this.password
         })
         .then(response => {
-          console.log("====>", response);
           if (response.data.status === "success") {
-            localStorage.setItem(
-              "x-token",
-              response.data.details.token.refreshToken
-            );
-            localStorage.setItem(
-              "x-refresh-token",
-              response.data.details.token.token
-            );
+            this.UPDATE_LOGIN();
             if (response.data.details.active) {
-              this.UPDATE_ACTIVATE();
+              this.UPDATE_LOGIN();
               router.push({ name: "index" });
             } else {
               router.push({ name: "confirmation" });
@@ -155,9 +151,4 @@ export default {
 };
 </script>
 
-<style lang="css">
-.custom {
-  font-size: 1.3em !important;
-  padding: 4px 10px !important;
-}
-</style>
+<style lang="css"></style>
