@@ -15,19 +15,11 @@ export default {
       type: String,
       default: "default",
       validator: value => {
-        let acceptedValues = [
-          "primary",
-          "info",
-          "success",
-          "warning",
-          "danger",
-          "rose",
-          "default"
-        ];
+        let acceptedValues = ["primary", "info", "success", "warning", "danger", "rose", "default"];
         return acceptedValues.indexOf(value) !== -1;
       }
     }
   }
 };
 </script>
-<style></style>
+<style scoped></style>

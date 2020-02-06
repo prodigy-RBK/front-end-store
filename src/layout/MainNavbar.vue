@@ -122,10 +122,9 @@
               <md-list-item href="/wishlist">
                 <i class="material-icons">favorite</i>
               </md-list-item>
-              <md-badge class="md-primary" md-position="top" md-content="12">
+              <md-badge class="md-primary" md-position="top" :md-content="this.$store.state.cart.length">
                 <md-list-item href="/shoppingCart">
                   <i class="material-icons">shopping_cart</i>
-                  <p>0</p>
                 </md-list-item>
               </md-badge>
             </md-list>
@@ -235,7 +234,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .imageDiv {
   padding-right: 10px;
   width: 100px !important;

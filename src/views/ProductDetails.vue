@@ -17,19 +17,10 @@
           <div class="row">
             <div class="col-md-6 col-sm-6">
               <div class="col-md-10 mr-auto ml-auto">
-                <tabs
-                  :tab-images="images"
-                  plain
-                  nav-pills-images
-                  color-button="primary"
-                >
+                <tabs :tab-images="product.images" plain nav-pills-images color-button="primary">
                   <!-- here you can add your content for tab-content -->
 
-                  <div
-                    :slot="'tab-pane-' + (index + 1)"
-                    v-for="(image, index) in images"
-                    :key="index"
-                  >
+                  <div :slot="'tab-pane-' + (index + 1)" v-for="(image, index) in product.images" :key="index">
                     <img :src="image" />
                   </div>
                 </tabs>
@@ -38,13 +29,13 @@
             <div class="col-md-6 col-sm-6">
               <h2 class="title">{{ product.title }}</h2>
               <!-- <h4>{{brand.name}}</h4> -->
-              <img :src="brand.image" style="width: 100px" />
+              <img :src="product.brand.image" style="width: 100px" />
               <h3 class="main-price">$ {{ product.price }}</h3>
               <h3 class="title">Description</h3>
 
               <md-card-content>{{ product.description }}</md-card-content>
               <div class="row pick-size">
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-4 col-sm-4">
                   <div class="md-layout-item">
                     <div>
                       <md-menu md-size="big" class="big" md-align-trigger>
@@ -74,7 +65,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-4 col-sm-4">
                   <div class="md-layout-item">
                     <div>
                       <md-menu md-size="big" class="big" md-align-trigger>
@@ -104,12 +95,18 @@
                     </div>
                   </div>
                 </div>
+                <div class="col-md-4 col-sm-4" style="align-self: flex-end">
+                  <div class="md-layout-item" style="height: 100%">
+                    <div>
+                      <md-menu md-size="big" class="big" md-align-trigger>
+                        <md-input style="padding: 10px" type="number" id="big" min="1" max="5" v-model="selectedQuantity"> </md-input>
+                      </md-menu>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div style="text-align-last: end;">
-                <md-button @click="test" class="float-left md-rose md-round">
-                  Add to Cart &#xA0;
-                  <i class="material-icons">shopping_cart</i>
-                </md-button>
+                <md-button @click="addToCart" class="float-left md-rose md-round">Add to Cart &#xA0;<i class="material-icons">shopping_cart</i></md-button>
               </div>
             </div>
           </div>
@@ -312,6 +309,7 @@
   </div>
 </template>
 <script>
+import { mapMutations, mapGetters } from "vuex";
 import { Tabs } from "@/components";
 import axios from "axios";
 export default {
@@ -339,17 +337,33 @@ export default {
     return {
       selectedSize: "Select size",
       selectedColor: "Select color",
+      selectedQuantity: 1,
       activeSize: false,
       activeColor: false,
       product: null,
-      images: [],
       sizes: [],
       colors: []
     };
   },
   methods: {
-    test() {
-      console.log(this.selectedSize);
+    ...mapMutations(["ADD_TO_CART"]),
+    addToCart() {
+      var product = {
+        productId: this.product._id,
+        selectedColor: this.selectedColor,
+        selectedSize: this.selectedSize,
+        selectedQuantity: this.selectedQuantity
+      };
+      console.log(this.$store.state.cart.length);
+      for (let i = 0; i < this.$store.state.cart.length; i++) {
+        if (product.productId._id === this.$store.state.cart[i].productId) {
+          if (product.selectedColor === this.$store.state.cart[i].selectedColor && product.selectedSize === this.$store.state.cart[i].selectedSize) {
+            console.log("same product"); //FIX THIS
+            return;
+          }
+        }
+      }
+      this.ADD_TO_CART(product);
     }
   },
   computed: {
@@ -383,12 +397,6 @@ export default {
         this.sizes.push(elem.size);
       }
     });
-    this.brand = data.brand;
-    this.images = [
-      data.images[0],
-      "https://media.gettyimages.com/photos/colorful-powder-explosion-in-all-directions-in-a-nice-composition-picture-id890147976?s=612x612"
-    ];
-    // this.images = data.images
     this.product = data;
   },
   watch: {

@@ -457,7 +457,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "../assets/css/buttons.css";
 .form-control {
   display: block;
