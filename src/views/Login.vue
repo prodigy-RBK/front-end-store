@@ -103,10 +103,8 @@ export default {
             email: response.email
           })
           .then(response => {
-            localStorage.setItem(
-              "x-token",
-              res.response.authResponse.accessToken
-            );
+            this.UPDATE_LOGIN();
+            this.UPDATE_ACTIVATE();
             router.push({ name: "index" });
           });
       });
@@ -119,10 +117,8 @@ export default {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
-          localStorage.setItem(
-            "x-token",
-            googleUser.getAuthResponse().id_token
-          );
+          this.UPDATE_LOGIN();
+          this.UPDATE_ACTIVATE();
           router.push({ name: "index" });
         });
     },
@@ -134,13 +130,8 @@ export default {
           password: this.password
         })
         .then(response => {
-          console.log("====>", response);
           if (response.data.status === "success") {
-            localStorage.setItem("x-token", response.data.details.token.token);
-            localStorage.setItem(
-              "x-refresh-token",
-              response.data.details.token.refreshToken
-            );
+            this.UPDATE_LOGIN();
             if (response.data.details.active) {
               this.UPDATE_ACTIVATE();
               router.push({ name: "index" });

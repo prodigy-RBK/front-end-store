@@ -38,9 +38,9 @@ export default new Vuex.Store({
   },
   mutations: {
     UPDATE_LOGIN: state => {
-      state.user.loggedIn = true;
+      state.user.loggedIn = localStorage.getItem("x-token") ? true : false;
     },
-    UPDATE_ACTIVATE: state => {
+    UPDATE_ACTIVATE: (state) => {
       state.user.isActivated = true;
     },
     ADD_PRODUCTS: (state, prods) => {

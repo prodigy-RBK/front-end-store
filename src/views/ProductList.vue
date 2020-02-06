@@ -371,10 +371,6 @@ import { FilterSection } from "@/components";
 import { mapMutations, mapGetters } from "vuex";
 import { Pagination } from "@/components";
 import axios from "axios";
-axios.defaults.headers.common["x-token"] = localStorage.getItem("x-token");
-axios.defaults.headers.common["x-refresh-token"] = localStorage.getItem(
-  "x-refresh-token"
-);
 
 export default {
   name: "shopping-cart",
@@ -441,9 +437,10 @@ export default {
     }
   },
   async beforeMount() {
-    let { data } = await axios.get(
+    let data = await axios.get(
       `http://127.0.0.1:3000/api/products/allproducts`
     );
+    console.log(data);
     this.ADD_PRODUCTS(data);
     this.DISPLAY_PRODUCTS(data);
   },
