@@ -173,13 +173,8 @@ export default {
       extraNavClasses: "",
       toggledClass: false,
       selectedProduct: "",
-      products: []
+      products: this.$store.state.products
     };
-  },
-  async beforeMount() {
-    let { data } = await axios.get(`http://127.0.0.1:3000/api/products/allproducts`);
-    this.products = data;
-    // this.products = this.$store.state.products;
   },
   methods: {
     bodyClick() {
@@ -224,6 +219,15 @@ export default {
       if (element_id) {
         element_id.scrollIntoView({ block: "end", behavior: "smooth" });
       }
+    }
+  },
+  async beforeMount() {
+    try {
+      await axios.get("http://localhost:3000/api/user/verifytoken");
+      this.$store.commit("UPDATE_LOGIN", true);
+    } catch (err) {
+      console.log(err);
+      this.$store.commit("UPDATE_LOGIN", false);
     }
   },
   mounted() {
