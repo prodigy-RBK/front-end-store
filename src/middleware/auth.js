@@ -4,5 +4,10 @@ export default function auth({ next, store }) {
             name: "login"
         });
     }
+    if (!store.getters.auth.isActivated) {
+        return next({
+            name: "confirmation"
+        });
+    }
     return next();
 }
