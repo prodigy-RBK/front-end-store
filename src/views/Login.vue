@@ -103,7 +103,10 @@ export default {
             email: response.email
           })
           .then(response => {
-            localStorage.setItem("x-token", this.token);
+            localStorage.setItem(
+              "x-token",
+              res.response.authResponse.accessToken
+            );
             router.push({ name: "index" });
           });
       });
@@ -133,13 +136,10 @@ export default {
         .then(response => {
           console.log("====>", response);
           if (response.data.status === "success") {
-            localStorage.setItem(
-              "x-token",
-              response.data.details.token.refreshToken
-            );
+            localStorage.setItem("x-token", response.data.details.token.token);
             localStorage.setItem(
               "x-refresh-token",
-              response.data.details.token.token
+              response.data.details.token.refreshToken
             );
             if (response.data.details.active) {
               this.UPDATE_ACTIVATE();

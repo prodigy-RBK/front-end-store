@@ -340,7 +340,7 @@
               </p>
               <p
                 class="description"
-              >Join our newsletter and get news in your inbox every week! We hate spam too, so no worries about this.</p>>>>>>>> 16e875e15e014f2b2455504e55a97bf50d7f2a9a
+              >Join our newsletter and get news in your inbox every week! We hate spam too, so no worries about this.</p>
             </div>
             <div class="card card-raised card-form-horizontal">
               <div class="card-body">
@@ -374,6 +374,10 @@ import { FilterSection } from "@/components";
 import { mapMutations, mapGetters } from "vuex";
 import { Pagination } from "@/components";
 import axios from "axios";
+axios.defaults.headers.common["x-token"] = localStorage.getItem("x-token");
+axios.defaults.headers.common["x-refresh-token"] = localStorage.getItem(
+  "x-refresh-token"
+);
 
 export default {
   name: "shopping-cart",
@@ -440,8 +444,8 @@ export default {
     }
   },
   async beforeMount() {
-    let { data } = await axios.get(
-      `http://127.0.0.1:3000/api/products/allproducts`
+    let { data } = await axios.post(
+      "http://127.0.0.1:3000/api/products/allproducts"
     );
     this.ADD_PRODUCTS(data);
     this.DISPLAY_PRODUCTS(data);
