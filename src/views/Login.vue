@@ -6,19 +6,12 @@
           <div
             class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
           >
-            <facebook-login
-              class="button"
-              appId="2678136558938821"
-              @login="getUserData"
-              @logout="onLogout"
-              @sdk-loaded="sdkLoaded"
-              @get-initial-status="getUserData"
-            ></facebook-login>
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Login</h4>
+
               <facebook-login
-                slot="buttons"
                 class="button"
+                slot="buttons"
                 appId="2678136558938821"
                 @login="getUserData"
                 @logout="onLogout"
@@ -32,10 +25,9 @@
                 :renderParams="renderParams"
                 :onSuccess="onSuccess"
                 :onFailure="onFailure"
-                style="content: Login with Google !important;"
-              >
-              </GoogleLogin>
+              ></GoogleLogin>
               <br />
+              <div id="test" slot="buttons"></div>
               <p slot="description" class="description">Or Be Classical</p>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>email</md-icon>
@@ -113,7 +105,11 @@ export default {
           })
           .then(response => {
             this.UPDATE_LOGIN();
+<<<<<<< HEAD
             localStorage.setItem("x-token", this.token);
+=======
+            this.UPDATE_ACTIVATE();
+>>>>>>> 6d032ac30484db742fc750e25f6c4900484640d7
             router.push({ name: "index" });
           });
       });
@@ -127,7 +123,11 @@ export default {
         })
         .then(response => {
           this.UPDATE_LOGIN();
+<<<<<<< HEAD
           localStorage.setItem("x-token", googleUser.getAuthResponse().id_token);
+=======
+          this.UPDATE_ACTIVATE();
+>>>>>>> 6d032ac30484db742fc750e25f6c4900484640d7
           router.push({ name: "index" });
         });
     },
@@ -139,16 +139,8 @@ export default {
           password: this.password
         })
         .then(response => {
-          console.log("====>", response);
           if (response.data.status === "success") {
-            localStorage.setItem(
-              "x-token",
-              response.data.details.token.refreshToken
-            );
-            localStorage.setItem(
-              "x-refresh-token",
-              response.data.details.token.token
-            );
+            this.UPDATE_LOGIN();
             if (response.data.details.active) {
               this.UPDATE_LOGIN();
               router.push({ name: "index" });

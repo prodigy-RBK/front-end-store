@@ -44,9 +44,9 @@ export default new Vuex.Store({
   },
   mutations: {
     UPDATE_LOGIN: state => {
-      state.user.loggedIn = true;
+      state.user.loggedIn = localStorage.getItem("x-token") ? true : false;
     },
-    UPDATE_ACTIVATE: state => {
+    UPDATE_ACTIVATE: (state) => {
       state.user.isActivated = true;
     },
     ADD_PRODUCTS: (state, prods) => {
@@ -70,7 +70,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    UPDATE_DISPLAYED_PRODUCTS: function(state, payload) {
+    UPDATE_DISPLAYED_PRODUCTS: function (state, payload) {
       let { brandsQuery, categoriesQuery, tagsQuery, priceRange, page } = payload;
       if (!brandsQuery.length) brandsQuery = this.state.filters.brands.map(elm => elm._id);
       if (!categoriesQuery.length) categoriesQuery = this.state.filters.categories;
