@@ -6,26 +6,25 @@
           <div
             class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
           >
-            <facebook-login
-              class="button"
-              appId="2678136558938821"
-              @login="getUserData"
-              @logout="onLogout"
-              @sdk-loaded="sdkLoaded"
-              @get-initial-status="getUserData"
-            ></facebook-login>
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Login</h4>
+              <facebook-login
+                class="button"
+                slot="buttons"
+                appId="2678136558938821"
+                @login="getUserData"
+                @logout="onLogout"
+                @sdk-loaded="sdkLoaded"
+                @get-initial-status="getUserData"
+              ></facebook-login>
               <GoogleLogin
                 slot="buttons"
-                class="button"
+                class="buttons"
                 :params="params"
                 :renderParams="renderParams"
                 :onSuccess="onSuccess"
                 :onFailure="onFailure"
-              >
-                <i class="fab fa-google-plus-g"></i>
-              </GoogleLogin>
+              ></GoogleLogin>
               <br />
               <p slot="description" class="description">Or Be Classical</p>
               <md-field class="md-form-group" slot="inputs">
