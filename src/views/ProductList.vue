@@ -40,12 +40,15 @@
                 <div class="card-body text-center">
                   <h4 class="card-title">
                     <a href="#pablo">Gucci</a>
-                  </h4>
+                  </h4><<<<<<< HEAD
                   <p class="card-description">
                     The structured shoulders and sleek detailing ensure a sharp
                     silhouette. Team it with a silk pocket square and leather
                     loafers.
-                  </p>
+                  </p>=======
+                  <p
+                    class="card-description"
+                  >The structured shoulders and sleek detailing ensure a sharp silhouette. Team it with a silk pocket square and leather loafers.</p>>>>>>>> 44abaab5d2058e4ecd71bc2007fd57e145a41579
                 </div>
                 <div class="card-footer">
                   <div class="price-container">
@@ -334,10 +337,7 @@
           <div class="col-md-6 ml-auto mr-auto">
             <div class="text-center">
               <h3 class="title">Subscribe to our Newsletter</h3>
-              <p class="description">
-                Join our newsletter and get news in your inbox every week! We
-                hate spam too, so no worries about this.
-              </p>
+
               <p
                 class="description"
               >Join our newsletter and get news in your inbox every week! We hate spam too, so no worries about this.</p>
@@ -444,8 +444,8 @@ export default {
     }
   },
   async beforeMount() {
-    let { data } = await axios.post(
-      "http://127.0.0.1:3000/api/products/allproducts"
+    let { data } = await axios.get(
+      `http://127.0.0.1:3000/api/products/allproducts`
     );
     this.ADD_PRODUCTS(data);
     this.DISPLAY_PRODUCTS(data);
@@ -457,6 +457,7 @@ export default {
     displayedProducts: function() {
       this.pageProducts = this.getDisplayedProducts().slice(0, 9);
       this.pageCount = Math.ceil(this.getDisplayedProducts().length / 9);
+      this.infoPagination = 1;
     }
   }
 };
