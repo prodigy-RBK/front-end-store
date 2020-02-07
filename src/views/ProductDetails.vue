@@ -20,7 +20,11 @@
                 <tabs :tab-images="product.images" plain nav-pills-images color-button="primary">
                   <!-- here you can add your content for tab-content -->
 
-                  <div :slot="'tab-pane-' + (index + 1)" v-for="(image, index) in product.images" :key="index">
+                  <div
+                    :slot="'tab-pane-' + (index + 1)"
+                    v-for="(image, index) in product.images"
+                    :key="index"
+                  >
                     <img :src="image" />
                   </div>
                 </tabs>
@@ -46,8 +50,7 @@
                                 ? { color: 'black' }
                                 : { color: 'grey' }
                             ]"
-                            >{{ selectedSize }}</span
-                          >
+                          >{{ selectedSize }}</span>
                           <md-icon>keyboard_arrow_down</md-icon>
                         </md-button>
                         <md-menu-content>
@@ -58,8 +61,7 @@
                               selectedSize = size;
                             "
                             :key="size"
-                            >{{ size }}</md-menu-item
-                          >
+                          >{{ size }}</md-menu-item>
                         </md-menu-content>
                       </md-menu>
                     </div>
@@ -76,8 +78,7 @@
                                 ? { color: 'black' }
                                 : { color: 'grey' }
                             ]"
-                            >{{ selectedColor }}</span
-                          >
+                          >{{ selectedColor }}</span>
                           <md-icon>keyboard_arrow_down</md-icon>
                         </md-button>
                         <md-menu-content>
@@ -88,8 +89,7 @@
                               selectedColor = color;
                             "
                             :key="color"
-                            >{{ color }}</md-menu-item
-                          >
+                          >{{ color }}</md-menu-item>
                         </md-menu-content>
                       </md-menu>
                     </div>
@@ -99,14 +99,25 @@
                   <div class="md-layout-item" style="height: 100%">
                     <div>
                       <md-menu md-size="big" class="big" md-align-trigger>
-                        <md-input style="padding: 10px" type="number" id="big" min="1" max="5" v-model="selectedQuantity"> </md-input>
+                        <md-input
+                          style="padding: 10px"
+                          type="number"
+                          id="big"
+                          min="1"
+                          max="5"
+                          v-model="selectedQuantity"
+                        ></md-input>
                       </md-menu>
                     </div>
                   </div>
                 </div>
               </div>
+              <star-rating v-model="rating"></star-rating>
               <div style="text-align-last: end;">
-                <md-button @click="addToCart" class="float-left md-rose md-round">Add to Cart &#xA0;<i class="material-icons">shopping_cart</i></md-button>
+                <md-button @click="addToCart" class="float-left md-rose md-round">
+                  Add to Cart &#xA0;
+                  <i class="material-icons">shopping_cart</i>
+                </md-button>
               </div>
             </div>
           </div>
@@ -161,10 +172,7 @@
               <div class="card card-product">
                 <div class="md-card-header card-image">
                   <a href="#pablo">
-                    <img
-                      class="img"
-                      src="../assets/img/examples/card-product1.jpg"
-                    />
+                    <img class="img" src="../assets/img/examples/card-product1.jpg" />
                   </a>
                 </div>
                 <div class="card-body">
@@ -197,10 +205,7 @@
               <div class="card card-product">
                 <div class="md-card-header card-image">
                   <a href="#pablo">
-                    <img
-                      class="img"
-                      src="../assets/img/examples/card-product3.jpg"
-                    />
+                    <img class="img" src="../assets/img/examples/card-product3.jpg" />
                   </a>
                 </div>
                 <div class="card-body">
@@ -234,10 +239,7 @@
               <div class="card card-product">
                 <div class="md-card-header card-image">
                   <a href="#pablo">
-                    <img
-                      class="img"
-                      src="../assets/img/examples/card-product4.jpg"
-                    />
+                    <img class="img" src="../assets/img/examples/card-product4.jpg" />
                   </a>
                 </div>
                 <div class="card-body">
@@ -270,10 +272,7 @@
               <div class="card card-product">
                 <div class="md-card-header card-image">
                   <a href="#pablo">
-                    <img
-                      class="img"
-                      src="../assets/img/examples/card-product2.jpg"
-                    />
+                    <img class="img" src="../assets/img/examples/card-product2.jpg" />
                   </a>
                 </div>
                 <div class="card-body">
@@ -342,6 +341,7 @@ export default {
       activeColor: false,
       product: null,
       sizes: [],
+      rating: 0,
       colors: []
     };
   },
@@ -357,7 +357,10 @@ export default {
       console.log(this.$store.state.cart.length);
       for (let i = 0; i < this.$store.state.cart.length; i++) {
         if (product.productId._id === this.$store.state.cart[i].productId) {
-          if (product.selectedColor === this.$store.state.cart[i].selectedColor && product.selectedSize === this.$store.state.cart[i].selectedSize) {
+          if (
+            product.selectedColor === this.$store.state.cart[i].selectedColor &&
+            product.selectedSize === this.$store.state.cart[i].selectedSize
+          ) {
             console.log("same product"); //FIX THIS
             return;
           }
@@ -398,13 +401,19 @@ export default {
       }
     });
     this.product = data;
+    this.rating = data.rating;
   },
   watch: {
     selectedSize: function() {
-      console.log(this.product.availability);
       this.colors = this.product.availability
         .filter(el => el.size === this.selectedSize)
         .map(elem => elem.color);
+    },
+    rating: function() {
+      let productId = window.location.pathname.slice(10);
+      axios.put(`http://127.0.0.1:3000/api/products/${productId}/rating`, {
+        rating: this.rating
+      });
     }
   }
 };
