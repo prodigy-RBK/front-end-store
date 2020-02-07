@@ -96,7 +96,17 @@ export default new Vuex.Store({
     UPDATE_USER_WISHLIST: async function(state) {
       let { data } = await axios.get("http://127.0.0.1:3000/api/user/wishlist");
       this.commit("UPDATE_WISHLIST", data.wishlist);
-      console.log(state.state.wishlist, "store");
+    },
+    ADD_TO_WISHLIST: async function(state, payload) {
+      let { data } = await axios.put("http://127.0.0.1:3000/api/user/wishlist", { product: payload });
+      this.commit("UPDATE_WISHLIST", data);
+    },
+    REMOVE_FROM_WISHLIST: async function(state, payload) {
+      let { data } = await axios.delete("http://127.0.0.1:3000/api/user/wishlist", {
+        data: {
+          product: payload
+        }
+      });
     }
   },
   plugins: [

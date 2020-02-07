@@ -83,7 +83,7 @@ export default {
           products: this.$store.state.wishlist
         }
       );
-      return data;
+      this.wishlist = data;
     }
   },
   computed: {
@@ -98,16 +98,27 @@ export default {
       };
     },
     updatedWishlist() {
-      return "hi";
+      return this.$store.state.wishlist;
+    }
+  },
+  watch: {
+    updatedWishlist: function() {
+      console.log("changed");
     }
   },
   async beforeMount() {
     // this.$store.commit("UPDATE_WISHLIST", data.wishlist);
-    this.wishlist = this.getWishlist();
+    this.getWishlist();
     this.inWishlist = true;
     this.$store.watch(
-      state => state.wishlist,
-      newWishlist => (this.wishlist = this.getWishlist())
+      state => {
+        console.log(state.wishlist);
+        return state.wishlist;
+      },
+      newWishlist => {
+        console.log(newWishlist);
+        this.getWishlist();
+      }
     );
   }
 };

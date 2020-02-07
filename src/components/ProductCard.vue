@@ -42,25 +42,11 @@ export default {
   },
   methods: {
     async addToWishlist() {
-      let { data } = await axios.put(
-        "http://127.0.0.1:3000/api/user/wishlist",
-        { product: this.product._id }
-      );
+      this.$store.dispatch("ADD_TO_WISHLIST", this.product._id);
       this.inWishlist = true;
-      await this.$store.commit("UPDATE_WISHLIST", data);
-      this.$store.dispatch("UPDATE_USER_WISHLIST");
     },
     async removeFromWishlist() {
-      let { data } = await axios.delete(
-        "http://127.0.0.1:3000/api/user/wishlist",
-        {
-          data: {
-            product: this.product._id
-          }
-        }
-      );
-      await this.$store.commit("UPDATE_WISHLIST", data);
-      this.$store.dispatch("UPDATE_USER_WISHLIST");
+      this.$store.dispatch("REMOVE_FROM_WISHLIST", this.product._id);
       this.inWishlist = false;
     }
   },
