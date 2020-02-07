@@ -65,6 +65,12 @@ export default new Vuex.Store({
     REMOVE_FROM_CART: (state, index) => {
       state.cart.splice(index, 1);
     },
+    ADD_QUANTITY: (state, index) => {
+      state.cart[index].selectedQuantity++;
+    },
+    SUBTRACT_QUANTITY: (state, index) => {
+      state.cart[index].selectedQuantity--;
+    },
     DELETE_CART: state => {
       state.cart = [];
     }

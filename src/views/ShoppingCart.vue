@@ -36,11 +36,11 @@
                   <tr v-for="(product, index) in products" :key="index">
                     <td>
                       <div class="img-container">
-                        <img :src="product.productId.images[0]" alt="..." />
+                        <img v-if="product.productId && product.productId.images.length !== 0" :src="product.productId.images[0]" alt="..." />
                       </div>
                     </td>
                     <td class="td-name">
-                      <a href="#pants">{{ product.productId.title }}</a>
+                      <a v-if="product.productId && product.productId.images.length !== 0" href="#pants">{{ product.productId.title }}</a>
                     </td>
                     <td>
                       {{ product.selectedColor }}
@@ -48,7 +48,9 @@
                     <td>
                       {{ product.selectedSize }}
                     </td>
-                    <td class="td-number"><small>&euro;</small> {{ product.productId.price }}</td>
+                    <td v-if="product.productId && product.productId.images.length !== 0" class="td-number">
+                      <small>&euro;</small> {{ product.productId.price }}
+                    </td>
                     <td class="td-number">
                       {{ product.selectedQuantity }}
                       <div class="md-group md-group-sm">
@@ -60,7 +62,9 @@
                         </md-button>
                       </div>
                     </td>
-                    <td class="td-number"><small>&euro;</small>{{ product.productId.price * product.selectedQuantity }}</td>
+                    <td class="td-number" v-if="product.productId && product.productId.images.length !== 0">
+                      <small>&euro;</small>{{ product.productId.price * product.selectedQuantity }}
+                    </td>
                     <td class="td-actions">
                       <md-button rel="tooltip" data-placement="left" title="Remove item" class=" md-simple" @click="deleteProduct(index)">
                         <i class="material-icons">close</i>
@@ -96,9 +100,12 @@
 
                               <!-- <register-modal></register-modal> -->
 
-                              <delivery-info-modal :deliveryInfo.sync="deliveryInfo" v-if="isAuthed && modalCount === 1"></delivery-info-modal>
+                              <delivery-info-modal
+                                :v="$v.deliveryInfo"
+                                :deliveryInfo.sync="deliveryInfo"
+                                v-if="isAuthed && modalCount === 1"
+                              ></delivery-info-modal>
                               <confirmation-modal :deliveryInfo.sync="deliveryInfo" v-if="isAuthed && modalCount === 2"></confirmation-modal>
-                              
                             </template>
 
                             <template slot="footer">
@@ -121,6 +128,78 @@
         </div>
       </div>
     </div>
+    <div id="notifications">
+      <div v-if="successNotif" class="alert alertTop alert-success">
+        <div class="container">
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('successNotif')">
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>check</md-icon>
+          </div>
+
+          <b> SUCCESS ALERT </b> : Yuhuuu! You've got your $11.99 album from The Weeknd
+        </div>
+      </div>
+      <div v-if="warningNotif" class="alert alertTop alert-warning">
+        <div class="container">
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('warningNotif')">
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>warning</md-icon>
+          </div>
+          <b> WARNING ALERT </b> : Hey, it looks like you still have the "copyright © 2015" in your footer. Please update it!
+        </div>
+      </div>
+      <div v-if="dangerNotif" class="alert alertTop alert-danger">
+        <div class="container">
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('dangerNotif')">
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>info_outline</md-icon>
+          </div>
+          <b> ERROR ALERT </b> : Damn man! You screwed up the server this time. You should find a good excuse for your Boss...
+        </div>
+      </div>
+    </div>
+    <div id="notifications2">
+      <div v-if="successNotif" class="alert alertBottom alert-success">
+        <div class="container">
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('successNotif')">
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>check</md-icon>
+          </div>
+
+          <b> SUCCESS ALERT </b> : Yuhuuu! You've got your $11.99 album from The Weeknd
+        </div>
+      </div>
+      <div v-if="warningNotif" class="alert alertBottom alert-warning">
+        <div class="container">
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('warningNotif')">
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>warning</md-icon>
+          </div>
+          <b> WARNING ALERT </b> : Hey, it looks like you still have the "copyright © 2015" in your footer. Please update it!
+        </div>
+      </div>
+      <div v-if="dangerNotif" class="alert alertBottom alert-danger">
+        <div class="container">
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('dangerNotif')">
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>info_outline</md-icon>
+          </div>
+          <b> ERROR ALERT </b> : Damn man! You screwed up the server this time. You should find a good excuse for your Boss...
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -135,9 +214,13 @@ import RegisterModal from "@/components";
 import DeliveryInfoModal from "@/components";
 import PaymentInfoModal from "@/components";
 import ConfirmationModal from "@/components";
+import { validationMixin } from "vuelidate";
+import { required, email, minLength, maxLength } from "vuelidate/lib/validators";
+
 export default {
   name: "shopping-cart",
   bodyClass: "product-page",
+  mixins: [validationMixin],
   props: {
     image: {
       type: String,
@@ -150,6 +233,9 @@ export default {
   },
   data() {
     return {
+      successNotif: false,
+      warningNotif: false,
+      dangerNotif: false,
       classicModal: false,
       isAuthed: this.$store.state.user.loggedIn,
       modalCount: 1,
@@ -167,38 +253,57 @@ export default {
       cartPrice: 0
     };
   },
+  validations: {
+    deliveryInfo: {
+      street1: { required },
+      city: { required },
+      zip: { required },
+      country: { required },
+      phone_number: { required },
+      payment_method: { required }
+    }
+  },
   methods: {
-    ...mapMutations(["REMOVE_FROM_CART", "DELETE_CART"]),
+    ...mapMutations(["REMOVE_FROM_CART", "DELETE_CART", "ADD_QUANTITY", "SUBTRACT_QUANTITY"]),
     classicModalShow() {
+      this.successNotif = true;
       this.classicModal = true;
       if (this.modalCount === 0 && this.isAuthed) {
         this.modalCount = 1;
       }
     },
+    removeNotify(notifyClass) {
+      this[notifyClass] = false;
+    },
     classicModalHide() {
       this.classicModal = false;
     },
     incModalCount() {
-      this.modalCount++;
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.modalCount++;
+      }
     },
     decModalCount() {
       this.modalCount--;
     },
     addQuantity(index) {
-      this.$store.state.cart[index];
-      this.products[index].selectedQuantity++;
+      this.ADD_QUANTITY(index);
+      this.test();
     },
     subtractQuantity(index) {
       if (this.products[index].selectedQuantity > 1) {
-        this.products[index].selectedQuantity--;
+        this.SUBTRACT_QUANTITY(index);
+        this.test();
       } else {
-        this.REMOVE_FROM_CART(index);
+        this.dangerNotif = true;
         // this.$store.state.cart.splice(index, 1);
-        // this.products.splice(index, 1);
       }
     },
     deleteProduct(index) {
       this.REMOVE_FROM_CART(index);
+      this.products.splice(index, 1);
     },
     submit() {
       let products = [];
@@ -245,6 +350,35 @@ export default {
       };
       this.cartPrice = 0;
       this.DELETE_CART();
+    },
+    async test() {
+      let cart = this.$store.state.cart;
+      let promises = [];
+      await cart.forEach((product, index) => {
+        let productId = product.productId;
+        console.log(productId);
+        this.products[index] = {};
+        this.products[index].selectedSize = product.selectedSize;
+        this.products[index].selectedColor = product.selectedColor;
+        this.products[index].selectedQuantity = product.selectedQuantity;
+        promises.push(axios.get(`http://127.0.0.1:3000/api/products/${productId}`));
+      });
+
+      await axios
+        .all(promises)
+        .then(results => {
+          results.forEach((response, index) => {
+            console.log(response.data);
+            this.products[index].productId = response.data;
+          });
+          console.log(this.products);
+        })
+        .then(() => {
+          this.cartPrice = this.products.reduce((acc, product) => {
+            return acc + product.productId.price * product.selectedQuantity;
+          }, 0);
+          console.log(this.cartPrice);
+        });
     }
   },
   computed: {
@@ -261,21 +395,16 @@ export default {
   },
   beforeMount() {
     console.log(this.$store.state.user.loggedIn);
-    let cart = this.$store.state.cart;
-    cart.forEach(async product => {
-      let productId = product.productId;
-      let { data } = await axios.get(`http://127.0.0.1:3000/api/products/${productId}`);
-      product.productId = data;
-    });
-
-    this.products = cart;
-
-    this.cartPrice = this.$store.state.cart.reduce((acc, product) => {
-      return acc + product.productId.price * product.selectedQuantity;
-    }, 0);
+    this.test();
+    // this.$store.watch(
+    //   state => state.cart,
+    //   () => {
+    //     this.test();
+    //   }
+    // );
   },
   updated() {
-    this.cartPrice = this.$store.state.cart.reduce((acc, product) => {
+    this.cartPrice = this.products.reduce((acc, product) => {
       return acc + product.productId.price * product.selectedQuantity;
     }, 0);
   }
