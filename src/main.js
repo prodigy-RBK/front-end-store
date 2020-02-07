@@ -29,7 +29,6 @@ axios.defaults.headers.common["x-token"] = localStorage.getItem("x-token");
 axios.defaults.headers.common["x-refresh-token"] = localStorage.getItem("x-refresh-token");
 axios.interceptors.response.use(
   function(response) {
-    console.log(response.headers);
     if (response.headers["x-token"]) {
       localStorage.setItem("x-token", response.headers["x-token"]);
       localStorage.setItem("x-refresh-token", response.headers["x-refresh-token"]);
@@ -37,7 +36,6 @@ axios.interceptors.response.use(
     return response;
   },
   function(error) {
-    // Do something with response error
     return Promise.reject(error);
   }
 );
