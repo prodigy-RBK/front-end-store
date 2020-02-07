@@ -74,7 +74,6 @@ export default new Vuex.Store({
     },
     UPDATE_WISHLIST: (state, payload) => {
       state.wishlist = payload;
-      console.log("updated", state.wishlist);
     }
   },
   actions: {

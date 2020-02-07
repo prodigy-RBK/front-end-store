@@ -108,7 +108,7 @@
           <br />
           <h2 class="section-title">News in fashion</h2>
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4" v-for="(article, index) in PopularArticles" :key="index">
               <div
                 class="card card-background"
                 :style="{
@@ -119,100 +119,6 @@
                   <h6 class="card-category text-info">Productivy Apps</h6>
                   <a href="#pablo">
                     <h3 class="card-title">The best trends in fashion 2017</h3>
-                  </a>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the
-                    human foundation in truth And I love you like Kanye loves
-                    Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <md-button href="#pablo" class="md-white md-round">
-                    <i class="material-icons">subject</i> Read
-                  </md-button>
-                </div>
-              </div>
-              <!-- end card -->
-            </div>
-            <div class="col-md-4">
-              <div
-                class="card card-background"
-                :style="{
-                  'background-image': `url(${require('../assets/img/examples/color3.jpg')})`
-                }"
-              >
-                <div class="card-body">
-                  <h6 class="card-category text-info">Fashion News</h6>
-                  <h3 class="card-title">Kanye joins the Yeezy team at Adidas</h3>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the
-                    human foundation in truth And I love you like Kanye loves
-                    Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <md-button href="#pablo" class="md-white md-round">
-                    <i class="material-icons">subject</i> Read
-                  </md-button>
-                </div>
-              </div>
-              <!-- end card -->
-            </div>
-            <div class="col-md-4">
-              <div
-                class="card card-background"
-                :style="{
-                  'background-image': `url(${require('../assets/img/examples/color2.jpg')})`
-                }"
-              >
-                <div class="card-body">
-                  <h6 class="card-category text-info">Productivy Apps</h6>
-                  <a href="#pablo">
-                    <h3 class="card-title">Learn how to use the new colors of 2017</h3>
-                  </a>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the
-                    human foundation in truth And I love you like Kanye loves
-                    Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <md-button href="#pablo" class="md-white md-round">
-                    <i class="material-icons">subject</i> Read
-                  </md-button>
-                </div>
-              </div>
-              <!-- end card -->
-            </div>
-            <div class="col-md-6">
-              <div
-                class="card card-background"
-                :style="{
-                  'background-image': `url(${require('../assets/img/dg3.jpg')})`
-                }"
-              >
-                <div class="card-body">
-                  <h6 class="card-category text-info">Tutorials</h6>
-                  <a href="#pablo">
-                    <h3 class="card-title">Trending colors of 2017</h3>
-                  </a>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the
-                    human foundation in truth And I love you like Kanye loves
-                    Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <md-button href="#pablo" class="md-white md-round">
-                    <i class="material-icons">subject</i> Read
-                  </md-button>
-                </div>
-              </div>
-              <!-- end card -->
-            </div>
-            <div class="col-md-6">
-              <div
-                class="card card-background"
-                :style="{
-                  'background-image': `url(${require('../assets/img/dg1.jpg')})`
-                }"
-              >
-                <div class="card-body">
-                  <h6 class="card-category text-info">Productivy Style</h6>
-                  <a href="#pablo">
-                    <h3 class="card-title">Fashion &amp; Style 2017</h3>
                   </a>
                   <p class="card-description">
                     Don't be scared of the truth because we need to restart the
@@ -380,7 +286,8 @@ export default {
       pageProducts: null,
       email: null,
       password: null,
-      leafShow: false
+      leafShow: false,
+      PopularArticles: []
     };
   },
   methods: {
@@ -397,6 +304,13 @@ export default {
       let max = page * 9;
       let min = max - 9;
       this.pageProducts = this.getDisplayedProducts().slice(min, max);
+    },
+    async fetchArticles() {
+      // let data = await axios.get(
+      //   "https://newsapi.org/v2/everything?q=fashion&apiKey=f85cc7f4c3d545539dcc36823289228a&language=en&sortBy=popularity&pageSize=5"
+      // );
+      let { data } = await axios.get("http://127.0.0.1:3000/api/articles");
+      // this.PopularArticles = data.articles;
     }
   },
   computed: {
@@ -420,6 +334,8 @@ export default {
     );
     this.ADD_PRODUCTS(data);
     this.DISPLAY_PRODUCTS(data);
+    this.fetchArticles();
+    console.log(this.PopularArticles, "hi");
   },
   watch: {
     infoPagination: async function() {
