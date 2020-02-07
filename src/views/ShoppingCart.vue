@@ -33,163 +33,85 @@
                 </thead>
                 <tbody>
                   <!-- Iterate over this -->
-                  <tr>
+                  <tr v-for="(product, index) in products" :key="index">
                     <td>
                       <div class="img-container">
-                        <img src="../assets/img/product2.jpg" alt="..." />
+                        <img :src="product.productId.images[0]" alt="..." />
                       </div>
                     </td>
                     <td class="td-name">
-                      <a href="#pants">Short Pants</a>
-                      <br />
-                      <small>by Pucci</small>
+                      <a href="#pants">{{ product.productId.title }}</a>
                     </td>
                     <td>
-                      Purple
+                      {{ product.selectedColor }}
                     </td>
                     <td>
-                      M
+                      {{ product.selectedSize }}
                     </td>
-                    <td class="td-number"><small>&euro;</small>499</td>
+                    <td class="td-number"><small>&euro;</small> {{ product.productId.price }}</td>
                     <td class="td-number">
-                      2
+                      {{ product.selectedQuantity }}
                       <div class="md-group md-group-sm">
-                        <md-button class=" md-round md-info">
+                        <md-button class=" md-round md-info" @click="subtractQuantity(index)">
                           <i class="material-icons">remove</i>
                         </md-button>
-                        <md-button class=" md-round md-info">
+                        <md-button class=" md-round md-info" @click="addQuantity(index)">
                           <i class="material-icons">add</i>
                         </md-button>
                       </div>
                     </td>
-                    <td class="td-number"><small>&euro;</small>998</td>
+                    <td class="td-number"><small>&euro;</small>{{ product.productId.price * product.selectedQuantity }}</td>
                     <td class="td-actions">
-                      <md-button rel="tooltip" data-placement="left" title="Remove item" class=" md-simple">
+                      <md-button rel="tooltip" data-placement="left" title="Remove item" class=" md-simple" @click="deleteProduct(index)">
                         <i class="material-icons">close</i>
                       </md-button>
                     </td>
                   </tr>
-                  <tr>
-                    <td>
-                      <div class="img-container">
-                        <img src="../assets/img/product2.jpg" alt="..." />
-                      </div>
-                    </td>
-                    <td class="td-name">
-                      <a href="#pants">Short Pants</a>
-                      <br />
-                      <small>by Pucci</small>
-                    </td>
-                    <td>
-                      Purple
-                    </td>
-                    <td>
-                      M
-                    </td>
-                    <td class="td-number"><small>&euro;</small>499</td>
-                    <td class="td-number">
-                      2
-                      <div class="md-group md-group-sm">
-                        <md-button class=" md-round md-info">
-                          <i class="material-icons">remove</i>
-                        </md-button>
-                        <md-button class=" md-round md-info">
-                          <i class="material-icons">add</i>
-                        </md-button>
-                      </div>
-                    </td>
-                    <td class="td-number"><small>&euro;</small>998</td>
-                    <td class="td-actions">
-                      <md-button rel="tooltip" data-placement="left" title="Remove item" class=" md-simple">
-                        <i class="material-icons">close</i>
-                      </md-button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="img-container">
-                        <img src="../assets/img/product2.jpg" alt="..." />
-                      </div>
-                    </td>
-                    <td class="td-name">
-                      <a href="#pants">Short Pants</a>
-                      <br />
-                      <small>by Pucci</small>
-                    </td>
-                    <td>
-                      Purple
-                    </td>
-                    <td>
-                      M
-                    </td>
-                    <td class="td-number"><small>&euro;</small>499</td>
-                    <td class="td-number">
-                      2
-                      <div class="md-group md-group-sm">
-                        <md-button class=" md-round md-info">
-                          <i class="material-icons">remove</i>
-                        </md-button>
-                        <md-button class=" md-round md-info">
-                          <i class="material-icons">add</i>
-                        </md-button>
-                      </div>
-                    </td>
-                    <td class="td-number"><small>&euro;</small>998</td>
-                    <td class="td-actions">
-                      <md-button rel="tooltip" data-placement="left" title="Remove item" class=" md-simple">
-                        <i class="material-icons">close</i>
-                      </md-button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="img-container">
-                        <img src="../assets/img/product2.jpg" alt="..." />
-                      </div>
-                    </td>
-                    <td class="td-name">
-                      <a href="#pants">Short Pants</a>
-                      <br />
-                      <small>by Pucci</small>
-                    </td>
-                    <td>
-                      Purple
-                    </td>
-                    <td>
-                      M
-                    </td>
-                    <td class="td-number"><small>&euro;</small>499</td>
-                    <td class="td-number">
-                      2
-                      <div class="md-group md-group-sm">
-                        <md-button class=" md-round md-info">
-                          <i class="material-icons">remove</i>
-                        </md-button>
-                        <md-button class=" md-round md-info">
-                          <i class="material-icons">add</i>
-                        </md-button>
-                      </div>
-                    </td>
-                    <td class="td-number"><small>&euro;</small>998</td>
-                    <td class="td-actions">
-                      <md-button rel="tooltip" data-placement="left" title="Remove item" class=" md-simple">
-                        <i class="material-icons">close</i>
-                      </md-button>
-                    </td>
-                  </tr>
+
                   <!-- End of iteration -->
                   <tr>
                     <td colspan="3"></td>
                     <td class="td-total">
                       Total
                     </td>
-                    <td colspan="1" class="td-price"><small>&euro;</small>2,346</td>
+                    <td colspan="1" class="td-price"><small>&euro;</small>{{ this.cartPrice }}</td>
                     <td colspan="1"></td>
                     <td colspan="2" class="text-right">
-                      <md-button class="md-info md-round">
-                        Complete Purchase
-                        <i class="material-icons">keyboard_arrow_right</i>
-                      </md-button>
+                      <div class="md-layout">
+                        <div class="md-layout-item md-size-33">
+                          <md-button class="md-info md-round" @click="classicModalShow()">
+                            Complete Purchase
+                            <i class="material-icons">keyboard_arrow_right</i>
+                          </md-button>
+                          <modal v-if="classicModal" @close="classicModalHide">
+                            <template slot="header">
+                              <h4 class="modal-title">Complete your checkout</h4>
+                              <md-button class="md-simple md-just-icon md-round modal-default-button" @click="classicModalHide">
+                                <md-icon>clear</md-icon>
+                              </md-button>
+                            </template>
+
+                            <template slot="body">
+                              <login-modal v-on:update:isAuthed="isAuthed = $event" :isAuthed="isAuthed" v-if="!isAuthed"></login-modal>
+
+                              <!-- <register-modal></register-modal> -->
+
+                              <delivery-info-modal :deliveryInfo.sync="deliveryInfo" v-if="isAuthed && modalCount === 1"></delivery-info-modal>
+                              <confirmation-modal :deliveryInfo.sync="deliveryInfo" v-if="isAuthed && modalCount === 2"></confirmation-modal>
+                              
+                            </template>
+
+                            <template slot="footer">
+                              <a class="md-simple" href="/register" target="_blank" v-if="!isAuthed">Register</a>
+                              <md-button class="md-simple" v-if="isAuthed && modalCount > 1" @click="decModalCount">Back</md-button>
+                              <md-button class="md-simple" v-if="isAuthed && modalCount < 2" @click="incModalCount">Next</md-button>
+                              <md-button class=" md-success md-simple" v-if="isAuthed && modalCount === 2" @click="submit">Submit order</md-button>
+
+                              <md-button class="md-danger md-simple" @click="classicModalHide">Close</md-button>
+                            </template>
+                          </modal>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -202,6 +124,17 @@
   </div>
 </template>
 <script>
+import GoogleLogin from "vue-google-login";
+import { LoginCard } from "@/components";
+import facebookLogin from "facebook-login-vuejs";
+import router from "../router";
+import { mapMutations, mapGetters } from "vuex";
+import axios from "axios";
+import LoginModal from "@/components";
+import RegisterModal from "@/components";
+import DeliveryInfoModal from "@/components";
+import PaymentInfoModal from "@/components";
+import ConfirmationModal from "@/components";
 export default {
   name: "shopping-cart",
   bodyClass: "product-page",
@@ -213,31 +146,105 @@ export default {
     signup: {
       type: String,
       default: require("@/assets/img/city.jpg")
-    },
-    landing: {
-      type: String,
-      default: require("@/assets/img/landing.jpg")
-    },
-    profile: {
-      type: String,
-      default: require("@/assets/img/profile.jpg")
     }
   },
   data() {
     return {
-      firstname: null,
-      email: null,
-      password: null,
-      leafShow: false
+      classicModal: false,
+      isAuthed: this.$store.state.user.loggedIn,
+      modalCount: 1,
+      products: [],
+      userId: null,
+      deliveryInfo: {
+        street1: null,
+        street2: null,
+        city: null,
+        zip: null,
+        country: null,
+        phone_number: null,
+        payment_method: null
+      },
+      cartPrice: 0
     };
   },
   methods: {
-    leafActive() {
-      if (window.innerWidth < 768) {
-        this.leafShow = false;
-      } else {
-        this.leafShow = true;
+    ...mapMutations(["REMOVE_FROM_CART", "DELETE_CART"]),
+    classicModalShow() {
+      this.classicModal = true;
+      if (this.modalCount === 0 && this.isAuthed) {
+        this.modalCount = 1;
       }
+    },
+    classicModalHide() {
+      this.classicModal = false;
+    },
+    incModalCount() {
+      this.modalCount++;
+    },
+    decModalCount() {
+      this.modalCount--;
+    },
+    addQuantity(index) {
+      this.$store.state.cart[index];
+      this.products[index].selectedQuantity++;
+    },
+    subtractQuantity(index) {
+      if (this.products[index].selectedQuantity > 1) {
+        this.products[index].selectedQuantity--;
+      } else {
+        this.REMOVE_FROM_CART(index);
+        // this.$store.state.cart.splice(index, 1);
+        // this.products.splice(index, 1);
+      }
+    },
+    deleteProduct(index) {
+      this.REMOVE_FROM_CART(index);
+    },
+    submit() {
+      let products = [];
+      let orderPrice = 0;
+      this.products.forEach(product => {
+        products.push({
+          productId: product.productId._id,
+          selectedSize: product.selectedSize,
+          selectedQuantity: product.selectedQuantity,
+          selectedColor: product.selectedColor,
+          totalProductPrice: product.selectedQuantity * product.productId.price
+        });
+        orderPrice += product.selectedQuantity * product.productId.price;
+      });
+      axios
+        .post("http://127.0.0.1:3000/api/orders/order", {
+          userId: "5e3701c760465a21305e7a70",
+          products: products,
+          orderPrice: orderPrice,
+          deliveryInfo: this.deliveryInfo
+        })
+        .then(response => {
+          console.log(response);
+          this.resetStates();
+        });
+    },
+    resetStates() {
+      this.classicModal = false;
+      this.modalCount = 1;
+      this.products = [];
+      this.deliveryInfo = {
+        street1: null,
+        street2: null,
+        city: null,
+        zip: null,
+        country: null,
+        phone_number: null,
+        payment_method: null
+      };
+      this.paymentInfo = {
+        card_number: null,
+        expiration: null,
+        ccv: null
+      };
+      this.cartPrice = 0;
+      this.DELETE_CART();
     }
   },
   computed: {
@@ -252,17 +259,30 @@ export default {
       };
     }
   },
-  mounted() {
-    this.leafActive();
-    window.addEventListener("resize", this.leafActive);
+  beforeMount() {
+    console.log(this.$store.state.user.loggedIn);
+    let cart = this.$store.state.cart;
+    cart.forEach(async product => {
+      let productId = product.productId;
+      let { data } = await axios.get(`http://127.0.0.1:3000/api/products/${productId}`);
+      product.productId = data;
+    });
+
+    this.products = cart;
+
+    this.cartPrice = this.$store.state.cart.reduce((acc, product) => {
+      return acc + product.productId.price * product.selectedQuantity;
+    }, 0);
   },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.leafActive);
+  updated() {
+    this.cartPrice = this.$store.state.cart.reduce((acc, product) => {
+      return acc + product.productId.price * product.selectedQuantity;
+    }, 0);
   }
 };
 </script>
 
-<style>
+<style scoped>
 .card {
   font-size: 0.875rem;
 }

@@ -437,7 +437,7 @@ export default {
     }
   },
   async beforeMount() {
-    let data = await axios.get(
+    let {data} = await axios.get(
       `http://127.0.0.1:3000/api/products/allproducts`
     );
     console.log(data);
@@ -457,7 +457,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "../assets/css/buttons.css";
 .form-control {
   display: block;

@@ -6,6 +6,28 @@
           <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Register</h4>
+              <facebook-login
+                slot="buttons"
+                class="button"
+                appId="2678136558938821"
+                @login="getUserData"
+                @logout="onLogout"
+                @sdk-loaded="sdkLoaded"
+                @get-initial-status="getUserData"
+              ></facebook-login>
+              <GoogleLogin
+                slot="buttons"
+                class="button"
+                :params="params"
+                :renderParams="renderParams"
+                :onSuccess="onSuccess"
+                :onFailure="onFailure"
+                style="content: Login with Google !important;"
+              >
+              </GoogleLogin>
+              <br />
+              <p slot="description" class="description">Or Be Classical</p>
+
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>face</md-icon>
                 <label>First Name...</label>
@@ -36,13 +58,18 @@
 </template>
 
 <script>
+import GoogleLogin from "vue-google-login";
 import { LoginCard } from "@/components";
+import facebookLogin from "facebook-login-vuejs";
 import router from "../router";
-
+import { mapMutations, mapGetters } from "vuex";
 import axios from "axios";
+
 export default {
   components: {
-    LoginCard
+    LoginCard,
+    GoogleLogin,
+    facebookLogin
   },
   bodyClass: "login-page",
   data() {
@@ -50,7 +77,17 @@ export default {
       firstname: null,
       lastName: null,
       email: null,
-      password: null
+      password: null,
+      params: {
+        client_id: "533129668624-0iiemq738iusdp6tdq5791thhiks11fq.apps.googleusercontent.com"
+      },
+      logoutButton: true,
+      // only needed if you want to render the button with the google ui
+      renderParams: {
+        width: 250,
+        height: 50,
+        longtitle: true
+      }
     };
   },
   props: {
@@ -67,6 +104,33 @@ export default {
     }
   },
   methods: {
+    ...mapGetters(["auth"]),
+    ...mapMutations(["UPDATE_LOGIN", "UPDATE_ACTIVATE"]),
+    getUserData(res) {
+      FB.api("/me", "GET", { fields: "id,name,email" }, response => {
+        axios
+          .post("http://localhost:3000/api/user/login/socialF", {
+            token: res.response.authResponse.accessToken,
+            email: response.email
+          })
+          .then(response => {
+            localStorage.setItem("x-token", this.token);
+            router.push({ name: "index" });
+          });
+      });
+    },
+
+    onSuccess(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      axios
+        .post("http://localhost:3000/api/user/login/social", {
+          token: googleUser.getAuthResponse().id_token
+        })
+        .then(response => {
+          localStorage.setItem("x-token", googleUser.getAuthResponse().id_token);
+          router.push({ name: "index" });
+        });
+    },
     submit: function(e, next) {
       axios
         .post("http://localhost:3000/api/user/signUp", {

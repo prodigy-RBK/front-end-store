@@ -1,9 +1,5 @@
 <template>
-  <footer
-    class="footer"
-    :class="{ [`footer-${type}`]: type }"
-    :data-background-color="backgroundColor"
-  >
+  <footer class="footer" :class="{ [`footer-${type}`]: type }" :data-background-color="backgroundColor">
     <div class="container">
       <nav>
         <ul>
@@ -50,4 +46,4 @@ export default {
   }
 };
 </script>
-<style></style>
+<style scoped></style>
