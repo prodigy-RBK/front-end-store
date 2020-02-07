@@ -8,5 +8,28 @@ import LoginCard from "./cards/LoginCard.vue";
 import Tabs from "./Tabs.vue";
 import Modal from "./Modal.vue";
 import FilterSection from "./FilterSection.vue";
+import LoginModal from "./LoginModal.vue";
+import RegisterModal from "./RegisterModal.vue";
+import DeliveryInfoModal from "./DeliveryInfoModal.vue";
+import PaymentInfoModal from "./PaymentInfoModal.vue";
+import ConfirmationModal from "./ConfirmationModal.vue";
+import ProductCard from "./ProductCard.vue";
 
-export { DropDown, Parallax, Pagination, Slider, Badge, NavTabsCard, LoginCard, Tabs, Modal, FilterSection };
+export {
+  PaymentInfoModal,
+  ConfirmationModal,
+  DeliveryInfoModal,
+  RegisterModal,
+  LoginModal,
+  DropDown,
+  Parallax,
+  Pagination,
+  Slider,
+  Badge,
+  NavTabsCard,
+  LoginCard,
+  Tabs,
+  Modal,
+  FilterSection,
+  ProductCard
+};

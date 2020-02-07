@@ -68,10 +68,7 @@ export default {
       const sliderValue = slider.get();
       if (newValue !== oldValue && sliderValue !== newValue) {
         if (Array.isArray(sliderValue) && Array.isArray(newValue)) {
-          if (
-            oldValue.length === newValue.length &&
-            oldValue.every((v, i) => v === newValue[i])
-          ) {
+          if (oldValue.length === newValue.length && oldValue.every((v, i) => v === newValue[i])) {
             slider.set(newValue);
           }
         } else {
@@ -82,4 +79,4 @@ export default {
   }
 };
 </script>
-<style></style>
+<style scoped></style>
