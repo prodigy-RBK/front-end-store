@@ -59,6 +59,7 @@ import axios from "axios";
 export default {
   components: {
     LoginCard,
+    GoogleLogin,
     facebookLogin
   },
   bodyClass: "login-page",
@@ -103,8 +104,8 @@ export default {
             email: response.email
           })
           .then(response => {
-            this.UPDATE_LOGIN();
-            this.UPDATE_ACTIVATE();
+            this.UPDATE_LOGIN(true);
+
             router.push({ name: "index" });
           });
       });
@@ -117,8 +118,11 @@ export default {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
-          this.UPDATE_LOGIN();
-          this.UPDATE_ACTIVATE();
+          this.UPDATE_LOGIN(true);
+          localStorage.setItem(
+            "x-token",
+            googleUser.getAuthResponse().id_token
+          );
           router.push({ name: "index" });
         });
     },
@@ -131,7 +135,7 @@ export default {
         })
         .then(response => {
           if (response.data.status === "success") {
-            this.UPDATE_LOGIN();
+            this.UPDATE_LOGIN(true);
             if (response.data.details.active) {
               this.UPDATE_ACTIVATE();
               router.push({ name: "index" });
@@ -148,9 +152,4 @@ export default {
 };
 </script>
 
-<style lang="css">
-.custom {
-  font-size: 1.3em !important;
-  padding: 4px 10px !important;
-}
-</style>
+<style lang="css"></style>
