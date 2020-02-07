@@ -3,7 +3,9 @@
     <div class="section page-header header-filter" :style="headerStyle">
       <div class="container">
         <div class="md-layout">
-          <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
+          <div
+            class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
+          >
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Login</h4>
 
@@ -66,7 +68,8 @@ export default {
       email: null,
       password: null,
       params: {
-        client_id: "533129668624-0iiemq738iusdp6tdq5791thhiks11fq.apps.googleusercontent.com"
+        client_id:
+          "533129668624-0iiemq738iusdp6tdq5791thhiks11fq.apps.googleusercontent.com"
       },
       logoutButton: true,
       // only needed if you want to render the button with the google ui
@@ -102,7 +105,7 @@ export default {
           })
           .then(response => {
             this.UPDATE_LOGIN(true);
-            localStorage.setItem("x-token", this.token);
+
             router.push({ name: "index" });
           });
       });
@@ -116,7 +119,10 @@ export default {
         })
         .then(response => {
           this.UPDATE_LOGIN(true);
-          localStorage.setItem("x-token", googleUser.getAuthResponse().id_token);
+          localStorage.setItem(
+            "x-token",
+            googleUser.getAuthResponse().id_token
+          );
           router.push({ name: "index" });
         });
     },
