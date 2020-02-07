@@ -108,24 +108,40 @@
           <br />
           <h2 class="section-title">News in fashion</h2>
           <div class="row">
-            <div class="col-md-4" v-for="(article, index) in PopularArticles" :key="index">
+            <div class="col-md-4" v-for="article in popularArticles1" :key="article.title">
               <div
                 class="card card-background"
                 :style="{
-                  'background-image': `url(${require('../assets/img/examples/color1.jpg')})`
+                  'background-image':'url(' +article.urlToImage +')'
                 }"
               >
                 <div class="card-body">
-                  <h6 class="card-category text-info">Productivy Apps</h6>
-                  <a href="#pablo">
-                    <h3 class="card-title">The best trends in fashion 2017</h3>
+                  <h6 class="card-category text-info">{{article.author}}</h6>
+                  <a :href="article.url" target="_blanck">
+                    <h3 class="card-title">{{article.title}}</h3>
                   </a>
-                  <p class="card-description">
-                    Don't be scared of the truth because we need to restart the
-                    human foundation in truth And I love you like Kanye loves
-                    Kanye I love Rick Owens’ bed design but the back is...
-                  </p>
-                  <md-button href="#pablo" class="md-white md-round">
+                  <p class="card-description">{{article.description}}</p>
+                  <md-button :href="article.url" class="md-white md-round" target="_blanck">
+                    <i class="material-icons">subject</i> Read
+                  </md-button>
+                </div>
+              </div>
+              <!-- end card -->
+            </div>
+            <div class="col-md-6" v-for="article in popularArticles2" :key="article.title">
+              <div
+                class="card card-background"
+                :style="{
+                  'background-image':'url(' +article.urlToImage +')'
+                }"
+              >
+                <div class="card-body">
+                  <h6 class="card-category text-info">{{article.author}}</h6>
+                  <a :href="article.url" target="_blanck">
+                    <h3 class="card-title">{{article.title}}</h3>
+                  </a>
+                  <p class="card-description">{{article.description}}</p>
+                  <md-button :href="article.url" class="md-white md-round" target="_blanck">
                     <i class="material-icons">subject</i> Read
                   </md-button>
                 </div>
@@ -142,63 +158,19 @@
       <div class="container">
         <h2 class="section-title">Latest Articles</h2>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" v-for="article in latestArticles" :key="article.title">
             <div class="card card-blog">
               <div class="card-header card-header-image">
-                <a href="#pablo">
-                  <img src="../assets/img/dg6.jpg" alt />
+                <a :href="article.url" target="_blanck">
+                  <img :src="article.urlToImage" alt />
                 </a>
               </div>
               <div class="card-body">
-                <h6 class="card-category text-rose">Trends</h6>
+                <h6 class="card-category text-rose">{{article.author}}</h6>
                 <h4 class="card-title">
-                  <a href="#pablo">Learn how to wear your scarf with a floral print shirt</a>
+                  <a :href="article.url" target="_blanck">{{article.title}}</a>
                 </h4>
-                <p class="card-description">
-                  Don't be scared of the truth because we need to restart the
-                  human foundation in truth And I love you like Kanye loves
-                  Kanye I love Rick Owens’ bed design but the back is...
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card card-blog">
-              <div class="card-header card-header-image">
-                <a href="#pablo">
-                  <img src="../assets/img/dg10.jpg" alt />
-                </a>
-              </div>
-              <div class="card-body">
-                <h6 class="card-category text-rose">Fashion week</h6>
-                <h4 class="card-title">
-                  <a href="#pablo">Katy Perry was wearing a Dolce &amp; Gabanna arc dress</a>
-                </h4>
-                <p class="card-description">
-                  Don't be scared of the truth because we need to restart the
-                  human foundation in truth And I love you like Kanye loves
-                  Kanye I love Rick Owens’ bed design but the back is...
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card card-blog">
-              <div class="card-header card-header-image">
-                <a href="#pablo">
-                  <img src="../assets/img/dg9.jpg" alt />
-                </a>
-              </div>
-              <div class="card-body">
-                <h6 class="card-category text-rose">Fashion week</h6>
-                <h4 class="card-title">
-                  <a href="#pablo">Check the latest fashion events and which are the trends</a>
-                </h4>
-                <p class="card-description">
-                  Don't be scared of the truth because we need to restart the
-                  human foundation in truth And I love you like Kanye loves
-                  Kanye I love Rick Owens’ bed design but the back is...
-                </p>
+                <p class="card-description">{{article.description}}</p>
               </div>
             </div>
           </div>
@@ -287,7 +259,10 @@ export default {
       email: null,
       password: null,
       leafShow: false,
-      PopularArticles: []
+      latestArticles: [],
+      popularArticles: [],
+      popularArticles1: [],
+      popularArticles2: []
     };
   },
   methods: {
@@ -306,11 +281,11 @@ export default {
       this.pageProducts = this.getDisplayedProducts().slice(min, max);
     },
     async fetchArticles() {
-      // let data = await axios.get(
-      //   "https://newsapi.org/v2/everything?q=fashion&apiKey=f85cc7f4c3d545539dcc36823289228a&language=en&sortBy=popularity&pageSize=5"
-      // );
       let { data } = await axios.get("http://127.0.0.1:3000/api/articles");
-      // this.PopularArticles = data.articles;
+      this.popularArticles = data.popularArticles.articles;
+      this.latestArticles = data.latestArticles.articles;
+      this.popularArticles1 = this.popularArticles.slice(0, 3);
+      this.popularArticles2 = this.popularArticles.slice(3);
     }
   },
   computed: {
@@ -335,7 +310,6 @@ export default {
     this.ADD_PRODUCTS(data);
     this.DISPLAY_PRODUCTS(data);
     this.fetchArticles();
-    console.log(this.PopularArticles, "hi");
   },
   watch: {
     infoPagination: async function() {
