@@ -1,6 +1,11 @@
 <template>
   <div class="wrapper">
-    <parallax class="page-header header-filter header-small" filter-color="rose" parallax-active="true" :style="headerStyle">
+    <parallax
+      class="page-header header-filter header-small"
+      filter-color="rose"
+      parallax-active="true"
+      :style="headerStyle"
+    >
       <div class="md-layout">
         <div class="md-layout-item">
           <div class="image-wrapper index-page">
@@ -42,27 +47,35 @@
                     <td class="td-name">
                       <a href="#pants">{{ product.productId.title }}</a>
                     </td>
-                    <td>
-                      {{ product.selectedColor }}
+                    <td>{{ product.selectedColor }}</td>
+                    <td>{{ product.selectedSize }}</td>
+                    <td class="td-number">
+                      <small>&euro;</small>
+                      {{ product.productId.price }}
                     </td>
-                    <td>
-                      {{ product.selectedSize }}
-                    </td>
-                    <td class="td-number"><small>&euro;</small> {{ product.productId.price }}</td>
                     <td class="td-number">
                       {{ product.selectedQuantity }}
                       <div class="md-group md-group-sm">
-                        <md-button class=" md-round md-info" @click="subtractQuantity(index)">
+                        <md-button class="md-round md-info" @click="subtractQuantity(index)">
                           <i class="material-icons">remove</i>
                         </md-button>
-                        <md-button class=" md-round md-info" @click="addQuantity(index)">
+                        <md-button class="md-round md-info" @click="addQuantity(index)">
                           <i class="material-icons">add</i>
                         </md-button>
                       </div>
                     </td>
-                    <td class="td-number"><small>&euro;</small>{{ product.productId.price * product.selectedQuantity }}</td>
+                    <td class="td-number">
+                      <small>&euro;</small>
+                      {{ product.productId.price * product.selectedQuantity }}
+                    </td>
                     <td class="td-actions">
-                      <md-button rel="tooltip" data-placement="left" title="Remove item" class=" md-simple" @click="deleteProduct(index)">
+                      <md-button
+                        rel="tooltip"
+                        data-placement="left"
+                        title="Remove item"
+                        class="md-simple"
+                        @click="deleteProduct(index)"
+                      >
                         <i class="material-icons">close</i>
                       </md-button>
                     </td>
@@ -71,10 +84,11 @@
                   <!-- End of iteration -->
                   <tr>
                     <td colspan="3"></td>
-                    <td class="td-total">
-                      Total
+                    <td class="td-total">Total</td>
+                    <td colspan="1" class="td-price">
+                      <small>&euro;</small>
+                      {{ this.cartPrice }}
                     </td>
-                    <td colspan="1" class="td-price"><small>&euro;</small>{{ this.cartPrice }}</td>
                     <td colspan="1"></td>
                     <td colspan="2" class="text-right">
                       <div class="md-layout">
@@ -86,26 +100,55 @@
                           <modal v-if="classicModal" @close="classicModalHide">
                             <template slot="header">
                               <h4 class="modal-title">Complete your checkout</h4>
-                              <md-button class="md-simple md-just-icon md-round modal-default-button" @click="classicModalHide">
+                              <md-button
+                                class="md-simple md-just-icon md-round modal-default-button"
+                                @click="classicModalHide"
+                              >
                                 <md-icon>clear</md-icon>
                               </md-button>
                             </template>
 
                             <template slot="body">
-                              <login-modal v-on:update:isAuthed="isAuthed = $event" :isAuthed="isAuthed" v-if="!isAuthed"></login-modal>
+                              <login-modal
+                                v-on:update:isAuthed="isAuthed = $event"
+                                :isAuthed="isAuthed"
+                                v-if="!isAuthed"
+                              ></login-modal>
 
                               <!-- <register-modal></register-modal> -->
 
-                              <delivery-info-modal :deliveryInfo.sync="deliveryInfo" v-if="isAuthed && modalCount === 1"></delivery-info-modal>
-                              <confirmation-modal :deliveryInfo.sync="deliveryInfo" v-if="isAuthed && modalCount === 2"></confirmation-modal>
-                              
+                              <delivery-info-modal
+                                :deliveryInfo.sync="deliveryInfo"
+                                v-if="isAuthed && modalCount === 1"
+                              ></delivery-info-modal>
+                              <confirmation-modal
+                                :deliveryInfo.sync="deliveryInfo"
+                                v-if="isAuthed && modalCount === 2"
+                              ></confirmation-modal>
                             </template>
 
                             <template slot="footer">
-                              <a class="md-simple" href="/register" target="_blank" v-if="!isAuthed">Register</a>
-                              <md-button class="md-simple" v-if="isAuthed && modalCount > 1" @click="decModalCount">Back</md-button>
-                              <md-button class="md-simple" v-if="isAuthed && modalCount < 2" @click="incModalCount">Next</md-button>
-                              <md-button class=" md-success md-simple" v-if="isAuthed && modalCount === 2" @click="submit">Submit order</md-button>
+                              <a
+                                class="md-simple"
+                                href="/register"
+                                target="_blank"
+                                v-if="!isAuthed"
+                              >Register</a>
+                              <md-button
+                                class="md-simple"
+                                v-if="isAuthed && modalCount > 1"
+                                @click="decModalCount"
+                              >Back</md-button>
+                              <md-button
+                                class="md-simple"
+                                v-if="isAuthed && modalCount < 2"
+                                @click="incModalCount"
+                              >Next</md-button>
+                              <md-button
+                                class="md-success md-simple"
+                                v-if="isAuthed && modalCount === 2"
+                                @click="submit"
+                              >Submit order</md-button>
 
                               <md-button class="md-danger md-simple" @click="classicModalHide">Close</md-button>
                             </template>
@@ -151,6 +194,7 @@ export default {
   data() {
     return {
       classicModal: false,
+      publicKey: "pk_test_aoYl8Wtzsg8kvzaCJTY1XLBO008PAkBhvW",
       isAuthed: this.$store.state.user.loggedIn,
       modalCount: 1,
       products: [],
@@ -196,6 +240,24 @@ export default {
         // this.$store.state.cart.splice(index, 1);
         // this.products.splice(index, 1);
       }
+    },
+    checkout() {
+      StripeCheckout.configure({
+        key: this.publicKey,
+        locale: "auto",
+        token: async function(token) {
+          let { data } = await axios.post(
+            "http://127.0.0.1:3000/api/stripe/purchase",
+            {
+              token: token.id,
+              amount: 2000
+            }
+          );
+          console.log({ data, token });
+        }
+      }).open({
+        amount: 2000
+      });
     },
     deleteProduct(index) {
       this.REMOVE_FROM_CART(index);
@@ -260,11 +322,16 @@ export default {
     }
   },
   beforeMount() {
+    let stripeScript = document.createElement("script");
+    stripeScript.setAttribute("src", "https://checkout.stripe.com/checkout.js");
+    document.head.appendChild(stripeScript);
     console.log(this.$store.state.user.loggedIn);
     let cart = this.$store.state.cart;
     cart.forEach(async product => {
       let productId = product.productId;
-      let { data } = await axios.get(`http://127.0.0.1:3000/api/products/${productId}`);
+      let { data } = await axios.get(
+        `http://127.0.0.1:3000/api/products/${productId}`
+      );
       product.productId = data;
     });
 
@@ -698,7 +765,8 @@ a {
 }
 .page-header .iframe-container iframe {
   width: 100%;
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .header-filter {
@@ -990,7 +1058,8 @@ h2.title {
   color: rgba(0, 0, 0, 0.87);
   background: #fff;
   width: 100%;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .card .card-category:not([class*="text-"]) {
   color: #999999;
@@ -1050,7 +1119,8 @@ h2.title {
 }
 
 .card.bmd-card-raised {
-  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
 }
 
 @media (min-width: 992px) {
@@ -1074,7 +1144,8 @@ h2.title {
 }
 
 .card .card-header:not([class*="header-"]) {
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .card .card-header .nav-tabs {
@@ -1099,7 +1170,8 @@ h2.title {
   width: 100%;
   border-radius: 6px;
   pointer-events: none;
-  box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .card .card-header.card-header-image .card-title {
@@ -1129,7 +1201,8 @@ h2.title {
   box-shadow: none;
 }
 .card .card-header.card-header-image.no-shadow.shadow-normal {
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .card .card-header.card-header-image.no-shadow .colored-shadow {
   display: none !important;
@@ -1171,22 +1244,28 @@ h2.title {
   background: linear-gradient(60deg, #ec407a, #c2185b);
 }
 .card .card-header-primary {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(156, 39, 176, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(156, 39, 176, 0.6);
 }
 .card .card-header-danger {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(244, 67, 54, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(244, 67, 54, 0.6);
 }
 .card .card-header-rose {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(233, 30, 99, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(233, 30, 99, 0.6);
 }
 .card .card-header-warning {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(255, 152, 0, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(255, 152, 0, 0.6);
 }
 .card .card-header-info {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(0, 188, 212, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(0, 188, 212, 0.6);
 }
 .card .card-header-success {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(76, 175, 80, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(76, 175, 80, 0.6);
 }
 .card [class*="header-"],
 .card[class*="bg-"] {

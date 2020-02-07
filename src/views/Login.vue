@@ -8,7 +8,6 @@
           >
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Login</h4>
-
               <facebook-login
                 class="button"
                 slot="buttons"
@@ -20,7 +19,7 @@
               ></facebook-login>
               <GoogleLogin
                 slot="buttons"
-                class="button"
+                class="buttons"
                 :params="params"
                 :renderParams="renderParams"
                 :onSuccess="onSuccess"

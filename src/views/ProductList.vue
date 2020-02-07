@@ -80,33 +80,11 @@
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-4" v-for="product in pageProducts" :key="product._id">
-                      <div
-                        class="card card-product card-plain no-shadow"
-                        data-colored-shadow="false"
-                      >
-                        <div class="card-header card-header-image">
-                          <a :href="'/products/' + product._id">
-                            <img :src="product.images[0]" alt="..." />
-                          </a>
-                        </div>
-                        <div class="card-body">
-                          <a :href="'/products/' + product._id">
-                            <h4 class="card-title">{{ product.title }}</h4>
-                          </a>
-                          <p class="description">{{ product.description }}</p>
-                        </div>
-                        <div class="card-footer justify-content-between">
-                          <div class="price-container">
-                            <span class="price">€ {{ product.price }}</span>
-                          </div>
-                          <md-button class="md-rose md-just-icon md-simple">
-                            <md-icon>favorite</md-icon>
-                          </md-button>
-                          <md-button class="md-rose md-just-icon md-simple">
-                            <md-icon>favorite_border</md-icon>
-                          </md-button>
-                        </div>
-                      </div>
+                      <product-card
+                        :product="product"
+                        :inWishlist="$store.state.wishlist.includes(product._id)"
+                      ></product-card>
+
                       <!-- end card -->
                     </div>
                   </div>
@@ -368,8 +346,8 @@
 </template>
 <script>
 import { FilterSection } from "@/components";
+import { ProductCard } from "../components";
 import { mapMutations, mapGetters } from "vuex";
-import { Pagination } from "@/components";
 import axios from "axios";
 
 export default {
@@ -437,12 +415,12 @@ export default {
     }
   },
   async beforeMount() {
-    let {data} = await axios.get(
+    let { data } = await axios.get(
       `http://127.0.0.1:3000/api/products/allproducts`
     );
-    console.log(data);
     this.ADD_PRODUCTS(data);
     this.DISPLAY_PRODUCTS(data);
+    console.log(this.$store.state.wishlist, "product list");
   },
   watch: {
     infoPagination: async function() {

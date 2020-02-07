@@ -12,6 +12,7 @@ import { RegisterModal } from "@/components";
 import { DeliveryInfoModal } from "@/components";
 import { PaymentInfoModal } from "@/components";
 import { ConfirmationModal } from "@/components";
+import { ProductCard } from "@/components";
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
  */
@@ -32,6 +33,7 @@ const GlobalComponents = {
     Vue.component("delivery-info-modal", DeliveryInfoModal);
     Vue.component("payment-info-modal", PaymentInfoModal);
     Vue.component("confirmation-modal", ConfirmationModal);
+    Vue.component("product-card", ProductCard);
   }
 };
 

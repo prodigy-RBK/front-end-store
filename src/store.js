@@ -20,7 +20,8 @@ export default new Vuex.Store({
       tags: [],
       priceRange: [0, 1000]
     },
-    cart: []
+    cart: [],
+    wishlist: []
   },
   getters: {
     auth(state) {
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     getCart(state) {
       return state.cart;
+    },
+    getWishlist(state) {
+      return state.wishlist;
     }
   },
   mutations: {
@@ -67,6 +71,10 @@ export default new Vuex.Store({
     },
     DELETE_CART: state => {
       state.cart = [];
+    },
+    UPDATE_WISHLIST: (state, payload) => {
+      state.wishlist = payload;
+      console.log("updated", state.wishlist);
     }
   },
   actions: {
@@ -85,6 +93,22 @@ export default new Vuex.Store({
           page: page
         })
         .then(({ data }) => this.commit("DISPLAY_PRODUCTS", data));
+    },
+    UPDATE_USER_WISHLIST: async function(state) {
+      let { data } = await axios.get("http://127.0.0.1:3000/api/user/wishlist");
+      this.commit("UPDATE_WISHLIST", data.wishlist);
+    },
+    ADD_TO_WISHLIST: async function(state, payload) {
+      let { data } = await axios.put("http://127.0.0.1:3000/api/user/wishlist", { product: payload });
+      this.commit("UPDATE_WISHLIST", data);
+    },
+    REMOVE_FROM_WISHLIST: async function(state, payload) {
+      let { data } = await axios.delete("http://127.0.0.1:3000/api/user/wishlist", {
+        data: {
+          product: payload
+        }
+      });
+      this.commit("UPDATE_WISHLIST", data);
     }
   },
   plugins: [
