@@ -46,8 +46,8 @@ export default new Vuex.Store({
     UPDATE_LOGIN: (state, boo) => {
       state.user.loggedIn = boo;
     },
-    UPDATE_ACTIVATE: state => {
-      state.user.isActivated = true;
+    UPDATE_ACTIVATE: (state, value = true) => {
+      state.user.isActivated = value;
     },
     ADD_PRODUCTS: (state, prods) => {
       state.products = prods;
