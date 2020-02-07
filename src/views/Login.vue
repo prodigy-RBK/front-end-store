@@ -105,7 +105,7 @@ export default {
           })
           .then(response => {
             this.UPDATE_LOGIN(true);
-            localStorage.setItem("x-token", this.token);
+
             router.push({ name: "index" });
           });
       });
@@ -119,7 +119,10 @@ export default {
         })
         .then(response => {
           this.UPDATE_LOGIN(true);
-          localStorage.setItem("x-token", googleUser.getAuthResponse().id_token);
+          localStorage.setItem(
+            "x-token",
+            googleUser.getAuthResponse().id_token
+          );
           router.push({ name: "index" });
         });
     },
