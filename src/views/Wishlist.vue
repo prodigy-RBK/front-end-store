@@ -96,29 +96,14 @@ export default {
       return {
         backgroundImage: `url(${this.signup})`
       };
-    },
-    updatedWishlist() {
-      return this.$store.state.wishlist;
-    }
-  },
-  watch: {
-    updatedWishlist: function() {
-      console.log("changed");
     }
   },
   async beforeMount() {
-    // this.$store.commit("UPDATE_WISHLIST", data.wishlist);
     this.getWishlist();
     this.inWishlist = true;
     this.$store.watch(
-      state => {
-        console.log(state.wishlist);
-        return state.wishlist;
-      },
-      newWishlist => {
-        console.log(newWishlist);
-        this.getWishlist();
-      }
+      state => state.wishlist,
+      newWishlist => this.getWishlist()
     );
   }
 };

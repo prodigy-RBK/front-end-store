@@ -15,13 +15,17 @@
       <div class="price-container">
         <span class="price">€ {{ product.price }}</span>
       </div>
-      <md-button class="md-rose md-just-icon md-simple" @click="addToWishlist" v-show="!inWishlist">
+      <md-button
+        class="md-rose md-just-icon md-simple"
+        @click="addToWishlist"
+        v-show="!updatedInWishlist"
+      >
         <md-icon>favorite</md-icon>
       </md-button>
       <md-button
         class="md-rose md-just-icon md-simple"
         @click="removeFromWishlist"
-        v-show="inWishlist"
+        v-show="updatedInWishlist"
       >
         <md-icon>favorite_border</md-icon>
       </md-button>
@@ -38,16 +42,18 @@ export default {
     inWishlist: Boolean
   },
   data() {
-    return {};
+    return {
+      updatedInWishlist: this.inWishlist
+    };
   },
   methods: {
     async addToWishlist() {
       this.$store.dispatch("ADD_TO_WISHLIST", this.product._id);
-      this.inWishlist = true;
+      this.updatedInWishlist = true;
     },
     async removeFromWishlist() {
       this.$store.dispatch("REMOVE_FROM_WISHLIST", this.product._id);
-      this.inWishlist = false;
+      this.updatedInWishlist = false;
     }
   },
   beforeMount() {}
