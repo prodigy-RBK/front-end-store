@@ -420,7 +420,6 @@ export default {
     );
     this.ADD_PRODUCTS(data);
     this.DISPLAY_PRODUCTS(data);
-    console.log(this.$store.state.wishlist, "product list");
   },
   watch: {
     infoPagination: async function() {

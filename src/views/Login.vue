@@ -13,8 +13,6 @@
                 slot="buttons"
                 appId="2678136558938821"
                 @login="getUserData"
-                @logout="onLogout"
-                @sdk-loaded="sdkLoaded"
                 @get-initial-status="getUserData"
               ></facebook-login>
               <GoogleLogin
@@ -23,7 +21,6 @@
                 :params="params"
                 :renderParams="renderParams"
                 :onSuccess="onSuccess"
-                :onFailure="onFailure"
               ></GoogleLogin>
               <br />
               <div id="test" slot="buttons"></div>
@@ -73,8 +70,8 @@ export default {
       logoutButton: true,
       // only needed if you want to render the button with the google ui
       renderParams: {
-        width: 250,
-        height: 50,
+        width: 280,
+        height: 35,
         longtitle: true
       }
     };
