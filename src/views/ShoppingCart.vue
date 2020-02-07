@@ -322,6 +322,7 @@ export default {
     }
   },
   beforeMount() {
+    console.log("before", this.$store.state.cart);
     let stripeScript = document.createElement("script");
     stripeScript.setAttribute("src", "https://checkout.stripe.com/checkout.js");
     document.head.appendChild(stripeScript);
@@ -336,7 +337,7 @@ export default {
     });
 
     this.products = cart;
-
+    console.log({ store: this.$store.state.cart, cart });
     this.cartPrice = this.$store.state.cart.reduce((acc, product) => {
       return acc + product.productId.price * product.selectedQuantity;
     }, 0);
