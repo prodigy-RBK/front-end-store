@@ -25,30 +25,7 @@
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-3" v-for="product in wishlist" :key="product._id">
-                  <div class="card card-product card-plain no-shadow" data-colored-shadow="false">
-                    <div class="card-header card-header-image">
-                      <a :href="'/products/' + product._id">
-                        <img :src="product.images[0]" alt="..." />
-                      </a>
-                    </div>
-                    <div class="card-body">
-                      <a :href="'/products/' + product._id">
-                        <h4 class="card-title">{{ product.title }}</h4>
-                      </a>
-                      <p class="description">{{ product.description }}</p>
-                    </div>
-                    <div class="card-footer justify-content-between">
-                      <div class="price-container">
-                        <span class="price">€ {{ product.price }}</span>
-                      </div>
-                      <md-button class="md-rose md-just-icon md-simple">
-                        <md-icon>favorite</md-icon>
-                      </md-button>
-                      <md-button class="md-rose md-just-icon md-simple">
-                        <md-icon>favorite_border</md-icon>
-                      </md-button>
-                    </div>
-                  </div>
+                  <product-card :product="product" :inWishlist="inWishlist"></product-card>
                   <!-- end card -->
                 </div>
               </div>
@@ -61,6 +38,8 @@
 </template>
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
+
 export default {
   name: "shopping-cart",
   bodyClass: "product-page",
@@ -84,16 +63,27 @@ export default {
   },
   data() {
     return {
-      wishlist: []
+      wishlist: [],
+      inWishlist: false
     };
   },
   methods: {
+    ...mapGetters(["getWishlist"]),
     leafActive() {
       if (window.innerWidth < 768) {
         this.leafShow = false;
       } else {
         this.leafShow = true;
       }
+    },
+    async getWishlist() {
+      let { data } = await axios.post(
+        `http://127.0.0.1:3000/api/products/allproducts`,
+        {
+          products: this.$store.state.wishlist
+        }
+      );
+      return data;
     }
   },
   computed: {
@@ -106,14 +96,19 @@ export default {
       return {
         backgroundImage: `url(${this.signup})`
       };
+    },
+    updatedWishlist() {
+      return "hi";
     }
   },
   async beforeMount() {
-    axios
-      .get(`http://127.0.0.1:3000/api/user/wishlist`)
-      .then(data => console.log(data)); // FIX THIS: create a route for the wishlist by user
-    // let { data } = await axios.get(`http://127.0.0.1:3000/api/user/wishlist`); // FIX THIS: create a route for the wishlist by user
-    // this.wishlist = data;
+    // this.$store.commit("UPDATE_WISHLIST", data.wishlist);
+    this.wishlist = this.getWishlist();
+    this.inWishlist = true;
+    this.$store.watch(
+      state => state.wishlist,
+      newWishlist => (this.wishlist = this.getWishlist())
+    );
   }
 };
 </script>

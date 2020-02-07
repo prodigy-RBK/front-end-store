@@ -103,7 +103,7 @@ export default {
             email: response.email
           })
           .then(response => {
-            this.UPDATE_LOGIN();
+            this.UPDATE_LOGIN(true);
             localStorage.setItem("x-token", this.token);
             router.push({ name: "index" });
           });
@@ -117,7 +117,7 @@ export default {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
-          this.UPDATE_LOGIN();
+          this.UPDATE_LOGIN(true);
           localStorage.setItem(
             "x-token",
             googleUser.getAuthResponse().id_token
@@ -134,9 +134,9 @@ export default {
         })
         .then(response => {
           if (response.data.status === "success") {
-            this.UPDATE_LOGIN();
+            this.UPDATE_LOGIN(true);
             if (response.data.details.active) {
-              this.UPDATE_LOGIN();
+              this.UPDATE_ACTIVATE();
               router.push({ name: "index" });
             } else {
               router.push({ name: "confirmation" });

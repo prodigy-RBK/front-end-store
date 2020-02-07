@@ -20,7 +20,8 @@ export default new Vuex.Store({
       tags: [],
       priceRange: [0, 1000]
     },
-    cart: []
+    cart: [],
+    wishlist: []
   },
   getters: {
     auth(state) {
@@ -40,13 +41,16 @@ export default new Vuex.Store({
     },
     getCart(state) {
       return state.cart;
+    },
+    getWishlist(state) {
+      return state.wishlist;
     }
   },
   mutations: {
-    UPDATE_LOGIN: state => {
-      state.user.loggedIn = localStorage.getItem("x-token") ? true : false;
+    UPDATE_LOGIN: (state, boo) => {
+      state.user.loggedIn = boo;
     },
-    UPDATE_ACTIVATE: (state) => {
+    UPDATE_ACTIVATE: state => {
       state.user.isActivated = true;
     },
     ADD_PRODUCTS: (state, prods) => {
@@ -65,12 +69,15 @@ export default new Vuex.Store({
     REMOVE_FROM_CART: (state, index) => {
       state.cart.splice(index, 1);
     },
-    DELETE_CART: (state, index) => {
+    DELETE_CART: state => {
       state.cart = [];
+    },
+    UPDATE_WISHLIST: (state, payload) => {
+      state.wishlist = payload;
     }
   },
   actions: {
-    UPDATE_DISPLAYED_PRODUCTS: function (state, payload) {
+    UPDATE_DISPLAYED_PRODUCTS: function(state, payload) {
       let { brandsQuery, categoriesQuery, tagsQuery, priceRange, page } = payload;
       if (!brandsQuery.length) brandsQuery = this.state.filters.brands.map(elm => elm._id);
       if (!categoriesQuery.length) categoriesQuery = this.state.filters.categories;
@@ -85,6 +92,11 @@ export default new Vuex.Store({
           page: page
         })
         .then(({ data }) => this.commit("DISPLAY_PRODUCTS", data));
+    },
+    UPDATE_USER_WISHLIST: async function(state) {
+      let { data } = await axios.get("http://127.0.0.1:3000/api/user/wishlist");
+      this.commit("UPDATE_WISHLIST", data.wishlist);
+      console.log(state.state.wishlist, "store");
     }
   },
   plugins: [
