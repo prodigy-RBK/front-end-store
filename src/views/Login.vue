@@ -104,7 +104,7 @@ export default {
           })
           .then(response => {
             this.UPDATE_LOGIN(true);
-            localStorage.setItem("x-token", this.token);
+
             router.push({ name: "index" });
           });
       });
