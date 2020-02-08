@@ -11,6 +11,9 @@
       </a>
       <p class="description">{{ product.description }}</p>
     </div>
+
+    <star-rating v-model="product.rating" :increment="0.5" :read-only="true" :star-size="25"></star-rating>
+
     <div class="card-footer justify-content-between">
       <div class="price-container">
         <span class="price">€ {{ product.price }}</span>
