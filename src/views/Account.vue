@@ -113,12 +113,8 @@ export default {
     }
   },
   async beforeMount() {
-    let userId = "5e3701c760465a21305e7a70"; // FIX THIS
-    let { data } = await axios.get(
-      `http://127.0.0.1:3000/api/orders/user/${userId}`
-    );
+    let { data } = await axios.get(`http://127.0.0.1:3000/api/orders/user/`);
     this.orders = data;
-    console.log(this.orders[0].userId);
   }
 };
 </script>

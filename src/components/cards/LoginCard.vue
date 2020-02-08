@@ -12,7 +12,8 @@
       <slot name="inputs"></slot>
     </md-card-content>
 
-    <md-card-actions>
+    <md-card-actions style="display: flex; flex-direction: column-reverse;">
+      <!-- <slot name="footer" style="display: flex; flex-direction: column-reverse;"></slot> -->
       <slot name="footer"></slot>
     </md-card-actions>
   </md-card>
