@@ -26,20 +26,16 @@ const NavbarStore = {
   showNavbar: false
 };
 axios.defaults.headers.common["x-token"] = localStorage.getItem("x-token");
-axios.defaults.headers.common["x-refresh-token"] = localStorage.getItem(
-  "x-refresh-token"
-);
+axios.defaults.headers.common["x-refresh-token"] = localStorage.getItem("x-refresh-token");
 axios.interceptors.response.use(
-  function (response) {
-    console.log(response.headers);
-    if (response.headers['x-token']) {
-      localStorage.setItem('x-token', response.headers['x-token'])
-      localStorage.setItem('x-refresh-token', response.headers['x-refresh-token'])
+  function(response) {
+    if (response.headers["x-token"]) {
+      localStorage.setItem("x-token", response.headers["x-token"]);
+      localStorage.setItem("x-refresh-token", response.headers["x-refresh-token"]);
     }
     return response;
   },
-  function (error) {
-    // Do something with response error
+  function(error) {
     return Promise.reject(error);
   }
 );

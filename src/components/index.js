@@ -13,6 +13,7 @@ import RegisterModal from "./RegisterModal.vue";
 import DeliveryInfoModal from "./DeliveryInfoModal.vue";
 import PaymentInfoModal from "./PaymentInfoModal.vue";
 import ConfirmationModal from "./ConfirmationModal.vue";
+import ProductCard from "./ProductCard.vue";
 
 export {
   PaymentInfoModal,
@@ -29,5 +30,6 @@ export {
   LoginCard,
   Tabs,
   Modal,
-  FilterSection
+  FilterSection,
+  ProductCard
 };

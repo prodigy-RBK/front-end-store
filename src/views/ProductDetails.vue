@@ -85,7 +85,7 @@
                   <div class="md-layout-item" style="height: 100%">
                     <div>
                       <md-menu md-size="big" class="big" md-align-trigger>
-                        <md-input style="padding: 10px" type="number" id="big" min="1" max="5" v-model="selectedQuantity"> </md-input>
+                        <md-input style="padding: 10px" type="number" id="big" min="1" max="5" v-model="selectedQuantity"></md-input>
                       </md-menu>
                     </div>
                   </div>
@@ -101,8 +101,12 @@
                   </div>
                 </div>
               </div>
+              <star-rating v-model="rating"></star-rating>
               <div style="text-align-last: end;">
-                <md-button @click="addToCart" class="float-left md-rose md-round">Add to Cart &#xA0;<i class="material-icons">shopping_cart</i></md-button>
+                <md-button @click="addToCart" class="float-left md-rose md-round">
+                  Add to Cart &#xA0;
+                  <i class="material-icons">shopping_cart</i>
+                </md-button>
               </div>
             </div>
           </div>
@@ -356,6 +360,7 @@ export default {
       activeColor: false,
       product: null,
       sizes: [],
+      rating: 0,
       colors: []
     };
   },
@@ -416,11 +421,18 @@ export default {
       }
     });
     this.product = data;
+    this.rating = data.rating;
   },
   watch: {
     selectedSize: function() {
       console.log(this.product.availability);
       this.colors = this.product.availability.filter(el => el.size === this.selectedSize).map(elem => elem.color);
+    },
+    rating: function() {
+      let productId = window.location.pathname.slice(10);
+      axios.put(`http://127.0.0.1:3000/api/products/${productId}/rating`, {
+        rating: this.rating
+      });
     }
   }
 };
