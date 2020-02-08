@@ -110,43 +110,51 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="features text-center">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="info">
-                <div class="icon icon-info">
-                  <i class="material-icons">local_shipping</i>
+          <div style="padding: 20px 30px">
+            <hr />
+          </div>
+          <div class="section section-comments" style="padding: 0px">
+            <div class="row">
+              <div class="col-md-8 ml-auto mr-auto">
+                <div class="media-area">
+                  <h3 class="title text-center">{{ product.reviews.length }} Reviews</h3>
+                  <div v-for="(review, index) in product.reviews" :key="index" class="media">
+                    <div class="media-body">
+                      <h4 class="media media-heading">
+                        {{ review.user
+                        }}<small
+                          >&#xB7; {{ review.creationDate | moment("from", "now", true) }} <span v-if="!review.creationDate">a few seconds </span>ago</small
+                        >
+                      </h4>
+                      <h6 class="text-muted"></h6>
+                      <p>
+                        {{ review.review }}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <h4 class="info-title">2 Days Delivery</h4>
-                <p>
-                  Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be
-                  enough.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="info">
-                <div class="icon icon-success">
-                  <i class="material-icons">verified_user</i>
+                <h3 class="title text-center">Post your Review</h3>
+                <div v-if="isAuthed" class="media media-post">
+                  <div class="media-body">
+                    <md-field class="md-form-group" :class="getValidationClass('review')" slot="inputs">
+                      <label style="padding-left: 50px" for="review">Write some nice stuff or nothing......</label>
+                      <md-textarea style="padding-left: 50px" name="review" id="review" v-model="review"></md-textarea>
+                      <span style="padding: 20px 0px 0px 50px" class="md-error" v-if="!$v.review.required">Cannot post an empty review</span>
+                    </md-field>
+                    <div style="margin: 30px 0; text-align-last: end;">
+                      <md-button @click="validatereview" class="float-left md-primary md-round">
+                        Post review
+                        <i class="material-icons">reply</i>
+                      </md-button>
+                    </div>
+                  </div>
                 </div>
-                <h4 class="info-title">Refundable Policy</h4>
-                <p>
-                  Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be
-                  enough.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="info">
-                <div class="icon icon-rose">
-                  <i class="material-icons">favorite</i>
+                <div v-else>
+                  <div class="media-body" style="text-align: center; margin-bottom: 20px">
+                    <p><a href="/login">Login</a> to post your review</p>
+                  </div>
                 </div>
-                <h4 class="info-title">Popular Item</h4>
-                <p>
-                  Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be
-                  enough.
-                </p>
+                <!-- end media-post -->
               </div>
             </div>
           </div>
@@ -279,8 +287,19 @@
           <div class="alert-icon">
             <md-icon>check</md-icon>
           </div>
+          <b> SUCCESS ALERT </b> : Product successfully added to cart
+        </div>
+      </div>
+      <div v-if="reviewNotif" class="alert alertTop alert-success">
+        <div class="container">
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('reviewNotif')">
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>check</md-icon>
+          </div>
 
-          <b> SUCCESS ALERT </b> : Successfully added
+          <b> SUCCESS ALERT </b> : Review successfully added
         </div>
       </div>
       <div v-if="dangerNotif" class="alert alertTop alert-danger">
@@ -308,6 +327,18 @@
           <b> SUCCESS ALERT </b> : Successfully added
         </div>
       </div>
+      <div v-if="reviewNotif" class="alert alertBottom alert-success">
+        <div class="container">
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('reviewNotif')">
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>check</md-icon>
+          </div>
+
+          <b> SUCCESS ALERT </b> : Review successfully added
+        </div>
+      </div>
       <div v-if="dangerNotif" class="alert alertBottom alert-danger">
         <div class="container">
           <button type="button" aria-hidden="true" class="close" @click="removeNotify('dangerNotif')">
@@ -326,9 +357,12 @@
 import { mapMutations, mapGetters } from "vuex";
 import { Tabs } from "@/components";
 import axios from "axios";
+import { validationMixin } from "vuelidate";
+import { required, email, minLength, maxLength } from "vuelidate/lib/validators";
 export default {
   name: "product-details",
   bodyClass: "product-page",
+  mixins: [validationMixin],
   props: {
     image: {
       type: String,
@@ -349,7 +383,10 @@ export default {
   },
   data() {
     return {
+      isAuthed: this.$store.state.user.loggedIn,
+      review: null,
       successNotif: false,
+      reviewNotif: false,
       dangerNotif: false,
       colorValidator: false,
       sizeValidator: false,
@@ -363,6 +400,11 @@ export default {
       rating: 0,
       colors: []
     };
+  },
+  validations: {
+    review: {
+      required
+    }
   },
   methods: {
     ...mapMutations(["ADD_TO_CART"]),
@@ -393,8 +435,41 @@ export default {
         this.ADD_TO_CART(product);
       }
     },
+    submitReview() {
+      let productId = window.location.pathname.slice(10);
+      axios
+        .put(`http://127.0.0.1:3000/api/products/${productId}/review`, {
+          user: "Heni Mezrani",
+          review: this.review
+        })
+        .then(response => {
+          console.log(response);
+          this.product.reviews.push({
+            user: "Heni Mezrani",
+            review: this.review
+          });
+          this.reviewNotif = true;
+          this.review = null;
+        });
+    },
     removeNotify(notifyClass) {
       this[notifyClass] = false;
+    },
+    getValidationClass(fieldName) {
+      const field = this.$v[fieldName];
+
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty
+        };
+      }
+    },
+    validatereview() {
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.submitReview();
+      }
     }
   },
   computed: {
@@ -480,5 +555,8 @@ export default {
 .errorspan {
   color: red;
   font-size: 0.9em;
+}
+.section-comments .title {
+  margin-bottom: 30px;
 }
 </style>
