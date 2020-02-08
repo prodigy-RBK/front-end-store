@@ -101,7 +101,7 @@
                   </div>
                 </div>
               </div>
-              <star-rating v-model="rating"></star-rating>
+              <star-rating v-model="rating" :increment="0.5" :star-size="35" :inline="true"></star-rating>
               <div style="text-align-last: end;">
                 <md-button @click="addToCart" class="float-left md-rose md-round">
                   Add to Cart &#xA0;
