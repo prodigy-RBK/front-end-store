@@ -129,7 +129,7 @@ export default {
   },
   async beforeMount() {
     let orderId = window.location.pathname.slice(9);
-    let { data } = await axios.get(`http://127.0.0.1:3000/api/orders/${orderId}`);
+    let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/orders/${orderId}`);
     // this.images = data.images
     this.order = data;
     console.log(this.order.userId);

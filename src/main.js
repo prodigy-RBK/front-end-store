@@ -21,6 +21,7 @@ import store from "./store";
 import axios from "axios";
 Vue.config.productionTip = false;
 
+Vue.use(require("vue-moment"));
 Vue.use(MaterialKit);
 const NavbarStore = {
   showNavbar: false

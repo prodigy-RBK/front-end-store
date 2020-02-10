@@ -11,8 +11,10 @@
               <div class="md-toolbar-section-start">
                 <h3 class="md-title">Menu</h3>
                 <md-list>
-                  <md-list-item href="/">
-                    <p>Link</p>
+                  <md-list-item>
+                    <router-link to="/" exact>
+                      <p>Link</p>
+                    </router-link>
                   </md-list-item>
 
                   <md-list-item href="javascript:void(0)">
@@ -33,35 +35,24 @@
                           >
                             <p>Dropdown</p>
                           </md-button>
-                          <ul
-                            class="dropdown-menu"
-                            :class="{ 'dropdown-menu-right': responsive }"
-                          >
+                          <ul class="dropdown-menu" :class="{ 'dropdown-menu-right': responsive }">
                             <li class="dropdown-header">Dropdown header</li>
                             <li>
                               <a href="#pablo" class="dropdown-item">Action</a>
                             </li>
                             <li>
-                              <a href="#pablo" class="dropdown-item"
-                                >Another action</a
-                              >
+                              <a href="#pablo" class="dropdown-item">Another action</a>
                             </li>
                             <li>
-                              <a href="#pablo" class="dropdown-item"
-                                >Something else here</a
-                              >
+                              <a href="#pablo" class="dropdown-item">Something else here</a>
                             </li>
                             <li class="dropdown-divider"></li>
                             <li>
-                              <a href="#pablo" class="dropdown-item"
-                                >Separated link</a
-                              >
+                              <a href="#pablo" class="dropdown-item">Separated link</a>
                             </li>
                             <li class="dropdown-divider"></li>
                             <li>
-                              <a href="#pablo" class="dropdown-item"
-                                >One more separated link</a
-                              >
+                              <a href="#pablo" class="dropdown-item">One more separated link</a>
                             </li>
                           </ul>
                         </drop-down>
@@ -71,9 +62,7 @@
                 </md-list>
               </div>
               <div class="md-toolbar-section-end">
-                <md-button
-                  class="md-just-icon md-simple md-white md-toolbar-toggle"
-                >
+                <md-button class="md-just-icon md-simple md-white md-toolbar-toggle">
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
@@ -94,9 +83,7 @@
                 <h3 class="md-title">Icons</h3>
               </div>
               <div class="md-toolbar-section-end">
-                <md-button
-                  class="md-just-icon md-simple md-white md-toolbar-toggle"
-                >
+                <md-button class="md-just-icon md-simple md-white md-toolbar-toggle">
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
@@ -129,31 +116,21 @@
                             <ul class="dropdown-menu dropdown-menu-right">
                               <li class="dropdown-header">Dropdown header</li>
                               <li>
-                                <a href="#pablo" class="dropdown-item"
-                                  >Action</a
-                                >
+                                <a href="#pablo" class="dropdown-item">Action</a>
                               </li>
                               <li>
-                                <a href="#pablo" class="dropdown-item"
-                                  >Another action</a
-                                >
+                                <a href="#pablo" class="dropdown-item">Another action</a>
                               </li>
                               <li>
-                                <a href="#pablo" class="dropdown-item"
-                                  >Something else here</a
-                                >
+                                <a href="#pablo" class="dropdown-item">Something else here</a>
                               </li>
                               <li class="dropdown-divider"></li>
                               <li>
-                                <a href="#pablo" class="dropdown-item"
-                                  >Separated link</a
-                                >
+                                <a href="#pablo" class="dropdown-item">Separated link</a>
                               </li>
                               <li class="dropdown-divider"></li>
                               <li>
-                                <a href="#pablo" class="dropdown-item"
-                                  >One more separated link</a
-                                >
+                                <a href="#pablo" class="dropdown-item">One more separated link</a>
                               </li>
                             </ul>
                           </drop-down>
