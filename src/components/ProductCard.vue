@@ -41,14 +41,14 @@
           @click="addToWishlist"
           v-show="!updatedInWishlist"
         >
-          <md-icon>favorite</md-icon>
+          <md-icon>favorite_border</md-icon>
         </md-button>
         <md-button
           class="md-rose md-just-icon md-simple"
           @click="removeFromWishlist"
           v-show="updatedInWishlist"
         >
-          <md-icon>favorite_border</md-icon>
+          <md-icon>favorite</md-icon>
         </md-button>
       </div>
     </div>
