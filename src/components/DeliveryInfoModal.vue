@@ -26,13 +26,25 @@
     <md-field class="md-form-group" :class="getValidationClass('city')" slot="inputs">
       <md-icon>change</md-icon>
       <label for="city">City...</label>
-      <md-input name="city" id="city" v-model="deliveryInfo.city" type="text" @keyup="$emit('update:deliveryInfo.city', deliveryInfo.city)"></md-input>
+      <md-input
+        name="city"
+        id="city"
+        v-model="deliveryInfo.city"
+        type="text"
+        @keyup="$emit('update:deliveryInfo.city', deliveryInfo.city)"
+      ></md-input>
       <span class="md-error errorspan" v-if="!v.city.required">City is required</span>
     </md-field>
     <md-field class="md-form-group" :class="getValidationClass('zip')" slot="inputs">
       <md-icon>lock_outline</md-icon>
       <label for="zip">Zip...</label>
-      <md-input name="zip" id="zip" v-model="deliveryInfo.zip" type="number" @keyup="$emit('update:deliveryInfo.zip', deliveryInfo.zip)"></md-input>
+      <md-input
+        name="zip"
+        id="zip"
+        v-model="deliveryInfo.zip"
+        type="number"
+        @keyup="$emit('update:deliveryInfo.zip', deliveryInfo.zip)"
+      ></md-input>
       <span class="md-error errorspan" v-if="!v.zip.required">Zip code is required</span>
     </md-field>
     <md-field class="md-form-group" :class="getValidationClass('country')" slot="inputs">
@@ -95,9 +107,7 @@ export default {
     }
   },
   methods: {
-    test() {
-      console.log("hi");
-    },
+    test() {},
     getValidationClass(fieldName) {
       const field = this.v[fieldName];
 
@@ -108,9 +118,7 @@ export default {
       }
     }
   },
-  mounted() {
-    console.log(this.v);
-  }
+  mounted() {}
 };
 </script>
 

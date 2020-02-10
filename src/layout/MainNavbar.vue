@@ -275,7 +275,6 @@ export default {
       this.$store.commit("UPDATE_LOGIN", true);
       this.$store.dispatch("UPDATE_USER_WISHLIST");
     } catch (err) {
-      console.log(err);
       this.$store.commit("UPDATE_LOGIN", false);
     }
   },

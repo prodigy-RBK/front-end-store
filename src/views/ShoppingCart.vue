@@ -389,7 +389,6 @@ export default {
               amount: orderPrice * 100
             }
           );
-          console.log(data);
           axios
             .post("https://prodigy-rbk.herokuapp.com/api/orders/order", {
               products: products,
@@ -397,8 +396,6 @@ export default {
               deliveryInfo: that.deliveryInfo
             })
             .then(response => {
-              console.log(response);
-
               that.resetStates();
               that.successNotif = true;
             });
@@ -445,7 +442,9 @@ export default {
         this.products[index].selectedColor = product.selectedColor;
         this.products[index].selectedQuantity = product.selectedQuantity;
         promises.push(
-          axios.get(`https://prodigy-rbk.herokuapp.com/api/products/${productId}`)
+          axios.get(
+            `https://prodigy-rbk.herokuapp.com/api/products/${productId}`
+          )
         );
       });
 
@@ -479,7 +478,6 @@ export default {
     let stripeScript = document.createElement("script");
     stripeScript.setAttribute("src", "https://checkout.stripe.com/checkout.js");
     document.head.appendChild(stripeScript);
-    console.log(this.$store.state.user.loggedIn);
     this.test();
   },
   updated() {

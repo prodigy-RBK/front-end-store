@@ -143,13 +143,15 @@ export default {
       this.control[arg] = !this.control[arg];
     },
     getBrands(gender) {
-      return axios.get(`https://prodigy-rbk.herokuapp.com/api/brand`).then(({ data }) => {
-        this.brands = data;
-        this.$store.commit("UPDATE_FILTERS", {
-          filter: "brands",
-          values: data
+      return axios
+        .get(`https://prodigy-rbk.herokuapp.com/api/brand`)
+        .then(({ data }) => {
+          this.brands = data;
+          this.$store.commit("UPDATE_FILTERS", {
+            filter: "brands",
+            values: data
+          });
         });
-      });
     },
     getTags(gender) {
       return axios
@@ -164,7 +166,9 @@ export default {
     },
     getCategories(gender) {
       return axios
-        .get(`https://prodigy-rbk.herokuapp.com/api/products/categories/${gender}`)
+        .get(
+          `https://prodigy-rbk.herokuapp.com/api/products/categories/${gender}`
+        )
         .then(({ data }) => {
           this.categories = data;
           this.$store.commit("UPDATE_FILTERS", {
@@ -176,7 +180,6 @@ export default {
     updatePriceRange() {
       this.filters.priceRange = this.sliders.rangeSlider;
       this.$store.dispatch("UPDATE_DISPLAYED_PRODUCTS", this.filters);
-      console.log(this.filters.priceRange);
     }
   },
   created: function() {
@@ -224,7 +227,6 @@ export default {
 .collapse.show {
   display: block;
 }
-
 
 .card {
   position: relative;
@@ -314,7 +316,6 @@ export default {
   margin-left: -0.625rem;
 }
 
-
 .clearfix::after {
   display: block;
   clear: both;
@@ -391,7 +392,6 @@ a .material-icons {
   margin-bottom: 25px;
   min-height: 32px;
 }
-
 
 input::-webkit-input-placeholder {
   line-height: 1.1;
@@ -485,7 +485,8 @@ label {
 }
 .page-header .iframe-container iframe {
   width: 100%;
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .header-filter {
@@ -658,7 +659,8 @@ b {
   color: rgba(0, 0, 0, 0.87);
   background: #fff;
   width: 100%;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .card .card-category:not([class*="text-"]) {
   color: #999999;
@@ -717,7 +719,8 @@ b {
   font-size: 18px;
 }
 .card.bmd-card-raised {
-  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
 }
 @media (min-width: 992px) {
   .card.bmd-card-flat {
@@ -737,7 +740,8 @@ b {
   color: #fff;
 }
 .card .card-header:not([class*="header-"]) {
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .card .card-header .nav-tabs {
   padding: 0;
@@ -758,7 +762,8 @@ b {
   width: 100%;
   border-radius: 6px;
   pointer-events: none;
-  box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .card .card-header.card-header-image .card-title {
   position: absolute;
@@ -787,7 +792,8 @@ b {
   box-shadow: none;
 }
 .card .card-header.card-header-image.no-shadow.shadow-normal {
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .card .card-header.card-header-image.no-shadow .colored-shadow {
   display: none !important;
@@ -829,22 +835,28 @@ b {
   background: linear-gradient(60deg, #ec407a, #c2185b);
 }
 .card .card-header-primary {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(156, 39, 176, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(156, 39, 176, 0.6);
 }
 .card .card-header-danger {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(244, 67, 54, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(244, 67, 54, 0.6);
 }
 .card .card-header-rose {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(233, 30, 99, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(233, 30, 99, 0.6);
 }
 .card .card-header-warning {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(255, 152, 0, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(255, 152, 0, 0.6);
 }
 .card .card-header-info {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(0, 188, 212, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(0, 188, 212, 0.6);
 }
 .card .card-header-success {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(76, 175, 80, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(76, 175, 80, 0.6);
 }
 .card [class*="header-"],
 .card[class*="bg-"] {
@@ -1157,7 +1169,12 @@ b {
   margin-bottom: 0;
 }
 
-.ecommerce-page .card-refine .checkbox input[type="checkbox"]:checked + .checkbox-material .check {
+.ecommerce-page
+  .card-refine
+  .checkbox
+  input[type="checkbox"]:checked
+  + .checkbox-material
+  .check {
   background: #e91e63;
 }
 

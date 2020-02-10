@@ -514,11 +514,7 @@ export default {
           selectedQuantity: this.selectedQuantity
         };
         for (let i = 0; i < this.$store.state.cart.length; i++) {
-          console.log("here");
-          console.log(product.productId);
-          console.log(this.$store.state.cart[i].productId);
           if (product.productId === this.$store.state.cart[i].productId) {
-            console.log("checking");
             if (
               product.selectedColor ===
                 this.$store.state.cart[i].selectedColor &&
@@ -543,7 +539,6 @@ export default {
           }
         )
         .then(response => {
-          console.log(response);
           this.product.reviews.push(
             response.data.reviews[response.data.reviews.length - 1]
           );
