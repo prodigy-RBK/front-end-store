@@ -143,7 +143,7 @@ export default {
       this.control[arg] = !this.control[arg];
     },
     getBrands(gender) {
-      return axios.get(`http://127.0.0.1:3000/api/brand`).then(({ data }) => {
+      return axios.get(`https://prodigy-rbk.herokuapp.com/api/brand`).then(({ data }) => {
         this.brands = data;
         this.$store.commit("UPDATE_FILTERS", {
           filter: "brands",
@@ -153,7 +153,7 @@ export default {
     },
     getTags(gender) {
       return axios
-        .get(`http://127.0.0.1:3000/api/products/tags/${gender}`)
+        .get(`https://prodigy-rbk.herokuapp.com/api/products/tags/${gender}`)
         .then(({ data }) => {
           this.tags = data;
           this.$store.commit("UPDATE_FILTERS", {
@@ -164,7 +164,7 @@ export default {
     },
     getCategories(gender) {
       return axios
-        .get(`http://127.0.0.1:3000/api/products/categories/${gender}`)
+        .get(`https://prodigy-rbk.herokuapp.com/api/products/categories/${gender}`)
         .then(({ data }) => {
           this.categories = data;
           this.$store.commit("UPDATE_FILTERS", {

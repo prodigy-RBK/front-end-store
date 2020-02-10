@@ -1,6 +1,11 @@
 <template>
   <div class="wrapper">
-    <parallax class="page-header header-filter header-small" filter-color="rose" parallax-active="true" :style="headerStyle">
+    <parallax
+      class="page-header header-filter header-small"
+      filter-color="rose"
+      parallax-active="true"
+      :style="headerStyle"
+    >
       <div class="md-layout">
         <div class="md-layout-item">
           <div class="image-wrapper index-page">
@@ -36,21 +41,34 @@
                   <tr v-for="(product, index) in products" :key="index">
                     <td>
                       <div class="img-container">
-                        <img v-if="product.productId && product.productId.images.length !== 0" :src="product.productId.images[0]" alt="..." />
+                        <img
+                          v-if="product.productId && product.productId.images.length !== 0"
+                          :src="product.productId.images[0]"
+                          alt="..."
+                        />
                       </div>
                     </td>
                     <td class="td-name">
-                      <a v-if="product.productId && product.productId.images.length !== 0" href="#pants">{{ product.productId.title }}</a>
+                      <a
+                        v-if="product.productId && product.productId.images.length !== 0"
+                        href="#pants"
+                      >{{ product.productId.title }}</a>
                     </td>
                     <td>{{ product.selectedColor }}</td>
                     <td>{{ product.selectedSize }}</td>
-                    <td class="td-number text-center" v-if="product.productId && product.productId.images.length !== 0">
+                    <td
+                      class="td-number text-center"
+                      v-if="product.productId && product.productId.images.length !== 0"
+                    >
                       <small>&euro;</small>
                       {{ product.productId.price }}
                     </td>
                     <td class="td-number text-center">
                       <div class="md-group md-group-sm">
-                        <md-button class="md-round md-info md-dense" @click="subtractQuantity(index)">
+                        <md-button
+                          class="md-round md-info md-dense"
+                          @click="subtractQuantity(index)"
+                        >
                           <i class="material-icons">remove</i>
                         </md-button>
                         <div style="background-color: #00bcd4; color: white; max-height: 32px">
@@ -61,11 +79,21 @@
                         </md-button>
                       </div>
                     </td>
-                    <td class="td-number text-center" v-if="product.productId && product.productId.images.length !== 0">
-                      <small>&euro;</small>{{ product.productId.price * product.selectedQuantity }}
+                    <td
+                      class="td-number text-center"
+                      v-if="product.productId && product.productId.images.length !== 0"
+                    >
+                      <small>&euro;</small>
+                      {{ product.productId.price * product.selectedQuantity }}
                     </td>
                     <td class="td-actions">
-                      <md-button rel="tooltip" data-placement="left" title="Remove item" class="md-simple" @click="deleteProduct(index)">
+                      <md-button
+                        rel="tooltip"
+                        data-placement="left"
+                        title="Remove item"
+                        class="md-simple"
+                        @click="deleteProduct(index)"
+                      >
                         <i class="material-icons">close</i>
                       </md-button>
                     </td>
@@ -89,13 +117,20 @@
                           <modal v-if="classicModal" @close="classicModalHide">
                             <template slot="header">
                               <h4 class="modal-title">Complete your checkout</h4>
-                              <md-button class="md-simple md-just-icon md-round modal-default-button" @click="classicModalHide">
+                              <md-button
+                                class="md-simple md-just-icon md-round modal-default-button"
+                                @click="classicModalHide"
+                              >
                                 <md-icon>clear</md-icon>
                               </md-button>
                             </template>
 
                             <template slot="body">
-                              <login-modal v-on:update:isAuthed="isAuthed = $event" :isAuthed="isAuthed" v-if="!isAuthed"></login-modal>
+                              <login-modal
+                                v-on:update:isAuthed="isAuthed = $event"
+                                :isAuthed="isAuthed"
+                                v-if="!isAuthed"
+                              ></login-modal>
 
                               <!-- <register-modal></register-modal> -->
 
@@ -104,14 +139,34 @@
                                 :deliveryInfo.sync="deliveryInfo"
                                 v-if="isAuthed && modalCount === 1"
                               ></delivery-info-modal>
-                              <confirmation-modal :deliveryInfo.sync="deliveryInfo" v-if="isAuthed && modalCount === 2"></confirmation-modal>
+                              <confirmation-modal
+                                :deliveryInfo.sync="deliveryInfo"
+                                v-if="isAuthed && modalCount === 2"
+                              ></confirmation-modal>
                             </template>
 
                             <template slot="footer">
-                              <a class="md-simple" href="/register" target="_blank" v-if="!isAuthed">Register</a>
-                              <md-button class="md-simple" v-if="isAuthed && modalCount > 1" @click="decModalCount">Back</md-button>
-                              <md-button class="md-simple" v-if="isAuthed && modalCount < 2" @click="incModalCount">Next</md-button>
-                              <md-button class="md-success md-simple" v-if="isAuthed && modalCount === 2" @click="submit">Submit order</md-button>
+                              <a
+                                class="md-simple"
+                                href="/register"
+                                target="_blank"
+                                v-if="!isAuthed"
+                              >Register</a>
+                              <md-button
+                                class="md-simple"
+                                v-if="isAuthed && modalCount > 1"
+                                @click="decModalCount"
+                              >Back</md-button>
+                              <md-button
+                                class="md-simple"
+                                v-if="isAuthed && modalCount < 2"
+                                @click="incModalCount"
+                              >Next</md-button>
+                              <md-button
+                                class="md-success md-simple"
+                                v-if="isAuthed && modalCount === 2"
+                                @click="submit"
+                              >Submit order</md-button>
 
                               <md-button class="md-danger md-simple" @click="classicModalHide">Close</md-button>
                             </template>
@@ -130,50 +185,70 @@
     <div id="notifications">
       <div v-if="successNotif" class="alert alertTop alert-success">
         <div class="container">
-          <button type="button" aria-hidden="true" class="close" @click="removeNotify('successNotif')">
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="removeNotify('successNotif')"
+          >
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
             <md-icon>check</md-icon>
           </div>
 
-          <b> SUCCESS ALERT </b> : Purchase completed!
+          <b>SUCCESS ALERT</b> : Purchase completed!
         </div>
       </div>
       <div v-if="dangerNotif" class="alert alertTop alert-danger">
         <div class="container">
-          <button type="button" aria-hidden="true" class="close" @click="removeNotify('dangerNotif')">
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="removeNotify('dangerNotif')"
+          >
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b> ERROR ALERT </b> : Cannot do that, please delete the product...
+          <b>ERROR ALERT</b> : Cannot do that, please delete the product...
         </div>
       </div>
     </div>
     <div id="notifications2">
       <div v-if="successNotif" class="alert alertBottom alert-success">
         <div class="container">
-          <button type="button" aria-hidden="true" class="close" @click="removeNotify('successNotif')">
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="removeNotify('successNotif')"
+          >
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
             <md-icon>check</md-icon>
           </div>
 
-          <b> SUCCESS ALERT </b> : Purchase completed!
+          <b>SUCCESS ALERT</b> : Purchase completed!
         </div>
       </div>
       <div v-if="dangerNotif" class="alert alertBottom alert-danger">
         <div class="container">
-          <button type="button" aria-hidden="true" class="close" @click="removeNotify('dangerNotif')">
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="removeNotify('dangerNotif')"
+          >
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b> ERROR ALERT </b> : Cannot do that, please delete the product...
+          <b>ERROR ALERT</b> : Cannot do that, please delete the product...
         </div>
       </div>
     </div>
@@ -192,7 +267,12 @@ import DeliveryInfoModal from "@/components";
 import PaymentInfoModal from "@/components";
 import ConfirmationModal from "@/components";
 import { validationMixin } from "vuelidate";
-import { required, email, minLength, maxLength } from "vuelidate/lib/validators";
+import {
+  required,
+  email,
+  minLength,
+  maxLength
+} from "vuelidate/lib/validators";
 
 export default {
   name: "shopping-cart",
@@ -241,7 +321,12 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["REMOVE_FROM_CART", "DELETE_CART", "ADD_QUANTITY", "SUBTRACT_QUANTITY"]),
+    ...mapMutations([
+      "REMOVE_FROM_CART",
+      "DELETE_CART",
+      "ADD_QUANTITY",
+      "SUBTRACT_QUANTITY"
+    ]),
     classicModalShow() {
       this.classicModal = true;
       if (this.modalCount === 0 && this.isAuthed) {
@@ -297,17 +382,19 @@ export default {
         key: this.publicKey,
         locale: "auto",
         token: async function(token) {
-          let { data } = await axios.post("http://127.0.0.1:3000/api/stripe/purchase", {
-            token: token.id,
-            amount: orderPrice * 100
-          });
+          let { data } = await axios.post(
+            "https://prodigy-rbk.herokuapp.com/api/stripe/purchase",
+            {
+              token: token.id,
+              amount: orderPrice * 100
+            }
+          );
           console.log(data);
           axios
-            .post("http://127.0.0.1:3000/api/orders/order", {
-              userId: "5e3701c760465a21305e7a70",
+            .post("https://prodigy-rbk.herokuapp.com/api/orders/order", {
               products: products,
               orderPrice: orderPrice,
-              deliveryInfo: this.deliveryInfo
+              deliveryInfo: that.deliveryInfo
             })
             .then(response => {
               console.log(response);
@@ -357,7 +444,9 @@ export default {
         this.products[index].selectedSize = product.selectedSize;
         this.products[index].selectedColor = product.selectedColor;
         this.products[index].selectedQuantity = product.selectedQuantity;
-        promises.push(axios.get(`http://127.0.0.1:3000/api/products/${productId}`));
+        promises.push(
+          axios.get(`https://prodigy-rbk.herokuapp.com/api/products/${productId}`)
+        );
       });
 
       await axios
@@ -817,7 +906,8 @@ a {
 }
 .page-header .iframe-container iframe {
   width: 100%;
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .header-filter {
@@ -1109,7 +1199,8 @@ h2.title {
   color: rgba(0, 0, 0, 0.87);
   background: #fff;
   width: 100%;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .card .card-category:not([class*="text-"]) {
   color: #999999;
@@ -1169,7 +1260,8 @@ h2.title {
 }
 
 .card.bmd-card-raised {
-  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
 }
 
 @media (min-width: 992px) {
@@ -1193,7 +1285,8 @@ h2.title {
 }
 
 .card .card-header:not([class*="header-"]) {
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .card .card-header .nav-tabs {
@@ -1218,7 +1311,8 @@ h2.title {
   width: 100%;
   border-radius: 6px;
   pointer-events: none;
-  box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .card .card-header.card-header-image .card-title {
@@ -1248,7 +1342,8 @@ h2.title {
   box-shadow: none;
 }
 .card .card-header.card-header-image.no-shadow.shadow-normal {
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .card .card-header.card-header-image.no-shadow .colored-shadow {
   display: none !important;
@@ -1290,22 +1385,28 @@ h2.title {
   background: linear-gradient(60deg, #ec407a, #c2185b);
 }
 .card .card-header-primary {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(156, 39, 176, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(156, 39, 176, 0.6);
 }
 .card .card-header-danger {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(244, 67, 54, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(244, 67, 54, 0.6);
 }
 .card .card-header-rose {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(233, 30, 99, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(233, 30, 99, 0.6);
 }
 .card .card-header-warning {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(255, 152, 0, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(255, 152, 0, 0.6);
 }
 .card .card-header-info {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(0, 188, 212, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(0, 188, 212, 0.6);
 }
 .card .card-header-success {
-  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(76, 175, 80, 0.6);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2),
+    0 13px 24px -11px rgba(76, 175, 80, 0.6);
 }
 .card [class*="header-"],
 .card[class*="bg-"] {
