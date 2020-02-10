@@ -265,8 +265,6 @@ export default {
     }
   },
   async beforeMount() {
-    console.log("nav", this.$store.state.cart);
-
     try {
       await axios.get("http://localhost:3000/api/user/verifytoken");
       this.$store.commit("UPDATE_LOGIN", true);

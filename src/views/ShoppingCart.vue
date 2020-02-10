@@ -30,9 +30,9 @@
                     <th>Product</th>
                     <th class="th-description">Color</th>
                     <th class="th-description">Size</th>
-                    <th class="text-right">Price</th>
-                    <th class="text-right">Qty</th>
-                    <th class="text-right">Amount</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">Qty</th>
+                    <th class="text-center">Amount</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -41,30 +41,48 @@
                   <tr v-for="(product, index) in products" :key="index">
                     <td>
                       <div class="img-container">
-                        <img :src="product.productId.images[0]" alt="..." />
+                        <img
+                          v-if="product.productId && product.productId.images.length !== 0"
+                          :src="product.productId.images[0]"
+                          alt="..."
+                        />
                       </div>
                     </td>
                     <td class="td-name">
-                      <a href="#pants">{{ product.productId.title }}</a>
+                      <a
+                        v-if="product.productId && product.productId.images.length !== 0"
+                        href="#pants"
+                      >{{ product.productId.title }}</a>
                     </td>
                     <td>{{ product.selectedColor }}</td>
                     <td>{{ product.selectedSize }}</td>
-                    <td class="td-number">
+                    <td
+                      class="td-number text-center"
+                      v-if="product.productId && product.productId.images.length !== 0"
+                    >
                       <small>&euro;</small>
                       {{ product.productId.price }}
                     </td>
-                    <td class="td-number">
-                      {{ product.selectedQuantity }}
+                    <td class="td-number text-center">
                       <div class="md-group md-group-sm">
-                        <md-button class="md-round md-info" @click="subtractQuantity(index)">
+                        <md-button
+                          class="md-round md-info md-dense"
+                          @click="subtractQuantity(index)"
+                        >
                           <i class="material-icons">remove</i>
                         </md-button>
-                        <md-button class="md-round md-info" @click="addQuantity(index)">
+                        <div style="background-color: #00bcd4; color: white; max-height: 32px">
+                          <h5 style="line-height: 0.8rem">{{ product.selectedQuantity }}</h5>
+                        </div>
+                        <md-button class="md-round md-info md-dense" @click="addQuantity(index)">
                           <i class="material-icons">add</i>
                         </md-button>
                       </div>
                     </td>
-                    <td class="td-number">
+                    <td
+                      class="td-number text-center"
+                      v-if="product.productId && product.productId.images.length !== 0"
+                    >
                       <small>&euro;</small>
                       {{ product.productId.price * product.selectedQuantity }}
                     </td>
@@ -89,10 +107,9 @@
                       <small>&euro;</small>
                       {{ this.cartPrice }}
                     </td>
-                    <td colspan="1"></td>
-                    <td colspan="2" class="text-right">
+                    <td colspan="3" class="text-center">
                       <div class="md-layout">
-                        <div class="md-layout-item md-size-33">
+                        <div class="md-layout-item">
                           <md-button class="md-info md-round" @click="classicModalShow()">
                             Complete Purchase
                             <i class="material-icons">keyboard_arrow_right</i>
@@ -118,6 +135,7 @@
                               <!-- <register-modal></register-modal> -->
 
                               <delivery-info-modal
+                                :v="$v.deliveryInfo"
                                 :deliveryInfo.sync="deliveryInfo"
                                 v-if="isAuthed && modalCount === 1"
                               ></delivery-info-modal>
@@ -164,6 +182,76 @@
         </div>
       </div>
     </div>
+    <div id="notifications">
+      <div v-if="successNotif" class="alert alertTop alert-success">
+        <div class="container">
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="removeNotify('successNotif')"
+          >
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>check</md-icon>
+          </div>
+
+          <b>SUCCESS ALERT</b> : Purchase completed!
+        </div>
+      </div>
+      <div v-if="dangerNotif" class="alert alertTop alert-danger">
+        <div class="container">
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="removeNotify('dangerNotif')"
+          >
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>info_outline</md-icon>
+          </div>
+          <b>ERROR ALERT</b> : Cannot do that, please delete the product...
+        </div>
+      </div>
+    </div>
+    <div id="notifications2">
+      <div v-if="successNotif" class="alert alertBottom alert-success">
+        <div class="container">
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="removeNotify('successNotif')"
+          >
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>check</md-icon>
+          </div>
+
+          <b>SUCCESS ALERT</b> : Purchase completed!
+        </div>
+      </div>
+      <div v-if="dangerNotif" class="alert alertBottom alert-danger">
+        <div class="container">
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="removeNotify('dangerNotif')"
+          >
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>info_outline</md-icon>
+          </div>
+          <b>ERROR ALERT</b> : Cannot do that, please delete the product...
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -178,9 +266,18 @@ import RegisterModal from "@/components";
 import DeliveryInfoModal from "@/components";
 import PaymentInfoModal from "@/components";
 import ConfirmationModal from "@/components";
+import { validationMixin } from "vuelidate";
+import {
+  required,
+  email,
+  minLength,
+  maxLength
+} from "vuelidate/lib/validators";
+
 export default {
   name: "shopping-cart",
   bodyClass: "product-page",
+  mixins: [validationMixin],
   props: {
     image: {
       type: String,
@@ -193,6 +290,8 @@ export default {
   },
   data() {
     return {
+      successNotif: false,
+      dangerNotif: false,
       classicModal: false,
       publicKey: "pk_test_aoYl8Wtzsg8kvzaCJTY1XLBO008PAkBhvW",
       isAuthed: this.$store.state.user.loggedIn,
@@ -211,60 +310,64 @@ export default {
       cartPrice: 0
     };
   },
+  validations: {
+    deliveryInfo: {
+      street1: { required },
+      city: { required },
+      zip: { required },
+      country: { required },
+      phone_number: { required },
+      payment_method: { required }
+    }
+  },
   methods: {
-    ...mapMutations(["REMOVE_FROM_CART", "DELETE_CART"]),
+    ...mapMutations([
+      "REMOVE_FROM_CART",
+      "DELETE_CART",
+      "ADD_QUANTITY",
+      "SUBTRACT_QUANTITY"
+    ]),
     classicModalShow() {
       this.classicModal = true;
       if (this.modalCount === 0 && this.isAuthed) {
         this.modalCount = 1;
       }
     },
+    removeNotify(notifyClass) {
+      this[notifyClass] = false;
+    },
     classicModalHide() {
       this.classicModal = false;
     },
     incModalCount() {
-      this.modalCount++;
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.modalCount++;
+      }
     },
     decModalCount() {
       this.modalCount--;
     },
     addQuantity(index) {
-      this.$store.state.cart[index];
-      this.products[index].selectedQuantity++;
+      this.ADD_QUANTITY(index);
+      this.test();
     },
     subtractQuantity(index) {
       if (this.products[index].selectedQuantity > 1) {
-        this.products[index].selectedQuantity--;
+        this.SUBTRACT_QUANTITY(index);
+        this.test();
       } else {
-        this.REMOVE_FROM_CART(index);
+        this.dangerNotif = true;
         // this.$store.state.cart.splice(index, 1);
-        // this.products.splice(index, 1);
       }
     },
     checkout() {
-      StripeCheckout.configure({
-        key: this.publicKey,
-        locale: "auto",
-        token: async function(token) {
-          let { data } = await axios.post(
-            "http://127.0.0.1:3000/api/stripe/purchase",
-            {
-              token: token.id,
-              amount: 2000
-            }
-          );
-          console.log({ data, token });
-        }
-      }).open({
-        amount: 2000
-      });
-    },
-    deleteProduct(index) {
-      this.REMOVE_FROM_CART(index);
-    },
-    submit() {
+      var that = this;
+      this.classicModal = false;
       let products = [];
       let orderPrice = 0;
+
       this.products.forEach(product => {
         products.push({
           productId: product.productId._id,
@@ -275,17 +378,41 @@ export default {
         });
         orderPrice += product.selectedQuantity * product.productId.price;
       });
-      axios
-        .post("http://127.0.0.1:3000/api/orders/order", {
-          userId: "5e3701c760465a21305e7a70",
-          products: products,
-          orderPrice: orderPrice,
-          deliveryInfo: this.deliveryInfo
-        })
-        .then(response => {
-          console.log(response);
-          this.resetStates();
-        });
+      StripeCheckout.configure({
+        key: this.publicKey,
+        locale: "auto",
+        token: async function(token) {
+          let { data } = await axios.post(
+            "http://127.0.0.1:3000/api/stripe/purchase",
+            {
+              token: token.id,
+              amount: orderPrice * 100
+            }
+          );
+          console.log(data);
+          axios
+            .post("http://127.0.0.1:3000/api/orders/order", {
+              products: products,
+              orderPrice: orderPrice,
+              deliveryInfo: that.deliveryInfo
+            })
+            .then(response => {
+              console.log(response);
+
+              that.resetStates();
+              that.successNotif = true;
+            });
+        }
+      }).open({
+        amount: orderPrice * 100
+      });
+    },
+    deleteProduct(index) {
+      this.REMOVE_FROM_CART(index);
+      this.products.splice(index, 1);
+    },
+    submit() {
+      this.checkout();
     },
     resetStates() {
       this.classicModal = false;
@@ -307,6 +434,33 @@ export default {
       };
       this.cartPrice = 0;
       this.DELETE_CART();
+    },
+    async test() {
+      let cart = this.$store.state.cart;
+      let promises = [];
+      await cart.forEach((product, index) => {
+        let productId = product.productId;
+        this.products[index] = {};
+        this.products[index].selectedSize = product.selectedSize;
+        this.products[index].selectedColor = product.selectedColor;
+        this.products[index].selectedQuantity = product.selectedQuantity;
+        promises.push(
+          axios.get(`http://127.0.0.1:3000/api/products/${productId}`)
+        );
+      });
+
+      await axios
+        .all(promises)
+        .then(results => {
+          results.forEach((response, index) => {
+            this.products[index].productId = response.data;
+          });
+        })
+        .then(() => {
+          this.cartPrice = this.products.reduce((acc, product) => {
+            return acc + product.productId.price * product.selectedQuantity;
+          }, 0);
+        });
     }
   },
   computed: {
@@ -322,28 +476,14 @@ export default {
     }
   },
   beforeMount() {
-    console.log("before", this.$store.state.cart);
     let stripeScript = document.createElement("script");
     stripeScript.setAttribute("src", "https://checkout.stripe.com/checkout.js");
     document.head.appendChild(stripeScript);
     console.log(this.$store.state.user.loggedIn);
-    let cart = this.$store.state.cart;
-    cart.forEach(async product => {
-      let productId = product.productId;
-      let { data } = await axios.get(
-        `http://127.0.0.1:3000/api/products/${productId}`
-      );
-      product.productId = data;
-    });
-
-    this.products = cart;
-    console.log({ store: this.$store.state.cart, cart });
-    this.cartPrice = this.$store.state.cart.reduce((acc, product) => {
-      return acc + product.productId.price * product.selectedQuantity;
-    }, 0);
+    this.test();
   },
   updated() {
-    this.cartPrice = this.$store.state.cart.reduce((acc, product) => {
+    this.cartPrice = this.products.reduce((acc, product) => {
       return acc + product.productId.price * product.selectedQuantity;
     }, 0);
   }
@@ -1377,5 +1517,9 @@ h2.title {
 
 thead th {
   border: none !important;
+}
+
+.table-responsive {
+  overflow: unset;
 }
 </style>
