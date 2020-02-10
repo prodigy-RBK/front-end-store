@@ -597,10 +597,10 @@ export default {
   },
   watch: {
     selectedSize: function() {
-      console.log(this.product.availability);
       this.colors = this.product.availability
         .filter(el => el.size === this.selectedSize)
         .map(elem => elem.color);
+      this.selectedColor = "Select color";
     },
     rating: function() {
       let productId = window.location.pathname.slice(10);
