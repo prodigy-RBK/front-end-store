@@ -46,9 +46,9 @@
                       <span :class="getSpanClass(order.orderStatus)">{{ order.orderStatus }}</span>
                     </td>
                     <td class="text-center">
-                      <a :href="'/account/' + order._id">
+                      <router-link :to="'/account/' + order._id" exact>
                         <md-icon>view_headline</md-icon>
-                      </a>
+                      </router-link>
                     </td>
                   </tr>
                   <!-- End of iteration -->
@@ -113,7 +113,7 @@ export default {
     }
   },
   async beforeMount() {
-    let { data } = await axios.get(`http://127.0.0.1:3000/api/orders/user/`);
+    let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/orders/user/`);
     this.orders = data;
   }
 };

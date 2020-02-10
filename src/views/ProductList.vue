@@ -264,7 +264,7 @@ export default {
       this.pageProducts = this.getDisplayedProducts().slice(min, max);
     },
     async fetchArticles() {
-      let { data } = await axios.get("http://127.0.0.1:3000/api/articles");
+      let { data } = await axios.get("https://prodigy-rbk.herokuapp.com/api/articles");
       this.popularArticles = data.popularArticles.articles;
       this.latestArticles = data.latestArticles.articles;
       this.popularArticles1 = this.popularArticles.slice(0, 3);

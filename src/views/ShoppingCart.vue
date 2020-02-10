@@ -383,7 +383,7 @@ export default {
         locale: "auto",
         token: async function(token) {
           let { data } = await axios.post(
-            "http://127.0.0.1:3000/api/stripe/purchase",
+            "https://prodigy-rbk.herokuapp.com/api/stripe/purchase",
             {
               token: token.id,
               amount: orderPrice * 100
@@ -391,7 +391,7 @@ export default {
           );
           console.log(data);
           axios
-            .post("http://127.0.0.1:3000/api/orders/order", {
+            .post("https://prodigy-rbk.herokuapp.com/api/orders/order", {
               products: products,
               orderPrice: orderPrice,
               deliveryInfo: that.deliveryInfo
@@ -445,7 +445,7 @@ export default {
         this.products[index].selectedColor = product.selectedColor;
         this.products[index].selectedQuantity = product.selectedQuantity;
         promises.push(
-          axios.get(`http://127.0.0.1:3000/api/products/${productId}`)
+          axios.get(`https://prodigy-rbk.herokuapp.com/api/products/${productId}`)
         );
       });
 

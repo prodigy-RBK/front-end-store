@@ -89,7 +89,7 @@ export default {
     getUserData(res) {
       FB.api("/me", "GET", { fields: "id,name,email" }, response => {
         axios
-          .post("http://localhost:3000/api/user/login/socialF", {
+          .post("https://prodigy-rbk.herokuapp.com/api/user/login/socialF", {
             token: res.response.authResponse.accessToken,
             email: response.email
           })
@@ -104,7 +104,7 @@ export default {
     onSuccess(googleUser) {
       var profile = googleUser.getBasicProfile();
       axios
-        .post("http://localhost:3000/api/user/login/social", {
+        .post("https://prodigy-rbk.herokuapp.com/api/user/login/social", {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
@@ -116,7 +116,7 @@ export default {
     submit: function(e) {
       this.sending = false;
       axios
-        .post("http://localhost:3000/api/user/login", {
+        .post("https://prodigy-rbk.herokuapp.com/api/user/login", {
           email: this.email,
           password: this.password
         })

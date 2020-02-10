@@ -5,14 +5,17 @@
     style="height: 100%"
   >
     <div class="card-header card-header-image">
-      <a :href="'/products/' + product._id">
+      <router-link :to="'/products/' + product._id" exact>
         <img :src="product.images[0]" alt="..." />
-      </a>
+      </router-link>
+      <!-- <a :to="'/products/' + product._id">
+        <img :src="product.images[0]" alt="..." />
+      </a>-->
     </div>
     <div class="card-body">
-      <a :href="'/products/' + product._id">
+      <router-link :to="'/products/' + product._id" exact>
         <h4 class="card-title">{{ product.title }}</h4>
-      </a>
+      </router-link>
       <p class="description">{{ product.description }}</p>
     </div>
     <div class="card-footer justify-content-between myFooter">

@@ -189,7 +189,8 @@
                 <div v-else>
                   <div class="media-body" style="text-align: center; margin-bottom: 20px">
                     <p>
-                      <a href="/login">Login</a> to post your review
+                      <router-link to="/login" exact>Login</router-link>
+                      <span></span> to post your review
                     </p>
                   </div>
                 </div>
@@ -535,9 +536,12 @@ export default {
     submitReview() {
       let productId = window.location.pathname.slice(10);
       axios
-        .put(`http://127.0.0.1:3000/api/products/${productId}/review`, {
-          review: this.review
-        })
+        .put(
+          `https://prodigy-rbk.herokuapp.com/api/products/${productId}/review`,
+          {
+            review: this.review
+          }
+        )
         .then(response => {
           console.log(response);
           this.product.reviews.push(
@@ -582,7 +586,7 @@ export default {
   async beforeMount() {
     let productId = window.location.pathname.slice(10);
     let { data } = await axios.get(
-      `http://127.0.0.1:3000/api/products/${productId}`
+      `https://prodigy-rbk.herokuapp.com/api/products/${productId}`
     );
     data.availability.map(elem => {
       if (!this.colors.includes(elem.color)) {
@@ -604,9 +608,12 @@ export default {
     },
     rating: function() {
       let productId = window.location.pathname.slice(10);
-      axios.put(`http://127.0.0.1:3000/api/products/${productId}/rating`, {
-        rating: this.rating
-      });
+      axios.put(
+        `https://prodigy-rbk.herokuapp.com/api/products/${productId}/rating`,
+        {
+          rating: this.rating
+        }
+      );
     }
   }
 };

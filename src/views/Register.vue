@@ -131,7 +131,7 @@
             <md-icon>info_outline</md-icon>
           </div>
           <b>ERROR ALERT</b> : This account already exists, want to
-          <a class="login-anchor" href="/login">Log In</a>? ...
+          <router-link class="login-anchor" to="/login" exact>Log In</router-link>? ...
         </div>
       </div>
       <div v-if="socialButtonNotif" class="alert alertTop alert-danger">
@@ -199,7 +199,7 @@
             <md-icon>info_outline</md-icon>
           </div>
           <b>ERROR ALERT</b> : This account already exists, want to
-          <a class="login-anchor" href="/login">Log In</a>? ...
+          <router-link class="login-anchor" to="/login" exact>Log In</router-link>? ...
         </div>
       </div>
       <div v-if="socialButtonNotif" class="alert alertBottom alert-danger">
@@ -306,7 +306,7 @@ export default {
     getUserData(res) {
       FB.api("/me", "GET", { fields: "id,name,email" }, response => {
         axios
-          .post("http://localhost:3000/api/user/login/socialF", {
+          .post("https://prodigy-rbk.herokuapp.com/api/user/login/socialF", {
             token: res.response.authResponse.accessToken,
             email: response.email
           })
@@ -323,7 +323,7 @@ export default {
     onSuccess(googleUser) {
       var profile = googleUser.getBasicProfile();
       axios
-        .post("http://localhost:3000/api/user/login/social", {
+        .post("https://prodigy-rbk.herokuapp.com/api/user/login/social", {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
@@ -340,7 +340,7 @@ export default {
     submit: function(e, next) {
       this.sending = false;
       axios
-        .post("http://localhost:3000/api/user/signUp", {
+        .post("https://prodigy-rbk.herokuapp.com/api/user/signUp", {
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,

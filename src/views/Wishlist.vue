@@ -78,7 +78,7 @@ export default {
     },
     async getWishlist() {
       let { data } = await axios.post(
-        `http://127.0.0.1:3000/api/products/allproducts`,
+        `https://prodigy-rbk.herokuapp.com/api/products/allproducts`,
         {
           products: this.$store.state.wishlist
         }
