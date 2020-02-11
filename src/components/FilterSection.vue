@@ -147,6 +147,7 @@ export default {
       this.filters.categoriesQuery = [];
       this.filters.tagsQuery = [];
       this.filters.priceRange = [0, 1000];
+      this.sliders.rangeSlider = [0, 1000];
     },
     getBrands(gender) {
       return axios
