@@ -6,8 +6,6 @@
       class="button"
       appId="2678136558938821"
       @login="getUserData"
-      @logout="onLogout"
-      @sdk-loaded="sdkLoaded"
       @get-initial-status="getUserData"
     ></facebook-login>
     <GoogleLogin
@@ -16,7 +14,6 @@
       :params="params"
       :renderParams="renderParams"
       :onSuccess="onSuccess"
-      :onFailure="onFailure"
     ></GoogleLogin>
     <p slot="description" class="description">Or Be Classical</p>
     <md-field class="md-form-group" :class="getValidationClass('email')" slot="inputs">
@@ -111,8 +108,8 @@ export default {
           })
           .then(response => {
             this.UPDATE_LOGIN(true);
-            this.$emit("update:isAuthed", true);
             localStorage.setItem("x-token", this.token);
+            this.$emit("update:isAuthed", true);
           });
       });
     },
@@ -141,20 +138,20 @@ export default {
         })
         .then(response => {
           if (response.data.status === "success") {
-            localStorage.setItem(
-              "x-token",
-              response.data.details.token.refreshToken
-            );
-            localStorage.setItem(
-              "x-refresh-token",
-              response.data.details.token.token
-            );
+            this.UPDATE_LOGIN(true);
             if (response.data.details.active) {
-              this.UPDATE_LOGIN(true);
-              this.$emit("update:isAuthed", true);
+              this.UPDATE_ACTIVATE();
+              this.successNotif = true;
+              window.setTimeout(() => {
+                this.$emit("update:isAuthed", true);
+              }, 1500);
             } else {
               router.push({ name: "confirmation" });
             }
+          } else if (response.data.status === "wrong password") {
+            this.wrongPasswordNotif = true;
+          } else {
+            this.wrongUsernameNotif = true;
           }
         })
         .catch(function(error) {});
