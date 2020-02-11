@@ -34,7 +34,7 @@
               <label>Search...</label>
 
               <template slot="md-autocomplete-item" slot-scope="{ item, term }">
-                <a class="anchorCustom" :md-term="term" :href="'/products/' + item._id">
+                <router-link :to="'/products/' + item._id" exact :md-term="term">
                   <div style="display: flex;">
                     <div class="imageDiv">
                       <img :src="item.images[0]" />
@@ -45,7 +45,7 @@
                       <h6 class="detailsDiv">$ {{ item.price }}</h6>
                     </div>
                   </div>
-                </a>
+                </router-link>
               </template>
 
               <template
@@ -59,11 +59,12 @@
               <!-- Here you can add your items from the section-start of your toolbar -->
             </mobile-menu>
             <md-list>
-              <md-list-item href="/">
-                <i class="material-icons">layers</i>
-                <p>Home</p>
+              <md-list-item>
+                <router-link to="/">
+                  <i class="material-icons">layers</i>
+                  <p>Home</p>
+                </router-link>
               </md-list-item>
-
               <md-list-item
                 href="https://demos.creative-tim.com/vue-material-kit/documentation/"
                 target="_blank"
@@ -89,22 +90,22 @@
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                          <a href="/products">
+                          <router-link to="/products" exact>
                             <i class="material-icons">view_day</i>
                             <p>Products</p>
-                          </a>
+                          </router-link>
                         </li>
                         <li>
-                          <a href="/productDetails">
+                          <router-link to="/productDetails" exact>
                             <i class="material-icons">fingerprint</i>
                             <p>Product Details</p>
-                          </a>
+                          </router-link>
                         </li>
                         <li>
-                          <a href="/shoppingCart">
+                          <router-link to="/shoppingCart" exact>
                             <i class="material-icons">account_circle</i>
                             <p>Shopping Cart</p>
-                          </a>
+                          </router-link>
                         </li>
                       </ul>
                     </drop-down>
@@ -127,38 +128,42 @@
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                          <a href="/account">
+                          <router-link to="/account" exact>
                             <i class="material-icons">view_day</i>
                             <p>Account</p>
-                          </a>
+                          </router-link>
                         </li>
                         <li>
-                          <a href="/login">
+                          <router-link to="/login" exact>
                             <i class="material-icons">fingerprint</i>
                             <p>Login</p>
-                          </a>
+                          </router-link>
                         </li>
                         <li>
-                          <a href="/register">
+                          <router-link to="/register" exact>
                             <i class="material-icons">account_circle</i>
                             <p>Register</p>
-                          </a>
+                          </router-link>
                         </li>
                       </ul>
                     </drop-down>
                   </div>
                 </a>
               </li>
-              <md-list-item href="/wishlist">
-                <i class="material-icons">favorite</i>
+              <md-list-item>
+                <router-link to="/wishlist" exact>
+                  <i class="material-icons">favorite</i>
+                </router-link>
               </md-list-item>
               <md-badge
                 class="md-primary"
                 md-position="top"
                 :md-content="this.$store.state.cart.length"
               >
-                <md-list-item href="/shoppingCart">
-                  <i class="material-icons">shopping_cart</i>
+                <md-list-item>
+                  <router-link to="/shoppingCart" exact>
+                    <i class="material-icons">shopping_cart</i>
+                  </router-link>
                 </md-list-item>
               </md-badge>
             </md-list>
@@ -265,10 +270,8 @@ export default {
     }
   },
   async beforeMount() {
-    console.log("nav", this.$store.state.cart);
-
     try {
-      await axios.get("http://localhost:3000/api/user/verifytoken");
+      await axios.get("https://prodigy-rbk.herokuapp.com/api/user/verifytoken");
       this.$store.commit("UPDATE_LOGIN", true);
       this.$store.dispatch("UPDATE_USER_WISHLIST");
     } catch (err) {

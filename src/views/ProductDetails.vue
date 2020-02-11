@@ -8,11 +8,10 @@
         'background-image': `url(${require('../assets/img/bg6.jpg')})`
       }"
     >
-      <div class="container"></div>
     </parallax>
 
     <div class="section">
-      <div class="container">
+      <div class="container" style="max-width: 1600px;">
         <div class="main main-raised-custom main-product">
           <div class="row">
             <div class="col-md-6 col-sm-6">
@@ -121,15 +120,13 @@
                   <div v-for="(review, index) in product.reviews" :key="index" class="media">
                     <div class="media-body">
                       <h4 class="media media-heading">
-                        {{ review.user
-                        }}<small
-                          >&#xB7; {{ review.creationDate | moment("from", "now", true) }} <span v-if="!review.creationDate">a few seconds </span>ago</small
-                        >
+                        {{ review.user }}
+                        <small>
+                          &#xB7; {{ review.creationDate | moment("from", "now", true) }} <span v-if="!review.creationDate">a few seconds</span>ago
+                        </small>
                       </h4>
                       <h6 class="text-muted"></h6>
-                      <p>
-                        {{ review.review }}
-                      </p>
+                      <p>{{ review.review }}</p>
                     </div>
                   </div>
                 </div>
@@ -151,7 +148,10 @@
                 </div>
                 <div v-else>
                   <div class="media-body" style="text-align: center; margin-bottom: 20px">
-                    <p><a href="/login">Login</a> to post your review</p>
+                    <p>
+                      <router-link to="/login" exact>Login</router-link>
+                      <span></span> to post your review
+                    </p>
                   </div>
                 </div>
                 <!-- end media-post -->
@@ -174,9 +174,7 @@
                   <h4 class="card-title">
                     <a href="#pablo">Dolce &amp; Gabbana</a>
                   </h4>
-                  <div class="card-description">
-                    Dolce &amp; Gabbana's 'Greta' tote has been crafted in Italy from hard-wearing red textured-leather.
-                  </div>
+                  <div class="card-description">Dolce &amp; Gabbana's 'Greta' tote has been crafted in Italy from hard-wearing red textured-leather.</div>
                 </div>
                 <div class="card-footer justify-content-between">
                   <div class="price">
@@ -258,9 +256,7 @@
                   <h4 class="card-title">
                     <a href="#pablo">Dolce &amp; Gabbana</a>
                   </h4>
-                  <div class="card-description">
-                    Dolce &amp; Gabbana's 'Greta' tote has been crafted in Italy from hard-wearing red textured-leather.
-                  </div>
+                  <div class="card-description">Dolce &amp; Gabbana's 'Greta' tote has been crafted in Italy from hard-wearing red textured-leather.</div>
                 </div>
                 <div class="card-footer justify-content-between">
                   <div class="price">
@@ -287,7 +283,7 @@
           <div class="alert-icon">
             <md-icon>check</md-icon>
           </div>
-          <b> SUCCESS ALERT </b> : Product successfully added to cart
+          <b>SUCCESS ALERT</b> : Product successfully added to cart
         </div>
       </div>
       <div v-if="reviewNotif" class="alert alertTop alert-success">
@@ -299,7 +295,7 @@
             <md-icon>check</md-icon>
           </div>
 
-          <b> SUCCESS ALERT </b> : Review successfully added
+          <b>SUCCESS ALERT</b> : Review successfully added
         </div>
       </div>
       <div v-if="dangerNotif" class="alert alertTop alert-danger">
@@ -310,7 +306,7 @@
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b> ERROR ALERT </b> : This product already exists in your shopping cart where you can modify the quantity...
+          <b>ERROR ALERT</b> : This product already exists in your shopping cart where you can modify the quantity...
         </div>
       </div>
     </div>
@@ -324,7 +320,7 @@
             <md-icon>check</md-icon>
           </div>
 
-          <b> SUCCESS ALERT </b> : Successfully added
+          <b>SUCCESS ALERT</b> : Successfully added
         </div>
       </div>
       <div v-if="reviewNotif" class="alert alertBottom alert-success">
@@ -336,7 +332,7 @@
             <md-icon>check</md-icon>
           </div>
 
-          <b> SUCCESS ALERT </b> : Review successfully added
+          <b>SUCCESS ALERT</b> : Review successfully added
         </div>
       </div>
       <div v-if="dangerNotif" class="alert alertBottom alert-danger">
@@ -347,7 +343,7 @@
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b> ERROR ALERT </b> : This product already exists in your shopping cart where you can modify the quantity...
+          <b>ERROR ALERT</b> : This product already exists in your shopping cart where you can modify the quantity...
         </div>
       </div>
     </div>
@@ -438,16 +434,12 @@ export default {
     submitReview() {
       let productId = window.location.pathname.slice(10);
       axios
-        .put(`http://127.0.0.1:3000/api/products/${productId}/review`, {
-          user: "Heni Mezrani",
+        .put(`https://prodigy-rbk.herokuapp.com/api/products/${productId}/review`, {
           review: this.review
         })
         .then(response => {
           console.log(response);
-          this.product.reviews.push({
-            user: "Heni Mezrani",
-            review: this.review
-          });
+          this.product.reviews.push(response.data.reviews[response.data.reviews.length - 1]);
           this.reviewNotif = true;
           this.review = null;
         });
@@ -486,7 +478,7 @@ export default {
   },
   async beforeMount() {
     let productId = window.location.pathname.slice(10);
-    let { data } = await axios.get(`http://127.0.0.1:3000/api/products/${productId}`);
+    let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/products/${productId}`);
     data.availability.map(elem => {
       if (!this.colors.includes(elem.color)) {
         this.colors.push(elem.color);
@@ -500,12 +492,12 @@ export default {
   },
   watch: {
     selectedSize: function() {
-      console.log(this.product.availability);
       this.colors = this.product.availability.filter(el => el.size === this.selectedSize).map(elem => elem.color);
+      this.selectedColor = "Select color";
     },
     rating: function() {
       let productId = window.location.pathname.slice(10);
-      axios.put(`http://127.0.0.1:3000/api/products/${productId}/rating`, {
+      axios.put(`https://prodigy-rbk.herokuapp.com/api/products/${productId}/rating`, {
         rating: this.rating
       });
     }

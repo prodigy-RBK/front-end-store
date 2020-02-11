@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="section page-header header-filter" :style="headerStyle">
-      <div class="container">
+      <div class="container" style="max-width:1600px;">
         <div class="md-layout">
           <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
             <login-card header-color="green">
@@ -183,10 +183,17 @@ export default {
       logoutButton: true,
       // only needed if you want to render the button with the google ui
       renderParams: {
-        width: 280,
+        width: "300%",
         height: 35,
         longtitle: true
       }
+
+      //   display: flex;
+      // flex-direction: column;
+      // align-items: center;
+      // height: 100px;
+      // padding: 0px 0px;
+      // place-content: space-evenly;
     };
   },
   validations: {
@@ -218,7 +225,7 @@ export default {
     getUserData(res) {
       FB.api("/me", "GET", { fields: "id,name,email" }, response => {
         axios
-          .post("http://localhost:3000/api/user/login/socialF", {
+          .post("https://prodigy-rbk.herokuapp.com/api/user/login/socialF", {
             token: res.response.authResponse.accessToken,
             email: response.email
           })
@@ -236,7 +243,7 @@ export default {
     onSuccess(googleUser) {
       var profile = googleUser.getBasicProfile();
       axios
-        .post("http://localhost:3000/api/user/login/social", {
+        .post("https://prodigy-rbk.herokuapp.com/api/user/login/social", {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
@@ -252,7 +259,7 @@ export default {
     submit: function(e) {
       this.sending = false;
       axios
-        .post("http://localhost:3000/api/user/login", {
+        .post("https://prodigy-rbk.herokuapp.com/api/user/login", {
           email: this.email,
           password: this.password
         })

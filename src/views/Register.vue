@@ -1,30 +1,20 @@
 <template>
   <div class="wrapper">
     <div class="section page-header header-filter" :style="headerStyle">
-      <div class="container">
+      <div class="container" style="max-width: 1600px;">
         <div class="md-layout">
           <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Register</h4>
-              <facebook-login
-                slot="buttons"
-                class="button"
-                appId="2678136558938821"
-                @login="getUserData"
-                @logout="onLogout"
-                @sdk-loaded="sdkLoaded"
-                @get-initial-status="getUserData"
-              ></facebook-login>
+              <facebook-login slot="buttons" class="button" appId="2678136558938821" @login="getUserData" @get-initial-status="getUserData"></facebook-login>
               <GoogleLogin
                 slot="buttons"
                 class="button"
                 :params="params"
                 :renderParams="renderParams"
                 :onSuccess="onSuccess"
-                :onFailure="onFailure"
                 style="content: Login with Google !important;"
-              >
-              </GoogleLogin>
+              ></GoogleLogin>
               <br />
               <p slot="description" class="description">Or Be Classical</p>
 
@@ -73,7 +63,7 @@
             <md-icon>check</md-icon>
           </div>
 
-          <b> SUCCESS </b> : Yuhuuu! You're logged In!
+          <b>SUCCESS</b> : Yuhuuu! You're logged In!
         </div>
       </div>
       <div v-if="confirmationNotif" class="alert alertTop alert-success">
@@ -84,7 +74,7 @@
           <div class="alert-icon">
             <md-icon>check</md-icon>
           </div>
-          <b> SUCCESS </b> : Yuhuuu! You're successfully registered! Please check your email to confirm your account!
+          <b>SUCCESS</b> : Yuhuuu! You're successfully registered! Please check your email to confirm your account!
         </div>
       </div>
       <div v-if="emailExistsNotif" class="alert alertTop alert-danger">
@@ -95,7 +85,7 @@
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b> ERROR ALERT </b> : This account already exists, want to <a class="login-anchor" href="/login">Log In</a>? ...
+          <b>ERROR ALERT</b> : This account already exists, want to <router-link class="login-anchor" to="/login" exact>Log In</router-link>? ...
         </div>
       </div>
       <div v-if="socialButtonNotif" class="alert alertTop alert-danger">
@@ -106,7 +96,7 @@
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b> ERROR ALERT </b> : Seems like you're registered using social buttons. Try to Log In using Google or Facebook...
+          <b>ERROR ALERT</b> : Seems like you're registered using social buttons. Try to Log In using Google or Facebook...
         </div>
       </div>
     </div>
@@ -120,7 +110,7 @@
             <md-icon>check</md-icon>
           </div>
 
-          <b> SUCCESS </b> : Yuhuuu! You're logged In!
+          <b>SUCCESS</b> : Yuhuuu! You're logged In!
         </div>
       </div>
       <div v-if="confirmationNotif" class="alert alertBottom alert-success">
@@ -131,7 +121,7 @@
           <div class="alert-icon">
             <md-icon>check</md-icon>
           </div>
-          <b> SUCCESS </b> : Yuhuuu! You're successfully registered! Please check your email to confirm your account!
+          <b>SUCCESS</b> : Yuhuuu! You're successfully registered! Please check your email to confirm your account!
         </div>
       </div>
       <div v-if="emailExistsNotif" class="alert alertBottom alert-danger">
@@ -142,7 +132,7 @@
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b> ERROR ALERT </b> : This account already exists, want to <a class="login-anchor" href="/login">Log In</a>? ...
+          <b>ERROR ALERT</b> : This account already exists, want to <router-link class="login-anchor" to="/login" exact>Log In</router-link>? ...
         </div>
       </div>
       <div v-if="socialButtonNotif" class="alert alertBottom alert-danger">
@@ -153,7 +143,7 @@
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b> ERROR ALERT </b> : Seems like you're registered using social buttons. Try to Log In using Google or Facebook...
+          <b>ERROR ALERT</b> : Seems like you're registered using social buttons. Try to Log In using Google or Facebook...
         </div>
       </div>
     </div>
@@ -195,8 +185,8 @@ export default {
       logoutButton: true,
       // only needed if you want to render the button with the google ui
       renderParams: {
-        width: 250,
-        height: 50,
+        width: "300%",
+        height: 35,
         longtitle: true
       }
     };
@@ -238,7 +228,7 @@ export default {
     getUserData(res) {
       FB.api("/me", "GET", { fields: "id,name,email" }, response => {
         axios
-          .post("http://localhost:3000/api/user/login/socialF", {
+          .post("https://prodigy-rbk.herokuapp.com/api/user/login/socialF", {
             token: res.response.authResponse.accessToken,
             email: response.email
           })
@@ -255,7 +245,7 @@ export default {
     onSuccess(googleUser) {
       var profile = googleUser.getBasicProfile();
       axios
-        .post("http://localhost:3000/api/user/login/social", {
+        .post("https://prodigy-rbk.herokuapp.com/api/user/login/social", {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
@@ -269,7 +259,7 @@ export default {
     submit: function(e, next) {
       this.sending = false;
       axios
-        .post("http://localhost:3000/api/user/signUp", {
+        .post("https://prodigy-rbk.herokuapp.com/api/user/signUp", {
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,

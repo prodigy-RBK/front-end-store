@@ -12,7 +12,7 @@
       </div>
     </parallax>
     <div class="main main-raised-cart">
-      <div class="container">
+      <div class="container" style="max-width:1600px;">
         <div class="card card-plain">
           <div class="card-body">
             <h3 class="card-title">Order # {{ order._id }}</h3>
@@ -60,6 +60,7 @@
                       Total
                     </td>
                     <td colspan="1" class="td-price"><small>&euro;</small>{{ order.orderPrice }}</td>
+                    <td colspan="1"></td>
                     <td colspan="1"></td>
                   </tr>
                 </tbody>
@@ -129,7 +130,7 @@ export default {
   },
   async beforeMount() {
     let orderId = window.location.pathname.slice(9);
-    let { data } = await axios.get(`http://127.0.0.1:3000/api/orders/${orderId}`);
+    let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/orders/${orderId}`);
     // this.images = data.images
     this.order = data;
     console.log(this.order.userId);

@@ -54,7 +54,7 @@
         name="phone_number"
         id="phone_number"
         v-model="deliveryInfo.phone_number"
-        type="text"
+        type="number"
         @keyup="$emit('update:deliveryInfo.phone_number', deliveryInfo.phone_number)"
       ></md-input>
       <span class="md-error errorspan" v-if="!v.phone_number.required">Phone number is required</span>

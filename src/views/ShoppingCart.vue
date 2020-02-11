@@ -12,7 +12,7 @@
       </div>
     </parallax>
     <div class="main main-raised-cart">
-      <div class="container">
+      <div class="container" style="max-width: 1600px;">
         <div class="card card-plain">
           <div class="card-body">
             <h3 class="card-title">Shopping Cart</h3>
@@ -62,7 +62,8 @@
                       </div>
                     </td>
                     <td class="td-number text-center" v-if="product.productId && product.productId.images.length !== 0">
-                      <small>&euro;</small>{{ product.productId.price * product.selectedQuantity }}
+                      <small>&euro;</small>
+                      {{ product.productId.price * product.selectedQuantity }}
                     </td>
                     <td class="td-actions">
                       <md-button rel="tooltip" data-placement="left" title="Remove item" class="md-simple" @click="deleteProduct(index)">
@@ -137,7 +138,7 @@
             <md-icon>check</md-icon>
           </div>
 
-          <b> SUCCESS ALERT </b> : Purchase completed!
+          <b>SUCCESS ALERT</b> : Purchase completed!
         </div>
       </div>
       <div v-if="dangerNotif" class="alert alertTop alert-danger">
@@ -148,7 +149,7 @@
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b> ERROR ALERT </b> : Cannot do that, please delete the product...
+          <b>ERROR ALERT</b> : Cannot do that, please delete the product...
         </div>
       </div>
     </div>
@@ -162,7 +163,7 @@
             <md-icon>check</md-icon>
           </div>
 
-          <b> SUCCESS ALERT </b> : Purchase completed!
+          <b>SUCCESS ALERT</b> : Purchase completed!
         </div>
       </div>
       <div v-if="dangerNotif" class="alert alertBottom alert-danger">
@@ -173,7 +174,7 @@
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b> ERROR ALERT </b> : Cannot do that, please delete the product...
+          <b>ERROR ALERT</b> : Cannot do that, please delete the product...
         </div>
       </div>
     </div>
@@ -297,17 +298,16 @@ export default {
         key: this.publicKey,
         locale: "auto",
         token: async function(token) {
-          let { data } = await axios.post("http://127.0.0.1:3000/api/stripe/purchase", {
+          let { data } = await axios.post("https://prodigy-rbk.herokuapp.com/api/stripe/purchase", {
             token: token.id,
             amount: orderPrice * 100
           });
           console.log(data);
           axios
-            .post("http://127.0.0.1:3000/api/orders/order", {
-              userId: "5e3701c760465a21305e7a70",
+            .post("https://prodigy-rbk.herokuapp.com/api/orders/order", {
               products: products,
               orderPrice: orderPrice,
-              deliveryInfo: this.deliveryInfo
+              deliveryInfo: that.deliveryInfo
             })
             .then(response => {
               console.log(response);
@@ -357,7 +357,7 @@ export default {
         this.products[index].selectedSize = product.selectedSize;
         this.products[index].selectedColor = product.selectedColor;
         this.products[index].selectedQuantity = product.selectedQuantity;
-        promises.push(axios.get(`http://127.0.0.1:3000/api/products/${productId}`));
+        promises.push(axios.get(`https://prodigy-rbk.herokuapp.com/api/products/${productId}`));
       });
 
       await axios
@@ -392,6 +392,9 @@ export default {
     document.head.appendChild(stripeScript);
     console.log(this.$store.state.user.loggedIn);
     this.test();
+  },
+  mounted() {
+    console.log(this.products);
   },
   updated() {
     this.cartPrice = this.products.reduce((acc, product) => {
