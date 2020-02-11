@@ -65,7 +65,6 @@ export default new Vuex.Store({
     },
     ADD_TO_CART: (state, product) => {
       state.cart.push(product);
-      console.log(state.cart)
     },
     REMOVE_FROM_CART: (state, index) => {
       state.cart.splice(index, 1);

@@ -486,9 +486,7 @@ export default {
     document.head.appendChild(stripeScript);
     this.test();
   },
-  mounted() {
-    console.log(this.products);
-  },
+  mounted() {},
   updated() {
     this.cartPrice = this.products.reduce((acc, product) => {
       return acc + product.productId.price * product.selectedQuantity;

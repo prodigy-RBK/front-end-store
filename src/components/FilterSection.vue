@@ -4,6 +4,7 @@
       <h4 class="card-title">
         Refine
         <md-button
+          @click="resetFilters"
           class="md-just-icon md-simple pull-right"
           rel="tooltip"
           title
@@ -114,7 +115,6 @@ export default {
       brandsQuery: [],
       categoriesQuery: [],
       tagsQuery: [],
-      priceRange: [],
       priceRange: [0, 1000]
     },
     categories: [],
@@ -141,6 +141,12 @@ export default {
     },
     toggleAccordion: function(arg) {
       this.control[arg] = !this.control[arg];
+    },
+    resetFilters() {
+      this.filters.brandsQuery = [];
+      this.filters.categoriesQuery = [];
+      this.filters.tagsQuery = [];
+      this.filters.priceRange = [0, 1000];
     },
     getBrands(gender) {
       return axios

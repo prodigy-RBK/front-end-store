@@ -141,7 +141,9 @@
                         {{ review.user }}
                         <small>
                           &#xB7; {{ review.creationDate | moment("from", "now", true) }}
-                          <span v-if="!review.creationDate">a few seconds</span>ago
+                          <span
+                            v-if="!review.creationDate"
+                          >a few seconds</span>ago
                         </small>
                       </h4>
                       <h6 class="text-muted"></h6>
@@ -510,7 +512,6 @@ export default {
         };
         for (let i = 0; i < this.$store.state.cart.length; i++) {
           if (product.productId === this.$store.state.cart[i].productId) {
-            console.log("checking");
             if (
               product.selectedColor ===
                 this.$store.state.cart[i].selectedColor &&
@@ -535,7 +536,6 @@ export default {
           }
         )
         .then(response => {
-          console.log(response);
           this.product.reviews.push(
             response.data.reviews[response.data.reviews.length - 1]
           );
