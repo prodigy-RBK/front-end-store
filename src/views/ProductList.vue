@@ -25,7 +25,7 @@
 
     <div class="main main-raised">
       <div class="section">
-        <div class="container">
+        <div class="container" style="max-width: 1600px;">
           <!-- Section: Latest Offers -->
           <h2 class="section-title">Latest Offers</h2>
           <div class="row">
@@ -64,9 +64,10 @@
           </div>
         </div>
       </div>
+
       <!-- section: Product List -->
       <div class="section">
-        <div class="container">
+        <div class="container" style="max-width: 1600px;">
           <h2 class="section-title">Find what you need</h2>
           <div class="row">
             <div class="col-md-3">
@@ -96,39 +97,47 @@
           </div>
           <br />
           <h2 class="section-title">News in fashion</h2>
-          <div class="row">
+          <div class="row" style="margin-bottom: 20px;">
             <div class="col-md-4" v-for="article in popularArticles1" :key="article.title">
               <div
                 class="card card-background"
+                style="height: 100%"
                 :style="{
                   'background-image': 'url(' + article.urlToImage + ')'
                 }"
               >
                 <div class="card-body">
-                  <h6 class="card-category text-info">{{ article.author }}</h6>
-                  <a :href="article.url" target="_blanck">
-                    <h3 class="card-title">{{ article.title }}</h3>
-                  </a>
-                  <p class="card-description">{{ article.description }}</p>
-                  <md-button :href="article.url" class="md-white md-round" target="_blanck"> <i class="material-icons">subject</i> Read </md-button>
+                  <div class="custombody">
+                    <h6 class="card-category text-info">{{ article.author }}</h6>
+                    <a :href="article.url" target="_blanck">
+                      <h3 class="card-title">{{ article.title }}</h3>
+                    </a>
+                    <p class="card-description">{{ article.description }}</p>
+                    <md-button :href="article.url" class="md-white md-round" target="_blank"> <i class="material-icons">subject</i> Read </md-button>
+                  </div>
                 </div>
               </div>
               <!-- end card -->
             </div>
+          </div>
+          <div class="row">
             <div class="col-md-6" v-for="article in popularArticles2" :key="article.title">
               <div
+                style="height: 100%"
                 class="card card-background"
                 :style="{
                   'background-image': 'url(' + article.urlToImage + ')'
                 }"
               >
                 <div class="card-body">
-                  <h6 class="card-category text-info">{{ article.author }}</h6>
-                  <a :href="article.url" target="_blanck">
-                    <h3 class="card-title">{{ article.title }}</h3>
-                  </a>
-                  <p class="card-description">{{ article.description }}</p>
-                  <md-button :href="article.url" class="md-white md-round" target="_blanck"> <i class="material-icons">subject</i> Read </md-button>
+                  <div class="custombody">
+                    <h6 class="card-category text-info">{{ article.author }}</h6>
+                    <a :href="article.url" target="_blanck">
+                      <h3 class="card-title">{{ article.title }}</h3>
+                    </a>
+                    <p class="card-description">{{ article.description }}</p>
+                    <md-button :href="article.url" class="md-white md-round" target="_blanck"> <i class="material-icons">subject</i> Read </md-button>
+                  </div>
                 </div>
               </div>
               <!-- end card -->
@@ -137,30 +146,6 @@
         </div>
       </div>
       <!-- section -->
-    </div>
-    <!-- end-main-raised -->
-    <div class="section section-blog">
-      <div class="container">
-        <h2 class="section-title">Latest Articles</h2>
-        <div class="row">
-          <div class="col-md-4" v-for="article in latestArticles" :key="article.title">
-            <div class="card card-blog">
-              <div class="card-header card-header-image">
-                <a :href="article.url" target="_blanck">
-                  <img :src="article.urlToImage" alt />
-                </a>
-              </div>
-              <div class="card-body">
-                <h6 class="card-category text-rose">{{ article.author }}</h6>
-                <h4 class="card-title">
-                  <a :href="article.url" target="_blanck">{{ article.title }}</a>
-                </h4>
-                <p class="card-description">{{ article.description }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <!-- section -->
     <div
@@ -265,10 +250,10 @@ export default {
     },
     async fetchArticles() {
       let { data } = await axios.get("https://prodigy-rbk.herokuapp.com/api/articles");
-      this.popularArticles = data.popularArticles.articles;
       this.latestArticles = data.latestArticles.articles;
-      this.popularArticles1 = this.popularArticles.slice(0, 3);
-      this.popularArticles2 = this.popularArticles.slice(3);
+      this.popularArticles1 = this.latestArticles.slice(0, 3);
+      this.popularArticles2 = this.latestArticles.slice(1, 3);
+      // this.popularArticles2 = this.popularArticles.slice(3, 5);
     }
   },
   computed: {
@@ -2402,5 +2387,14 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
 
 .myPagination {
   margin-top: 50px;
+}
+
+.custombody {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: space-between;
+  justify-content: center;
+  height: 100%;
 }
 </style>

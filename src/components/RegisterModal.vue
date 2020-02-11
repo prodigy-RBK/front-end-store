@@ -70,8 +70,8 @@ export default {
       logoutButton: true,
       // only needed if you want to render the button with the google ui
       renderParams: {
-        width: 250,
-        height: 50,
+        width: "300%",
+        height: 35,
         longtitle: true
       }
     };

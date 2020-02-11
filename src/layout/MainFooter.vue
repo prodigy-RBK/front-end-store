@@ -1,6 +1,6 @@
 <template>
   <footer class="footer" :class="{ [`footer-${type}`]: type }" :data-background-color="backgroundColor">
-    <div class="container">
+    <div class="container" style="max-width:1600px;">
       <nav>
         <ul>
           <li>
