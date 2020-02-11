@@ -2,7 +2,16 @@
   <md-card class="md-card-login" :class="{ 'md-card-hidden': cardHidden }">
     <md-card-header :class="getClass(headerColor)">
       <slot name="title"></slot>
-      <div class="social-line">
+      <div
+        class="social-line"
+        style="        
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100px;
+      padding: 0px 67px;
+      place-content: space-evenly;"
+      >
         <slot name="buttons"></slot>
       </div>
     </md-card-header>
