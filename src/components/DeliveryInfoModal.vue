@@ -80,7 +80,7 @@
         id="payment_method"
         @md-selected="$emit('update:deliveryInfo.phone_number', deliveryInfo.phone_number)"
       >
-        <md-option value="paypall">Paypall</md-option>
+        <!-- <md-option value="paypall">Paypall</md-option> -->
         <md-option value="cash_on_delivery">Cash On Delivery</md-option>
         <md-option value="credit_card">Credit Card</md-option>
       </md-select>

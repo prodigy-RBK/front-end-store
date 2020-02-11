@@ -367,7 +367,6 @@ export default {
       this.classicModal = false;
       let products = [];
       let orderPrice = 0;
-
       this.products.forEach(product => {
         products.push({
           productId: product.productId._id,
@@ -378,31 +377,38 @@ export default {
         });
         orderPrice += product.selectedQuantity * product.productId.price;
       });
-      StripeCheckout.configure({
-        key: this.publicKey,
-        locale: "auto",
-        token: async function(token) {
-          let { data } = await axios.post(
-            "https://prodigy-rbk.herokuapp.com/api/stripe/purchase",
-            {
-              token: token.id,
-              amount: orderPrice * 100
-            }
-          );
-          axios
-            .post("https://prodigy-rbk.herokuapp.com/api/orders/order", {
-              products: products,
-              orderPrice: orderPrice,
-              deliveryInfo: that.deliveryInfo
-            })
-            .then(response => {
-              that.resetStates();
-              that.successNotif = true;
-            });
-        }
-      }).open({
-        amount: orderPrice * 100
-      });
+      if (this.deliveryInfo.payment_method === "Credit Card") {
+        StripeCheckout.configure({
+          key: this.publicKey,
+          locale: "auto",
+          token: async function(token) {
+            let { data } = await axios.post(
+              "https://prodigy-rbk.herokuapp.com/api/stripe/purchase",
+              {
+                token: token.id,
+                amount: orderPrice * 100
+              }
+            );
+            this.postOrder(products, orderPrice, that.deliveryInfo);
+          }
+        }).open({
+          amount: orderPrice * 100
+        });
+      } else {
+        this.postOrder(products, orderPrice, that.deliveryInfo);
+      }
+    },
+    postOrder(products, orderPrice, deliveryInfo) {
+      axios
+        .post("https://prodigy-rbk.herokuapp.com/api/orders/order", {
+          products,
+          orderPrice,
+          deliveryInfo
+        })
+        .then(response => {
+          this.resetStates();
+          this.successNotif = true;
+        });
     },
     deleteProduct(index) {
       this.REMOVE_FROM_CART(index);
