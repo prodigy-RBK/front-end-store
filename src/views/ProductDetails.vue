@@ -7,12 +7,10 @@
       :style="{
         'background-image': `url(${require('../assets/img/bg6.jpg')})`
       }"
-    >
-      <div class="container"></div>
-    </parallax>
+    ></parallax>
 
     <div class="section">
-      <div class="container">
+      <div class="container" style="max-width: 1600px;">
         <div class="main main-raised-custom main-product">
           <div class="row">
             <div class="col-md-6 col-sm-6">
@@ -140,13 +138,10 @@
                   <div v-for="(review, index) in product.reviews" :key="index" class="media">
                     <div class="media-body">
                       <h4 class="media media-heading">
-                        {{ review.user
-                        }}
+                        {{ review.user }}
                         <small>
                           &#xB7; {{ review.creationDate | moment("from", "now", true) }}
-                          <span
-                            v-if="!review.creationDate"
-                          >a few seconds</span>ago
+                          <span v-if="!review.creationDate">a few seconds</span>ago
                         </small>
                       </h4>
                       <h6 class="text-muted"></h6>
@@ -515,6 +510,7 @@ export default {
         };
         for (let i = 0; i < this.$store.state.cart.length; i++) {
           if (product.productId === this.$store.state.cart[i].productId) {
+            console.log("checking");
             if (
               product.selectedColor ===
                 this.$store.state.cart[i].selectedColor &&
@@ -539,6 +535,7 @@ export default {
           }
         )
         .then(response => {
+          console.log(response);
           this.product.reviews.push(
             response.data.reviews[response.data.reviews.length - 1]
           );

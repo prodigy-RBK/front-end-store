@@ -17,7 +17,7 @@
       </div>
     </parallax>
     <div class="main main-raised-cart">
-      <div class="container">
+      <div class="container" style="max-width: 1600px;">
         <div class="card card-plain">
           <div class="card-body">
             <h3 class="card-title">Shopping Cart</h3>
@@ -479,6 +479,9 @@ export default {
     stripeScript.setAttribute("src", "https://checkout.stripe.com/checkout.js");
     document.head.appendChild(stripeScript);
     this.test();
+  },
+  mounted() {
+    console.log(this.products);
   },
   updated() {
     this.cartPrice = this.products.reduce((acc, product) => {

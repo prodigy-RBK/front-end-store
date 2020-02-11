@@ -17,7 +17,7 @@
       </div>
     </parallax>
     <div class="main main-raised-cart">
-      <div class="container">
+      <div class="container" style="max-width:1600px;">
         <div class="card card-plain">
           <div class="card-body">
             <h3 class="card-title">Order # {{ order._id }}</h3>
@@ -66,6 +66,7 @@
                       <small>&euro;</small>
                       {{ order.orderPrice }}
                     </td>
+                    <td colspan="1"></td>
                     <td colspan="1"></td>
                   </tr>
                 </tbody>

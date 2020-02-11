@@ -1,20 +1,12 @@
 <template>
   <div class="wrapper">
     <div class="section page-header header-filter" :style="headerStyle">
-      <div class="container">
+      <div class="container" style="max-width: 1600px;">
         <div class="md-layout">
-          <div
-            class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
-          >
+          <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Register</h4>
-              <facebook-login
-                slot="buttons"
-                class="button"
-                appId="2678136558938821"
-                @login="getUserData"
-                @get-initial-status="getUserData"
-              ></facebook-login>
+              <facebook-login slot="buttons" class="button" appId="2678136558938821" @login="getUserData" @get-initial-status="getUserData"></facebook-login>
               <GoogleLogin
                 slot="buttons"
                 class="button"
@@ -26,29 +18,19 @@
               <br />
               <p slot="description" class="description">Or Be Classical</p>
 
-              <md-field
-                class="md-form-group"
-                :class="getValidationClass('firstName')"
-                slot="inputs"
-              >
+              <md-field class="md-form-group" :class="getValidationClass('firstName')" slot="inputs">
                 <md-icon>face</md-icon>
                 <label for="firstName">First Name...</label>
                 <md-input name="firstName" id="firstName" v-model="firstName" type="firstName"></md-input>
                 <span class="md-error" v-if="!$v.firstName.required">First name is required</span>
-                <span
-                  class="md-error"
-                  v-else-if="!$v.firstName.minlength"
-                >Your first name should have a minimum of 3 characters</span>
+                <span class="md-error" v-else-if="!$v.firstName.minlength">Your first name should have a minimum of 3 characters</span>
               </md-field>
               <md-field class="md-form-group" :class="getValidationClass('lastName')" slot="inputs">
                 <md-icon>face</md-icon>
                 <label for="lastName">Last Name...</label>
                 <md-input name="lastName" id="lastName" v-model="lastName" type="lastName"></md-input>
                 <span class="md-error" v-if="!$v.lastName.required">Last name is required</span>
-                <span
-                  class="md-error"
-                  v-else-if="!$v.lastName.minlength"
-                >Your last name should have a minimum of 3 characters</span>
+                <span class="md-error" v-else-if="!$v.lastName.minlength">Your last name should have a minimum of 3 characters</span>
               </md-field>
               <md-field class="md-form-group" :class="getValidationClass('email')" slot="inputs">
                 <md-icon>email</md-icon>
@@ -62,22 +44,10 @@
                 <label for="password">Password...</label>
                 <md-input name="password" id="password" v-model="password" type="password"></md-input>
                 <span class="md-error" v-if="!$v.password.required">Password is required</span>
-                <span
-                  class="md-error"
-                  v-else-if="!$v.password.minlength"
-                >Your password should have a minimum of 8 characters</span>
+                <span class="md-error" v-else-if="!$v.password.minlength">Your password should have a minimum of 8 characters</span>
               </md-field>
-              <md-progress-bar
-                style="width: 100%"
-                slot="footer"
-                md-mode="indeterminate"
-                v-if="sending"
-              />
-              <md-button
-                slot="footer"
-                @click="validateUser"
-                class="md-simple md-success md-lg"
-              >Register</md-button>
+              <md-progress-bar style="width: 100%" slot="footer" md-mode="indeterminate" v-if="sending" />
+              <md-button slot="footer" @click="validateUser" class="md-simple md-success md-lg">Register</md-button>
             </login-card>
           </div>
         </div>
@@ -86,12 +56,7 @@
     <div id="notifications">
       <div v-if="successNotif" class="alert alertTop alert-success">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('successNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('successNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -103,12 +68,7 @@
       </div>
       <div v-if="confirmationNotif" class="alert alertTop alert-success">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('confirmationNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('confirmationNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -119,29 +79,18 @@
       </div>
       <div v-if="emailExistsNotif" class="alert alertTop alert-danger">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('emailExistsNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('emailExistsNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b>ERROR ALERT</b> : This account already exists, want to
-          <router-link class="login-anchor" to="/login" exact>Log In</router-link>? ...
+          <b>ERROR ALERT</b> : This account already exists, want to <router-link class="login-anchor" to="/login" exact>Log In</router-link>? ...
         </div>
       </div>
       <div v-if="socialButtonNotif" class="alert alertTop alert-danger">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('socialButtonNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('socialButtonNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -154,12 +103,7 @@
     <div id="notifications2">
       <div v-if="successNotif" class="alert alertBottom alert-success">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('successNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('successNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -171,12 +115,7 @@
       </div>
       <div v-if="confirmationNotif" class="alert alertBottom alert-success">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('confirmationNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('confirmationNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -187,29 +126,18 @@
       </div>
       <div v-if="emailExistsNotif" class="alert alertBottom alert-danger">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('emailExistsNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('emailExistsNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
             <md-icon>info_outline</md-icon>
           </div>
-          <b>ERROR ALERT</b> : This account already exists, want to
-          <router-link class="login-anchor" to="/login" exact>Log In</router-link>? ...
+          <b>ERROR ALERT</b> : This account already exists, want to <router-link class="login-anchor" to="/login" exact>Log In</router-link>? ...
         </div>
       </div>
       <div v-if="socialButtonNotif" class="alert alertBottom alert-danger">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('socialButtonNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('socialButtonNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -230,12 +158,7 @@ import router from "../router";
 import { mapMutations, mapGetters } from "vuex";
 import axios from "axios";
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  email,
-  minLength,
-  maxLength
-} from "vuelidate/lib/validators";
+import { required, email, minLength, maxLength } from "vuelidate/lib/validators";
 
 export default {
   components: {
@@ -257,14 +180,13 @@ export default {
       email: null,
       password: null,
       params: {
-        client_id:
-          "533129668624-0iiemq738iusdp6tdq5791thhiks11fq.apps.googleusercontent.com"
+        client_id: "533129668624-0iiemq738iusdp6tdq5791thhiks11fq.apps.googleusercontent.com"
       },
       logoutButton: true,
       // only needed if you want to render the button with the google ui
       renderParams: {
-        width: 250,
-        height: 50,
+        width: "300%",
+        height: 35,
         longtitle: true
       }
     };
@@ -327,10 +249,7 @@ export default {
           token: googleUser.getAuthResponse().id_token
         })
         .then(response => {
-          localStorage.setItem(
-            "x-token",
-            googleUser.getAuthResponse().id_token
-          );
+          localStorage.setItem("x-token", googleUser.getAuthResponse().id_token);
           this.successNotif = true;
           window.setTimeout(() => {
             router.push({ name: "index" });

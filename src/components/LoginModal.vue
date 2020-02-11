@@ -1,13 +1,22 @@
 <template>
-  <div>
+  <div
+    style="        
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0px 67px;
+      place-content: space-evenly;"
+  >
     <h4 slot="title" class="card-title">Login</h4>
     <facebook-login
+      style="justify-content: center;"
       slot="buttons"
       class="button"
       appId="2678136558938821"
       @login="getUserData"
       @get-initial-status="getUserData"
     ></facebook-login>
+    <br />
     <GoogleLogin
       slot="buttons"
       class="button"
@@ -15,6 +24,7 @@
       :renderParams="renderParams"
       :onSuccess="onSuccess"
     ></GoogleLogin>
+    <br />
     <p slot="description" class="description">Or Be Classical</p>
     <md-field class="md-form-group" :class="getValidationClass('email')" slot="inputs">
       <md-icon>email</md-icon>
@@ -72,8 +82,8 @@ export default {
       logoutButton: true,
       // only needed if you want to render the button with the google ui
       renderParams: {
-        width: 250,
-        height: 50,
+        width: "225%",
+        height: 35,
         longtitle: true
       }
     };
