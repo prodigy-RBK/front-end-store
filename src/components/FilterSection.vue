@@ -127,7 +127,7 @@ export default {
       isOpenOne: true,
       isOpenTwo: false,
       isOpenThree: false,
-      isOpenFour: true
+      isOpenFour: false
     }
   }),
   methods: {
