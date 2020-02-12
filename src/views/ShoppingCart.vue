@@ -216,6 +216,22 @@
           <b>ERROR ALERT</b> : Cannot do that, please delete the product...
         </div>
       </div>
+      <div v-if="quantityNotif" class="alert alertTop alert-danger">
+        <div class="container">
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="removeNotify('quantityNotif')"
+          >
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>info_outline</md-icon>
+          </div>
+          <b>ERROR ALERT</b> : Maximum quantity reached...
+        </div>
+      </div>
     </div>
     <div id="notifications2">
       <div v-if="successNotif" class="alert alertBottom alert-success">
@@ -249,6 +265,22 @@
             <md-icon>info_outline</md-icon>
           </div>
           <b>ERROR ALERT</b> : Cannot do that, please delete the product...
+        </div>
+      </div>
+      <div v-if="quantityNotif" class="alert alertBottom alert-danger">
+        <div class="container">
+          <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            @click="removeNotify('quantityNotif')"
+          >
+            <md-icon>clear</md-icon>
+          </button>
+          <div class="alert-icon">
+            <md-icon>info_outline</md-icon>
+          </div>
+          <b>ERROR ALERT</b> : Maximum quantity reached...
         </div>
       </div>
     </div>
@@ -292,6 +324,7 @@ export default {
     return {
       successNotif: false,
       dangerNotif: false,
+      quantityNotif: false,
       classicModal: false,
       publicKey: "pk_test_aoYl8Wtzsg8kvzaCJTY1XLBO008PAkBhvW",
       isAuthed: this.$store.state.user.loggedIn,
@@ -350,8 +383,21 @@ export default {
       this.modalCount--;
     },
     addQuantity(index) {
-      this.ADD_QUANTITY(index);
-      this.test();
+      const cartProduct = this.$store.state.cart[index];
+      this.products[index].productId.availability.forEach(elm => {
+        if (
+          elm.color === cartProduct.selectedColor &&
+          elm.size === cartProduct.selectedSize
+        ) {
+          if (elm.quantity < cartProduct.selectedQuantity + 1) {
+            this.quantityNotif = true;
+          }
+        }
+      });
+      if (!this.quantityNotif) {
+        this.ADD_QUANTITY(index);
+        this.test();
+      }
     },
     subtractQuantity(index) {
       if (this.products[index].selectedQuantity > 1) {

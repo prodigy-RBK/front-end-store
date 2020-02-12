@@ -93,7 +93,7 @@
                           style="padding: 10px"
                           type="number"
                           id="big"
-                          min="1"
+                          min="0"
                           :max="maxQuantity"
                           v-model="selectedQuantity"
                         ></md-input>
@@ -609,12 +609,11 @@ export default {
     });
     this.product = data;
     this.rating = data.rating;
-    console.log(this.inStock, "inStock");
     if (!this.inStock) {
       this.selectedSize = "Out of Stock";
       this.selectedColor = "Out of Stock";
-      console.log(this.selectedColor);
       this.selectedQuantity = 0;
+      this.maxQuantity = 0;
     }
   },
   watch: {
