@@ -399,8 +399,17 @@ export default {
         this.test();
       }
     },
-    checkAvailability(cartProduct) {
-      console.log(cartProduct);
+    checkAvailability(cartProduct, index) {
+      cartProduct.productId.availability.forEach(elm => {
+        if (
+          elm.color === cartProduct.selectedColor &&
+          elm.size === cartProduct.selectedSize
+        ) {
+          if (elm.quantity < cartProduct.selectedQuantity) {
+            this.deleteProduct(index);
+          }
+        }
+      });
     },
     subtractQuantity(index) {
       if (this.products[index].selectedQuantity > 1) {
@@ -508,7 +517,7 @@ export default {
         .then(results => {
           results.forEach((response, index) => {
             this.products[index].productId = response.data;
-            this.checkAvailability(this.products[index]);
+            this.checkAvailability(this.products[index], index);
           });
         })
         .then(() => {
