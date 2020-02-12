@@ -94,7 +94,7 @@
                           type="number"
                           id="big"
                           min="1"
-                          max="5"
+                          :max="maxQuantity"
                           v-model="selectedQuantity"
                         ></md-input>
                       </md-menu>
@@ -120,9 +120,17 @@
               </div>
               <star-rating v-model="rating" :increment="0.5" :star-size="35" :inline="true"></star-rating>
               <div style="text-align-last: end;">
-                <md-button @click="addToCart" class="float-left md-rose md-round">
+                <md-button
+                  @click="addToCart"
+                  :class="{'float-left md-rose md-round' : inStock, 'float-left md-round': !inStock}"
+                >
                   Add to Cart &#xA0;
                   <i class="material-icons">shopping_cart</i>
+                  <md-tooltip
+                    :class="{'ahashakeheartache': test}"
+                    v-if="!inStock"
+                    md-direction="top"
+                  >Out of stock</md-tooltip>
                 </md-button>
               </div>
             </div>
@@ -473,6 +481,7 @@ export default {
     return {
       isAuthed: this.$store.state.user.loggedIn,
       review: null,
+      test: false,
       successNotif: false,
       reviewNotif: false,
       dangerNotif: false,
@@ -484,6 +493,8 @@ export default {
       activeSize: false,
       activeColor: false,
       product: null,
+      maxQuantity: 1,
+      inStock: false,
       sizes: [],
       rating: 0,
       colors: []
@@ -503,6 +514,11 @@ export default {
       ) {
         this.sizeValidator = true;
         this.colorValidator = true;
+      } else if (!this.inStock) {
+        this.test = true;
+        setTimeout(() => {
+          this.test = false;
+        }, 500);
       } else {
         var product = {
           productId: this.product._id,
@@ -581,22 +597,46 @@ export default {
       `https://prodigy-rbk.herokuapp.com/api/products/${productId}`
     );
     data.availability.map(elem => {
-      if (!this.colors.includes(elem.color)) {
-        this.colors.push(elem.color);
-      }
-      if (!this.sizes.includes(elem.size)) {
-        this.sizes.push(elem.size);
+      if (!!elem.quantity) {
+        this.inStock = true;
+        if (!this.colors.includes(elem.color)) {
+          this.colors.push(elem.color);
+        }
+        if (!this.sizes.includes(elem.size)) {
+          this.sizes.push(elem.size);
+        }
       }
     });
     this.product = data;
     this.rating = data.rating;
+    console.log(this.inStock, "inStock");
+    if (!this.inStock) {
+      this.selectedSize = "Out of Stock";
+      this.selectedColor = "Out of Stock";
+      console.log(this.selectedColor);
+      this.selectedQuantity = 0;
+    }
   },
   watch: {
     selectedSize: function() {
       this.colors = this.product.availability
         .filter(el => el.size === this.selectedSize)
         .map(elem => elem.color);
-      this.selectedColor = "Select color";
+      this.selectedColor = this.inStock ? "Select color" : "Out of Stock";
+      // this.selectedColor = "Select color";
+    },
+    selectedColor: function() {
+      this.product.availability.forEach(elm => {
+        if (
+          this.selectedSize === elm.size &&
+          this.selectedColor === elm.color
+        ) {
+          this.maxQuantity = elm.quantity;
+          if (this.maxQuantity < this.selectedQuantity) {
+            this.selectedQuantity = 1;
+          }
+        }
+      });
     },
     rating: function() {
       let productId = window.location.pathname.slice(10);
@@ -656,5 +696,29 @@ export default {
 }
 .section-comments .title {
   margin-bottom: 30px;
+}
+
+.ahashakeheartache {
+  -webkit-animation: kf_shake 0.4s 1 linear;
+}
+@-webkit-keyframes kf_shake {
+  0% {
+    -webkit-transform: translate(30px);
+  }
+  20% {
+    -webkit-transform: translate(-30px);
+  }
+  40% {
+    -webkit-transform: translate(15px);
+  }
+  60% {
+    -webkit-transform: translate(-15px);
+  }
+  80% {
+    -webkit-transform: translate(8px);
+  }
+  100% {
+    -webkit-transform: translate(0px);
+  }
 }
 </style>
