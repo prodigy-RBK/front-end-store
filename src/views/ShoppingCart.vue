@@ -399,6 +399,9 @@ export default {
         this.test();
       }
     },
+    checkAvailability(cartProduct) {
+      console.log(cartProduct);
+    },
     subtractQuantity(index) {
       if (this.products[index].selectedQuantity > 1) {
         this.SUBTRACT_QUANTITY(index);
@@ -505,6 +508,7 @@ export default {
         .then(results => {
           results.forEach((response, index) => {
             this.products[index].productId = response.data;
+            this.checkAvailability(this.products[index]);
           });
         })
         .then(() => {

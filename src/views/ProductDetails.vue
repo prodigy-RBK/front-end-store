@@ -524,7 +524,7 @@ export default {
           productId: this.product._id,
           selectedColor: this.selectedColor,
           selectedSize: this.selectedSize,
-          selectedQuantity: this.selectedQuantity
+          selectedQuantity: parseInt(this.selectedQuantity)
         };
         for (let i = 0; i < this.$store.state.cart.length; i++) {
           if (product.productId === this.$store.state.cart[i].productId) {
