@@ -435,23 +435,20 @@ export default {
         });
         orderPrice += product.selectedQuantity * product.productId.price;
       });
-      if (this.deliveryInfo.payment_method === "Credit Card") {
+      if (this.deliveryInfo.payment_method === "credit_card") {
         StripeCheckout.configure({
           key: this.publicKey,
           locale: "auto",
           token: async function(token) {
-            let { data } = await axios.post(
+            let {
+              data
+            } = await axios.post(
               "https://prodigy-rbk.herokuapp.com/api/stripe/purchase",
-              {
-                token: token.id,
-                amount: orderPrice * 100
-              }
+              { token: token.id, amount: orderPrice * 100 }
             );
-            this.postOrder(products, orderPrice, that.deliveryInfo);
+            that.postOrder(products, orderPrice, that.deliveryInfo);
           }
-        }).open({
-          amount: orderPrice * 100
-        });
+        }).open({ amount: orderPrice * 100 });
       } else {
         this.postOrder(products, orderPrice, that.deliveryInfo);
       }
