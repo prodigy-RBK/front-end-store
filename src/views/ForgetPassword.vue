@@ -291,7 +291,7 @@ export default {
       this.sending = false;
       var token = window.location.pathname.split("/")[2];
       axios
-        .post(`https://prodigy-store.onrender.com/api/user/updatePassword/${token}`, {
+        .post(`https://prodigy-rbk.herokuapp.com/api/user/updatePassword/${token}`, {
           password: this.password
         })
         .then(response => {
