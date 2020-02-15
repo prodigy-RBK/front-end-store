@@ -271,7 +271,7 @@ export default {
     submit: function(e) {
       this.sending = false;
       axios
-        .post("http://localhost:3000/api/user/resetPassword", {
+        .post("https://prodigy-store.onrender.com/api/user/resetPassword", {
           email: this.email
         })
         .then(response => {

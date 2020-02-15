@@ -1,7 +1,7 @@
 import axios from "axios";
 export default function verify({ next, store, to }) {
   axios
-    .post(`http://localhost:3000/api/user/verifyEmailPassword/${to.params.token}`)
+    .post(`https://prodigy-store.onrender.com/api/user/verifyEmailPassword/${to.params.token}`)
     .then(res => {
       console.log(res.data);
       return next();

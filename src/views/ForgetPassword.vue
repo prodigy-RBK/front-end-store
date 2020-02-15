@@ -292,7 +292,7 @@ export default {
       var token = window.location.pathname.split("/")[2];
       console.log(token);
       axios
-        .post(`http://localhost:3000/api/user/updatePassword/${token}`, {
+        .post(`https://prodigy-store.onrender.com/api/user/updatePassword/${token}`, {
           password: this.password
         })
         .then(response => {
