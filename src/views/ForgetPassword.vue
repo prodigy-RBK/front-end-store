@@ -290,7 +290,6 @@ export default {
     submit: function(e) {
       this.sending = false;
       var token = window.location.pathname.split("/")[2];
-      console.log(token);
       axios
         .post(`https://prodigy-store.onrender.com/api/user/updatePassword/${token}`, {
           password: this.password
@@ -301,7 +300,6 @@ export default {
           }
         })
         .catch(function(error) {
-          console.log(error);
         });
     },
     getValidationClass(fieldName) {
