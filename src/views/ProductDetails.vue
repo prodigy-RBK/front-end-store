@@ -390,58 +390,6 @@
         </div>
       </div>
     </div>
-    <div id="notifications2">
-      <div v-if="successNotif" class="alert alertBottom alert-success">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('successNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>check</md-icon>
-          </div>
-
-          <b>SUCCESS ALERT</b> : Successfully added
-        </div>
-      </div>
-      <div v-if="reviewNotif" class="alert alertBottom alert-success">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('reviewNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>check</md-icon>
-          </div>
-
-          <b>SUCCESS ALERT</b> : Review successfully added
-        </div>
-      </div>
-      <div v-if="dangerNotif" class="alert alertBottom alert-danger">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('dangerNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
-          </div>
-          <b>ERROR ALERT</b> : This product already exists in your shopping cart where you can modify the quantity...
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
