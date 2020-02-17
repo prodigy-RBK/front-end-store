@@ -15,7 +15,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-
+import VueAnalytics from "vue-analytics";
 import MaterialKit from "./plugins/material-kit";
 import store from "./store";
 import axios from "axios";
@@ -26,6 +26,9 @@ Vue.use(MaterialKit);
 const NavbarStore = {
   showNavbar: false
 };
+Vue.use(VueAnalytics, {
+  id: "UA-158187092-1"
+});
 axios.interceptors.request.use(
   request => {
     if (localStorage.getItem("x-token")) {
