@@ -233,57 +233,6 @@
         </div>
       </div>
     </div>
-    <div id="notifications2">
-      <div v-if="successNotif" class="alert alertBottom alert-success">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('successNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>check</md-icon>
-          </div>
-
-          <b>SUCCESS ALERT</b> : Purchase completed!
-        </div>
-      </div>
-      <div v-if="dangerNotif" class="alert alertBottom alert-danger">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('dangerNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
-          </div>
-          <b>ERROR ALERT</b> : Cannot do that, please delete the product...
-        </div>
-      </div>
-      <div v-if="quantityNotif" class="alert alertBottom alert-danger">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('quantityNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
-          </div>
-          <b>ERROR ALERT</b> : Maximum quantity reached...
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
