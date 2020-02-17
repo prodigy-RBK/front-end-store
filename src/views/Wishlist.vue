@@ -19,7 +19,7 @@
             <br />
             <div class="col-md-12">
               <div class="row">
-                <div class="col-md-3" v-for="product in wishlist" :key="product._id">
+                <div class="col-md-3" v-for="product in wishlist" :key="product._id" style="margin-bottom: 30px">
                   <product-card :product="product" :inWishlist="inWishlist"></product-card>
                   <!-- end card -->
                 </div>

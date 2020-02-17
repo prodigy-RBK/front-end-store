@@ -100,53 +100,6 @@
         </div>
       </div>
     </div>
-    <div id="notifications2">
-      <div v-if="successNotif" class="alert alertBottom alert-success">
-        <div class="container">
-          <button type="button" aria-hidden="true" class="close" @click="removeNotify('successNotif')">
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>check</md-icon>
-          </div>
-
-          <b>SUCCESS</b> : Yuhuuu! You're logged In!
-        </div>
-      </div>
-      <div v-if="confirmationNotif" class="alert alertBottom alert-success">
-        <div class="container">
-          <button type="button" aria-hidden="true" class="close" @click="removeNotify('confirmationNotif')">
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>check</md-icon>
-          </div>
-          <b>SUCCESS</b> : Yuhuuu! You're successfully registered! Please check your email to confirm your account!
-        </div>
-      </div>
-      <div v-if="emailExistsNotif" class="alert alertBottom alert-danger">
-        <div class="container">
-          <button type="button" aria-hidden="true" class="close" @click="removeNotify('emailExistsNotif')">
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
-          </div>
-          <b>ERROR ALERT</b> : This account already exists, want to <router-link class="login-anchor" to="/login" exact>Log In</router-link>? ...
-        </div>
-      </div>
-      <div v-if="socialButtonNotif" class="alert alertBottom alert-danger">
-        <div class="container">
-          <button type="button" aria-hidden="true" class="close" @click="removeNotify('socialButtonNotif')">
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
-          </div>
-          <b>ERROR ALERT</b> : Seems like you're registered using social buttons. Try to Log In using Google or Facebook...
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
