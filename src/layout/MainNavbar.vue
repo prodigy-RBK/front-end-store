@@ -1,21 +1,20 @@
 <template>
-  <md-toolbar
-    id="toolbar"
-    md-elevation="0"
-    class="md-transparent md-absolute"
-    :class="extraNavClasses"
-    :color-on-scroll="colorOnScroll"
-  >
-    <div class="md-toolbar-row md-collapse-lateral">
+  <md-toolbar :key="renderCount" id="toolbar" md-elevation="0" class="md-transparent md-absolute" :class="extraNavClasses" :color-on-scroll="colorOnScroll">
+    <div class="md-toolbar-row md-collapse-lateral" style="max-width: 1500px">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title">Prodigy Strore</h3>
+        <router-link to="/">
+          <img
+            style="width: 200px; height:50px"
+            :src="
+              toggleImage
+                ? 'https://scontent.ftun4-1.fna.fbcdn.net/v/t1.15752-9/s2048x2048/86376678_219532949204480_3757337832645984256_n.png?_nc_cat=111&_nc_ohc=c6nHzh9V7jwAX_JepJ9&_nc_ht=scontent.ftun4-1.fna&oh=8d933b52f668784ad993f4f84a77daf4&oe=5EC6D0F6'
+                : 'https://ci5.googleusercontent.com/proxy/U8CeHzk689Vja-PFDt-nqUlHktVFqQmraEJ7YbA9VSGUpFo0Eiqi6eb-MuRull6awuhL94WBuwOrJBi-4fvd0qOn7t_IQGtCS7g3n0ZwZAsHWWgeu_iLFhOA2Q81ai4sDfkMRNxnODMnShWaMflcTQHSQ7YFPw1FN8tpDRBu4Hemunm6C5fCX8ap2fK8M5Ety1ux9g_5_CDXeD_F9qqL0DjmukQ4sYPzdmPtOSX9QsIWU1MgvsFccmuN-b78Y5XyiMLQU7__LF0kpUTRbv6Ye7IbCcILufNGW1EyWuyIHafNyKdBd6Y74fM_pluonCE8n-szJbiEtKyc=s0-d-e1-ft#https://scontent.ftun4-1.fna.fbcdn.net/v/t1.15752-9/s2048x2048/86722894_806476143164319_5779365936901390336_n.png?_nc_cat=101&_nc_ohc=kE3K6H3Cik4AX9f9XqV&_nc_ht=scontent.ftun4-1.fna&oh=cf08d4eaa46d4118257097616d6dc9be&oe=5F011AA2'
+            "
+          />
+        </router-link>
       </div>
       <div class="md-toolbar-section-end">
-        <md-button
-          class="md-just-icon md-simple md-toolbar-toggle"
-          :class="{ toggled: toggledClass }"
-          @click="toggleNavbarMobile()"
-        >
+        <md-button class="md-just-icon md-simple md-toolbar-toggle" :class="{ toggled: toggledClass }" @click="toggleNavbarMobile()">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -48,10 +47,7 @@
                 </router-link>
               </template>
 
-              <template
-                slot="md-autocomplete-empty"
-                slot-scope="{ term }"
-              >No items matching "{{ term }}" were found.</template>
+              <template slot="md-autocomplete-empty" slot-scope="{ term }">No items matching "{{ term }}" were found.</template>
             </md-autocomplete>
           </div>
           <div class="md-collapse-wrapper">
@@ -61,88 +57,52 @@
             <md-list>
               <md-list-item>
                 <router-link to="/">
-                  <i class="material-icons">layers</i>
-                  <p>Home</p>
+                  <i class="fa fa-venus-mars"></i>
+                  <p>All</p>
                 </router-link>
               </md-list-item>
-              <md-list-item
-                href="https://demos.creative-tim.com/vue-material-kit/documentation/"
-                target="_blank"
-              >
-                <i class="material-icons">content_paste</i>
-                <p>Documentation</p>
+              <md-list-item>
+                <router-link to="/men">
+                  <i class="fa fa-mars"></i>
+                  <p>Men</p>
+                </router-link>
               </md-list-item>
-
+              <md-list-item>
+                <router-link to="/women">
+                  <i class="fa fa-venus"></i>
+                  <p>Women</p>
+                </router-link>
+              </md-list-item>
               <li class="md-list-item">
-                <a
-                  href="javascript:void(0)"
-                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                >
+                <a href="javascript:void(0)" class="md-list-item-router md-list-item-container md-button-clean dropdown">
                   <div class="md-list-item-content">
                     <drop-down direction="down">
-                      <md-button
-                        slot="title"
-                        class="md-button md-button-link md-white md-simple dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
-                        <i class="material-icons">view_carousel</i>
-                        <p>Views</p>
-                      </md-button>
-                      <ul class="dropdown-menu dropdown-with-icons">
-                        <li>
-                          <router-link to="/products" exact>
-                            <i class="material-icons">view_day</i>
-                            <p>Products</p>
-                          </router-link>
-                        </li>
-                        <li>
-                          <router-link to="/productDetails" exact>
-                            <i class="material-icons">fingerprint</i>
-                            <p>Product Details</p>
-                          </router-link>
-                        </li>
-                        <li>
-                          <router-link to="/shoppingCart" exact>
-                            <i class="material-icons">account_circle</i>
-                            <p>Shopping Cart</p>
-                          </router-link>
-                        </li>
-                      </ul>
-                    </drop-down>
-                  </div>
-                </a>
-              </li>
-              <li class="md-list-item">
-                <a
-                  href="javascript:void(0)"
-                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                >
-                  <div class="md-list-item-content">
-                    <drop-down direction="down">
-                      <md-button
-                        slot="title"
-                        class="md-button md-button-link md-white md-simple dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
+                      <md-button slot="title" class="md-button md-button-link md-white md-simple dropdown-toggle" data-toggle="dropdown">
                         <i class="material-icons">person</i>
                       </md-button>
                       <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                          <router-link to="/account" exact>
+                          <router-link v-if="isAuthed" to="/account" exact>
                             <i class="material-icons">view_day</i>
                             <p>Account</p>
                           </router-link>
                         </li>
                         <li>
-                          <router-link to="/login" exact>
+                          <router-link v-if="!isAuthed" to="/login" exact>
                             <i class="material-icons">fingerprint</i>
                             <p>Login</p>
                           </router-link>
                         </li>
                         <li>
-                          <router-link to="/register" exact>
+                          <router-link v-if="!isAuthed" to="/register" exact>
                             <i class="material-icons">account_circle</i>
                             <p>Register</p>
+                          </router-link>
+                        </li>
+                        <li>
+                          <router-link v-if="isAuthed" to="/" @click.native="logout">
+                            <i class="material-icons">power_settings_new</i>
+                            <p>Logout</p>
                           </router-link>
                         </li>
                       </ul>
@@ -155,11 +115,7 @@
                   <i class="material-icons">favorite</i>
                 </router-link>
               </md-list-item>
-              <md-badge
-                class="md-primary"
-                md-position="top"
-                :md-content="this.$store.state.cart.length"
-              >
+              <md-badge class="md-primary" md-position="top" :md-content="this.$store.state.cart.length">
                 <md-list-item>
                   <router-link to="/shoppingCart" exact>
                     <i class="material-icons">shopping_cart</i>
@@ -199,15 +155,7 @@ export default {
       type: String,
       default: "white",
       validator(value) {
-        return [
-          "white",
-          "default",
-          "primary",
-          "danger",
-          "success",
-          "warning",
-          "info"
-        ].includes(value);
+        return ["white", "default", "primary", "danger", "success", "warning", "info"].includes(value);
       }
     },
     colorOnScroll: {
@@ -217,6 +165,9 @@ export default {
   },
   data() {
     return {
+      renderCount: 0,
+      isAuthed: false,
+      toggleImage: true,
       extraNavClasses: "",
       toggledClass: false,
       selectedProduct: "",
@@ -224,6 +175,16 @@ export default {
     };
   },
   methods: {
+    logout() {
+      this.isAuthed = false;
+      this.$store.commit("UPDATE_LOGIN", false);
+      delete window.localStorage["x-token"];
+      delete window.localStorage["x-refresh-token"];
+      var newvuex = JSON.parse(window.localStorage["vuex"]);
+      delete newvuex["wishlist"];
+      window.localStorage.vuex = JSON.stringify(newvuex);
+      this.renderCount++;
+    },
     bodyClick() {
       let bodyClick = document.getElementById("bodyClick");
 
@@ -245,15 +206,16 @@ export default {
       this.bodyClick();
     },
     handleScroll() {
-      let scrollValue =
-        document.body.scrollTop || document.documentElement.scrollTop;
+      let scrollValue = document.body.scrollTop || document.documentElement.scrollTop;
       let navbarColor = document.getElementById("toolbar");
       this.currentScrollValue = scrollValue;
       if (this.colorOnScroll > 0 && scrollValue > this.colorOnScroll) {
+        this.toggleImage = false;
         this.extraNavClasses = `md-${this.type}`;
         navbarColor.classList.remove("md-transparent");
       } else {
         if (this.extraNavClasses) {
+          this.toggleImage = true;
           this.extraNavClasses = "";
           navbarColor.classList.add("md-transparent");
         }
@@ -272,14 +234,18 @@ export default {
   async beforeMount() {
     try {
       await axios.get("https://prodigy-rbk.herokuapp.com/api/user/verifytoken");
-      this.$store.commit("UPDATE_LOGIN", true);
+      this.$root.$emit("login", true);
       this.$store.dispatch("UPDATE_USER_WISHLIST");
     } catch (err) {
-      this.$store.commit("UPDATE_LOGIN", false);
+      this.$root.$emit("login", false);
     }
   },
   mounted() {
     document.addEventListener("scroll", this.scrollListener);
+    this.$root.$on("login", boo => {
+      this.isAuthed = boo;
+      this.$store.commit("UPDATE_LOGIN", boo);
+    });
   },
   beforeDestroy() {
     document.removeEventListener("scroll", this.scrollListener);
