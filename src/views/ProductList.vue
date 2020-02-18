@@ -200,7 +200,7 @@ export default {
   props: {
     image: {
       type: String,
-      default: require("@/assets/img/vue-mk-header.jpg")
+      default: require("@/assets/img/e-commerce/bg1.jpg")
     },
     signup: {
       type: String,
@@ -257,7 +257,6 @@ export default {
     async getrecommendedproducts() {
       try {
         let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/user/verifytoken`);
-
         try {
           let recprods = await axios.get("https://prodigy-rbk.herokuapp.com/api/recommendedproducts/getrecommprods", { params: { userid: data.iduser } });
           if (recprods.data !== "noid") {
@@ -273,7 +272,6 @@ export default {
           } else {
             console.log("no id");
             let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
-
             this.recommendedproduct = mostviewed.data;
           }
         } catch (err) {
@@ -282,7 +280,6 @@ export default {
       } catch (err) {
         console.log("not logged in");
         let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
-
         this.recommendedproduct = mostviewed.data;
         console.log(err);
       }

@@ -64,7 +64,7 @@ export default {
   props: {
     image: {
       type: String,
-      default: require("@/assets/img/vue-mk-header.jpg")
+      default: require("@/assets/img/e-commerce/bg1.jpg")
     },
     signup: {
       type: String,
