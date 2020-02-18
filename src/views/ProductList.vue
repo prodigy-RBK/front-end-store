@@ -268,20 +268,23 @@ export default {
               }
               return array;
             }
-            this.recommendedproduct = shuffle(recprods.data);
-          } else {
-            let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
-
-            this.recommendedproduct = mostviewed.data;
-          }
+          } catch (err) {}
         } catch (err) {
-          console.log(err);
-        }
-      } catch (err) {
-        let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
+          let mostviewed = await axios.get(
+            "https://prodigy-rbk.herokuapp.com/api/analytics/pageview"
+          );
 
-        this.recommendedproduct = mostviewed.data;
-        console.log(err);
+          this.recommendedproduct = mostviewed.data;
+        }
+      } else {
+        function shuffle(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+          return array;
+        }
+        this.recommendedproduct = shuffle(this.recommendedproduct);
       }
     },
     async addToWishlist() {
@@ -309,9 +312,6 @@ export default {
     }
   },
   async beforeMount() {
-    let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/products/allproducts`);
-    this.ADD_PRODUCTS(data);
-    this.DISPLAY_PRODUCTS(data);
     this.fetchArticles();
     this.getrecommendedproducts();
   },
