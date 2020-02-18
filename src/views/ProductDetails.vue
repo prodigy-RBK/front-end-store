@@ -162,7 +162,7 @@
         <div class="related-products">
           <h3 class="title text-center">You may also be interested in:</h3>
           <div class="row">
-            <div class="col-md-4" v-for="product in recommendedproduct.slice(0, 3)" :key="product._id">
+            <div class="col-md-4" v-for="product in intrestedin.slice(0, 3)" :key="product._id">
               <div class="card card-product card-plain">
                 <router-link :to="'/products/' + product._id" exact>
                   <div class="card-header card-header-image">
@@ -170,6 +170,8 @@
                       <img :src="product.images[0]" />
                     </a>
                   </div>
+                </router-link>
+                <router-link :to="'/products/' + product._id" exact>
                   <div class="card-body text-center">
                     <h4 class="card-title">
                       <a href="#pablo">{{ product.title }}</a>
@@ -177,6 +179,7 @@
                     <!-- <p class="card-description">{{ product.description }}</p> -->
                   </div>
                 </router-link>
+
                 <div class="card-footer">
                   <div class="price-container">
                     <span class="price price-new">€ {{ product.price }}</span>
@@ -283,7 +286,7 @@ export default {
       sizes: [],
       rating: 0,
       colors: [],
-      recommendedproduct: []
+      intrestedin: []
     };
   },
   validations: {
@@ -332,7 +335,7 @@ export default {
           }
           return array;
         }
-        this.recommendedproduct = shuffle(mostviewed.data);
+        this.intrestedin = shuffle(mostviewed.data);
       } catch (err) {
         console.log(err);
       }
