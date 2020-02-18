@@ -4,30 +4,25 @@
       <nav>
         <ul>
           <li>
-            <a href="https://www.creative-tim.com">
-              Creative Tim
+            <a href="https://prodigy-store.onrender.com">
+              Prodigy Store
             </a>
           </li>
           <li>
-            <a href="https:///presentation.creative-tim.com">
-              About Us
+            <a href="https://dashboard-prodigy-store.onrender.com">
+              Dashboard
             </a>
           </li>
           <li>
-            <a href="https:///blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-          <li>
-            <a href="https://www.creative-tim.com/license">
-              Licenses
+            <a href="https://github.com/prodigy-RBK/front-end-store">
+              Github Repo
             </a>
           </li>
         </ul>
       </nav>
       <div class="copyright">
         &copy; {{ year }}, made with <md-icon>favorite</md-icon> by
-        <a href="https://www.creative-tim.com/" target="_blank">Creative Tim</a>
+        <a href="https://prodigy-store.onrender.com" target="_blank">Prodigy Store</a>
         for a better web.
       </div>
     </div>

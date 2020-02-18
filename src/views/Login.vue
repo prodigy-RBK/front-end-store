@@ -3,25 +3,11 @@
     <div class="section page-header header-filter" :style="headerStyle">
       <div class="container" style="max-width:1600px;">
         <div class="md-layout">
-          <div
-            class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
-          >
+          <div class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
             <login-card header-color="green">
               <h4 slot="title" class="card-title">Login</h4>
-              <facebook-login
-                class="button"
-                slot="buttons"
-                appId="2678136558938821"
-                @login="getUserData"
-                @get-initial-status="getUserData"
-              ></facebook-login>
-              <GoogleLogin
-                slot="buttons"
-                class="buttons"
-                :params="params"
-                :renderParams="renderParams"
-                :onSuccess="onSuccess"
-              ></GoogleLogin>
+              <facebook-login class="button" slot="buttons" appId="2678136558938821" @login="getUserData" @get-initial-status="getUserData"></facebook-login>
+              <GoogleLogin slot="buttons" class="buttons" :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
               <br />
               <p slot="description" class="description">Or Be Classical</p>
               <md-field class="md-form-group" :class="getValidationClass('email')" slot="inputs">
@@ -36,22 +22,13 @@
                 <label for="password">Password...</label>
                 <md-input name="password" id="password" v-model="password" type="password"></md-input>
                 <span class="md-error" v-if="!$v.password.required">Password is required</span>
-                <span
-                  class="md-error"
-                  v-else-if="!$v.password.minlength"
-                >Your password should have a minimum of 8 characters</span>
+                <span class="md-error" v-else-if="!$v.password.minlength">Your password should have a minimum of 8 characters</span>
               </md-field>
-              <md-progress-bar
-                style="width: 100%"
-                slot="footer"
-                md-mode="indeterminate"
-                v-if="sending"
-              />
-              <md-button
-                slot="footer"
-                @click="validateUser"
-                class="md-simple md-success md-lg"
-              >Log In</md-button>
+              <md-progress-bar style="width: 100%" slot="footer" md-mode="indeterminate" v-if="sending" />
+              <router-link slot="footer" to="/ResetPassword">
+                <span>Forgot your password?</span>
+              </router-link>
+              <md-button slot="footer" @click="validateUser" class="md-simple md-success md-lg">Log In</md-button>
             </login-card>
           </div>
         </div>
@@ -60,12 +37,7 @@
     <div id="notifications">
       <div v-if="successNotif" class="alert alertTop alert-success">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('successNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('successNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -77,12 +49,7 @@
       </div>
       <div v-if="inactiveNotif" class="alert alertTop alert-info">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('inactiveNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('inactiveNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -93,12 +60,7 @@
       </div>
       <div v-if="wrongUsernameNotif" class="alert alertTop alert-danger">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('wrongUsernameNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('wrongUsernameNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -109,12 +71,7 @@
       </div>
       <div v-if="wrongPasswordNotif" class="alert alertTop alert-danger">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('wrongPasswordNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('wrongPasswordNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -125,95 +82,7 @@
       </div>
       <div v-if="socialButtonNotif" class="alert alertTop alert-danger">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('socialButtonNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
-          </div>
-          <b>ERROR ALERT</b> : Seems like you're registered using social buttons. Try to Log In using Google or Facebook...
-        </div>
-      </div>
-    </div>
-    <div id="notifications2">
-      <div v-if="successNotif" class="alert alertBottom alert-success">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('successNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>check</md-icon>
-          </div>
-
-          <b>SUCCESS ALERT</b> : Yuhuuu! You've got your $11.99 album from The Weeknd
-        </div>
-      </div>
-      <div v-if="inactiveNotif" class="alert alertBottom alert-info">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('inactiveNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
-          </div>
-          <b>REMINDER</b> : Hey, it looks like you still haven't confirmed your email address yet. Please check your email!
-        </div>
-      </div>
-      <div v-if="wrongUsernameNotif" class="alert alertBottom alert-danger">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('wrongUsernameNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
-          </div>
-          <b>ERROR ALERT</b> : Wrong email, please make sure you register or verify that it is written correctly ...
-        </div>
-      </div>
-      <div v-if="wrongPasswordNotif" class="alert alertBottom alert-danger">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('wrongPasswordNotif')"
-          >
-            <md-icon>clear</md-icon>
-          </button>
-          <div class="alert-icon">
-            <md-icon>info_outline</md-icon>
-          </div>
-          <b>ERROR ALERT</b> : Wrong password, please make sure that it is written correctly ...
-        </div>
-      </div>
-      <div v-if="socialButtonNotif" class="alert alertBottom alert-danger">
-        <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('socialButtonNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('socialButtonNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -234,12 +103,7 @@ import router from "../router";
 import { mapMutations, mapGetters } from "vuex";
 import axios from "axios";
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  email,
-  minLength,
-  maxLength
-} from "vuelidate/lib/validators";
+import { required, email, minLength, maxLength } from "vuelidate/lib/validators";
 export default {
   components: {
     LoginCard,
@@ -259,8 +123,7 @@ export default {
       email: null,
       password: null,
       params: {
-        client_id:
-          "533129668624-0iiemq738iusdp6tdq5791thhiks11fq.apps.googleusercontent.com"
+        client_id: "533129668624-0iiemq738iusdp6tdq5791thhiks11fq.apps.googleusercontent.com"
       },
       logoutButton: true,
       // only needed if you want to render the button with the google ui
@@ -269,13 +132,6 @@ export default {
         height: 35,
         longtitle: true
       }
-
-      //   display: flex;
-      // flex-direction: column;
-      // align-items: center;
-      // height: 100px;
-      // padding: 0px 0px;
-      // place-content: space-evenly;
     };
   },
   validations: {
@@ -330,10 +186,7 @@ export default {
         })
         .then(response => {
           this.UPDATE_LOGIN(true);
-          localStorage.setItem(
-            "x-token",
-            googleUser.getAuthResponse().id_token
-          );
+          localStorage.setItem("x-token", googleUser.getAuthResponse().id_token);
           this.successNotif = true;
           window.setTimeout(() => {
             router.push({ name: "index" });
@@ -355,6 +208,7 @@ export default {
               this.UPDATE_ACTIVATE();
               this.successNotif = true;
               window.setTimeout(() => {
+                this.$root.$emit("login", true);
                 router.push({ name: "index" });
               }, 1500);
             } else {

@@ -1,6 +1,10 @@
 <template>
-  <div class="card card-product card-plain no-shadow" data-colored-shadow="false" style="height: 100%">
-    <div class="card-header card-header-image">
+  <div
+    class="card card-product card-plain no-shadow"
+    data-colored-shadow="false"
+    style="height: 100%"
+  >
+    <div class="card-header card-header-image" @click="sendtrigger(product._id)">
       <router-link :to="'/products/' + product._id" exact>
         <img :src="product.images[0]" alt="..." />
       </router-link>
@@ -8,7 +12,7 @@
         <img :src="product.images[0]" alt="..." />
       </a>-->
     </div>
-    <div class="card-body">
+    <div class="card-body" @click="sendtrigger(product._id)">
       <router-link :to="'/products/' + product._id" exact>
         <h4 class="card-title">{{ product.title }}</h4>
       </router-link>
@@ -19,8 +23,17 @@
         <span class="price">€ {{ product.price }}</span>
       </div>
       <div style="display: flex; width: 40px; place-content: space-evenly; ">
-        <p style="font-size: 1rem; font-weight: 400; margin: 0">{{ Math.round(product.rating * 2) / 2 }}</p>
-        <star-rating v-model="product.rating" :show-rating="false" :max-rating="1" :increment="0.5" :star-size="20" :read-only="true"></star-rating>
+        <p
+          style="font-size: 1rem; font-weight: 400; margin: 0"
+        >{{ Math.round(product.rating * 2) / 2 }}</p>
+        <star-rating
+          v-model="product.rating"
+          :show-rating="false"
+          :max-rating="1"
+          :increment="0.5"
+          :star-size="20"
+          :read-only="true"
+        ></star-rating>
       </div>
 
       <div>
@@ -59,8 +72,7 @@
               '--translateX': generateCoordinate(),
               '--translateY': generateCoordinate()
             }"
-            >favorite</md-icon
-          >
+          >favorite</md-icon>
 
           <md-icon
             class="smallHeart"
@@ -68,8 +80,7 @@
               '--translateX': generateCoordinate(),
               '--translateY': generateCoordinate()
             }"
-            >favorite</md-icon
-          >
+          >favorite</md-icon>
         </md-button>
       </div>
     </div>
@@ -97,6 +108,22 @@ export default {
     async removeFromWishlist() {
       this.$store.dispatch("REMOVE_FROM_WISHLIST", this.product._id);
       this.updatedInWishlist = false;
+    },
+    async sendtrigger(productid) {
+      try {
+        let { data } = await axios.get(
+          `https://prodigy-rbk.herokuapp.com/api/user/verifytoken`
+        );
+
+        if (data.iduser !== undefined) {
+          this.$ga.event({
+            eventCategory: productid,
+            eventAction: "clicked product",
+            eventLabel: data.iduser
+          });
+        }
+      } catch (err) {
+      }
     },
     generateCoordinate: () => {
       let coordinate = Math.floor(Math.random() * 20) + 5;
@@ -179,7 +206,10 @@ export default {
     transform: translate(0, 0);
   }
   100% {
-    transform: translate(calc(var(--translateX) * 1px), calc(var(--translateY) * 1px));
+    transform: translate(
+      calc(var(--translateX) * 1px),
+      calc(var(--translateY) * 1px)
+    );
     opacity: 0;
   }
 }

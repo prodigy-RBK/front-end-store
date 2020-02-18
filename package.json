@@ -1,7 +1,7 @@
 {
-  "name": "vue-material-kit",
-  "author": "Creative Tim https://www.creative-tim.com/",
-  "description": "Vue Material Kit",
+  "name": "prodigy-store-dashboard",
+  "author": "Prodigy",
+  "description": "Prodigy Store Dashboard",
   "version": "1.2.2",
   "private": true,
   "scripts": {
@@ -22,6 +22,7 @@
     "sockjs": "^0.3.19",
     "v-tooltip": "2.0.2",
     "vue": "2.6.10",
+    "vue-analytics": "^5.22.1",
     "vue-carousel": "0.18.0",
     "vue-clickaway": "2.2.2",
     "vue-google-login": "^2.0.3",

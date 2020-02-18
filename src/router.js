@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Index from "./views/Index.vue";
-import Example from "./views/Example.vue";
-import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
+import ForgetPassword from "./views/ForgetPassword.vue";
+import Forbidden from "./views/forbidden";
+import ResetPassword from "./views/ResetPassword";
+
 import Profile from "./views/Profile.vue";
 import MainNavbar from "./layout/MainNavbar.vue";
 import MainFooter from "./layout/MainFooter.vue";
@@ -13,6 +14,8 @@ import ProductDetails from "./views/ProductDetails.vue";
 import ProductList from "./views/ProductList.vue";
 import Confirmation from "./views/Confirmation.vue";
 import auth from "./middleware/auth";
+import verifyTokenUpdatePasswors from "./middleware/verifyTokenUpdatePasswors";
+
 import store from "./store";
 import Account from "./views/Account.vue";
 import OrderDetails from "./views/OrderDetails.vue";
@@ -142,24 +145,6 @@ const router = new Router({
       }
     },
     {
-      path: "/example",
-      name: "example",
-      components: { default: Example, header: MainNavbar, footer: MainFooter },
-      props: {
-        header: { colorOnScroll: 400 },
-        footer: { backgroundColor: "black" }
-      }
-    },
-    {
-      path: "/landing",
-      name: "landing",
-      components: { default: Landing, header: MainNavbar, footer: MainFooter },
-      props: {
-        header: { colorOnScroll: 400 },
-        footer: { backgroundColor: "black" }
-      }
-    },
-    {
       path: "/login",
       name: "login",
       components: { default: Login, header: MainNavbar, footer: MainFooter },
@@ -192,6 +177,33 @@ const router = new Router({
         header: MainNavbar,
         footer: MainFooter
       },
+      props: {
+        header: { colorOnScroll: 400 }
+      }
+    },
+    {
+      path: "/forgetPassword/:token",
+      name: "forgetPassword",
+      components: { default: ForgetPassword, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 }
+      },
+      meta: {
+        middleware: [verifyTokenUpdatePasswors]
+      }
+    },
+    {
+      path: "/forbidden",
+      name: "forbidden",
+      components: { default: Forbidden, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 }
+      }
+    },
+    {
+      path: "/ResetPassword",
+      name: "resetPassword",
+      components: { default: ResetPassword, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 }
       }

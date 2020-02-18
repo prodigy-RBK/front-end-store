@@ -25,7 +25,7 @@
             </h5>
           </div>
           <div id="collapseOne" class="message-body">
-            <slider v-model="sliders.rangeSlider" type="info" :connect="true"></slider>
+            <slider v-model="sliders.rangeSlider" type="info" :connect="true" :key="renderCount"></slider>
             <div slot="sliderFooter" class="card-body card-refine">
               <span
                 id="price-left"
@@ -107,10 +107,12 @@ import { Slider } from "@/components";
 import { mapMutations } from "vuex";
 import axios from "axios";
 import debounce from "lodash.debounce";
+import router from "../router";
 
 export default {
   name: "RegularCheckboxes",
   data: () => ({
+    renderCount: 0,
     filters: {
       brandsQuery: [],
       categoriesQuery: [],
@@ -143,11 +145,13 @@ export default {
       this.control[arg] = !this.control[arg];
     },
     resetFilters() {
+      this.renderCount += 1;
       this.filters.brandsQuery = [];
       this.filters.categoriesQuery = [];
       this.filters.tagsQuery = [];
       this.filters.priceRange = [0, 1000];
       this.sliders.rangeSlider = [0, 1000];
+      router.push({ path: "/" });
     },
     getBrands(gender) {
       return axios
