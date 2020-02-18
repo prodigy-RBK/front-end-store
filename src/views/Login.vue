@@ -25,9 +25,6 @@
                 <span class="md-error" v-else-if="!$v.password.minlength">Your password should have a minimum of 8 characters</span>
               </md-field>
               <md-progress-bar style="width: 100%" slot="footer" md-mode="indeterminate" v-if="sending" />
-              <router-link slot="footer" to="/ResetPassword">
-                <span>Forgot your password?</span>
-              </router-link>
               <md-button slot="footer" @click="validateUser" class="md-simple md-success md-lg">Log In</md-button>
             </login-card>
           </div>
@@ -132,6 +129,13 @@ export default {
         height: 35,
         longtitle: true
       }
+
+      //   display: flex;
+      // flex-direction: column;
+      // align-items: center;
+      // height: 100px;
+      // padding: 0px 0px;
+      // place-content: space-evenly;
     };
   },
   validations: {

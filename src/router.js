@@ -1,5 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
+import Index from "./views/Index.vue";
+import Example from "./views/Example.vue";
+import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import ForgetPassword from "./views/ForgetPassword.vue";
 import Forbidden from "./views/forbidden";
@@ -142,6 +145,24 @@ const router = new Router({
       },
       meta: {
         middleware: [auth]
+      }
+    },
+    {
+      path: "/example",
+      name: "example",
+      components: { default: Example, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
+      }
+    },
+    {
+      path: "/landing",
+      name: "landing",
+      components: { default: Landing, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
       }
     },
     {
