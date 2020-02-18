@@ -247,7 +247,7 @@ export default {
   props: {
     image: {
       type: String,
-      default: require("@/assets/img/vue-mk-header.jpg")
+      default: require("@/assets/img/e-commerce/clark-street-merc.jpg")
     },
     signup: {
       type: String,
