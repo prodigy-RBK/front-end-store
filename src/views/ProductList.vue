@@ -286,54 +286,42 @@ export default {
       this.popularArticles2 = this.latestArticles.slice(3, 5);
     },
     async getrecommendedproducts() {
-      if (this.recommendedproduct.length === 0) {
+      try {
+        let { data } = await axios.get(
+          `https://prodigy-rbk.herokuapp.com/api/user/verifytoken`
+        );
+
         try {
-          let { data } = await axios.get(
-            `https://prodigy-rbk.herokuapp.com/api/user/verifytoken`
+          let recprods = await axios.get(
+            "https://prodigy-rbk.herokuapp.com/api/recommendedproducts/getrecommprods",
+            { params: { userid: data.iduser } }
           );
-
-          try {
-            let recprods = await axios.get(
-              "https://prodigy-rbk.herokuapp.com/api/recommendedproducts/getrecommprods",
-              { params: { userid: data.iduser } }
-            );
-            if (recprods.data !== "noid") {
-              function shuffle(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                  let j = Math.floor(Math.random() * (i + 1));
-                  [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
+          if (recprods.data !== "noid") {
+            function shuffle(array) {
+              for (let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
               }
-              this.recommendedproduct = shuffle(recprods.data);
-            } else {
-              let mostviewed = await axios.get(
-                "https://prodigy-rbk.herokuapp.com/api/analytics/pageview"
-              );
-
-              this.recommendedproduct = mostviewed.data;
+              return array;
             }
-          } catch (err) {
-            console.log(err);
+            this.recommendedproduct = shuffle(recprods.data);
+          } else {
+            let mostviewed = await axios.get(
+              "https://prodigy-rbk.herokuapp.com/api/analytics/pageview"
+            );
+
+            this.recommendedproduct = mostviewed.data;
           }
         } catch (err) {
-          let mostviewed = await axios.get(
-            "https://prodigy-rbk.herokuapp.com/api/analytics/pageview"
-          );
-
-          this.recommendedproduct = mostviewed.data;
           console.log(err);
         }
-      } else {
-        console.log("done");
-        function shuffle(array) {
-          for (let i = array.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-          }
-          return array;
-        }
-        this.recommendedproduct = shuffle(this.recommendedproduct);
+      } catch (err) {
+        let mostviewed = await axios.get(
+          "https://prodigy-rbk.herokuapp.com/api/analytics/pageview"
+        );
+
+        this.recommendedproduct = mostviewed.data;
+        console.log(err);
       }
     },
     async addToWishlist() {
