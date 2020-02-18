@@ -162,31 +162,109 @@
         <div class="related-products">
           <h3 class="title text-center">You may also be interested in:</h3>
           <div class="row">
-            <div class="col-md-4" v-for="product in recommendedproduct.slice(0, 3)" :key="product._id">
-              <div class="card card-product card-plain">
-                <router-link :to="'/products/' + product._id" exact>
-                  <div class="card-header card-header-image">
-                    <a href="#pablo">
-                      <img :src="product.images[0]" />
-                    </a>
+            <div class="col-lg-3 col-md-6">
+              <div class="card card-product">
+                <div class="md-card-header card-image">
+                  <a href="#pablo">
+                    <img class="img" src="../assets/img/examples/card-product1.jpg" />
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-category text-rose">Trending</h6>
+                  <h4 class="card-title">
+                    <a href="#pablo">Dolce &amp; Gabbana</a>
+                  </h4>
+                  <div class="card-description">Dolce &amp; Gabbana's 'Greta' tote has been crafted in Italy from hard-wearing red textured-leather.</div>
+                </div>
+                <div class="card-footer justify-content-between">
+                  <div class="price">
+                    <h4>$1,459</h4>
                   </div>
-                  <div class="card-body text-center">
-                    <h4 class="card-title">
-                      <a href="#pablo">{{ product.title }}</a>
-                    </h4>
-                    <!-- <p class="card-description">{{ product.description }}</p> -->
-                  </div>
-                </router-link>
-                <div class="card-footer">
-                  <div class="price-container">
-                    <span class="price price-new">€ {{ product.price }}</span>
-                  </div>
-                  <div>
-                    <md-button class="md-rose md-just-icon md-simple" @click="addToWishlist" v-show="!updatedInWishlist">
-                      <md-icon>favorite_border</md-icon>
+                  <div class="stats">
+                    <md-button rel="tooltip" title="Saved to Wishlist" class="md-just-icon md-simple md-rose">
+                      <i class="material-icons">favorite</i>
                     </md-button>
-                    <md-button class="md-rose md-just-icon md-simple" @click="removeFromWishlist" v-show="updatedInWishlist">
-                      <md-icon>favorite</md-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="card card-product">
+                <div class="md-card-header card-image">
+                  <a href="#pablo">
+                    <img class="img" src="../assets/img/examples/card-product3.jpg" />
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-category text-muted">Popular</h6>
+                  <h4 class="card-title">
+                    <a href="#pablo">Balmain</a>
+                  </h4>
+                  <div class="card-description">
+                    Balmain's mid-rise skinny jeans are cut with stretch to ensure they retain their second-skin fit but move comfortably.
+                  </div>
+                </div>
+                <div class="card-footer justify-content-between">
+                  <div class="price">
+                    <h4>$459</h4>
+                  </div>
+                  <div class="stats">
+                    <md-button rel="tooltip" title="Saved to Wishlist" class="md-just-icon md-simple md-simple">
+                      <i class="material-icons">favorite</i>
+                    </md-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="card card-product">
+                <div class="md-card-header card-image">
+                  <a href="#pablo">
+                    <img class="img" src="../assets/img/examples/card-product4.jpg" />
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-category text-muted">Popular</h6>
+                  <h4 class="card-title">
+                    <a href="#pablo">Balenciaga</a>
+                  </h4>
+                  <div class="card-description">
+                    Balenciaga's black textured-leather wallet is finished with the label's iconic 'Giant' studs. This is where you can...
+                  </div>
+                </div>
+                <div class="card-footer justify-content-between">
+                  <div class="price">
+                    <h4>$590</h4>
+                  </div>
+                  <div class="stats">
+                    <md-button rel="tooltip" title="Saved to Wishlist" class="md-just-icon md-simple md-rose">
+                      <i class="material-icons">favorite</i>
+                    </md-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="card card-product">
+                <div class="md-card-header card-image">
+                  <a href="#pablo">
+                    <img class="img" src="../assets/img/examples/card-product2.jpg" />
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-category text-rose">Trending</h6>
+                  <h4 class="card-title">
+                    <a href="#pablo">Dolce &amp; Gabbana</a>
+                  </h4>
+                  <div class="card-description">Dolce &amp; Gabbana's 'Greta' tote has been crafted in Italy from hard-wearing red textured-leather.</div>
+                </div>
+                <div class="card-footer justify-content-between">
+                  <div class="price">
+                    <h4>$1,459</h4>
+                  </div>
+                  <div class="stats">
+                    <md-button rel="tooltip" title="Saved to Wishlist" class="md-just-icon md-simple md-rose">
+                      <i class="material-icons">favorite</i>
                     </md-button>
                   </div>
                 </div>
@@ -282,8 +360,7 @@ export default {
       inStock: false,
       sizes: [],
       rating: 0,
-      colors: [],
-      recommendedproduct: []
+      colors: []
     };
   },
   validations: {
@@ -319,22 +396,6 @@ export default {
         }
         this.successNotif = true;
         this.ADD_TO_CART(product);
-      }
-    },
-    async getrecommendedproducts() {
-      try {
-        let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
-
-        function shuffle(array) {
-          for (let i = array.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-          }
-          return array;
-        }
-        this.recommendedproduct = shuffle(mostviewed.data);
-      } catch (err) {
-        console.log(err);
       }
     },
     submitReview() {
@@ -382,7 +443,6 @@ export default {
     }
   },
   async beforeMount() {
-    this.getrecommendedproducts();
     let productId = window.location.pathname.slice(10);
     this.$ga.page(`/${productId}`);
     let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/products/${productId}`);
