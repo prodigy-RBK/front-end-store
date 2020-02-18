@@ -18,11 +18,7 @@
                 <tabs :tab-images="product.images" plain nav-pills-images color-button="primary">
                   <!-- here you can add your content for tab-content -->
 
-                  <div
-                    :slot="'tab-pane-' + (index + 1)"
-                    v-for="(image, index) in product.images"
-                    :key="index"
-                  >
+                  <div :slot="'tab-pane-' + (index + 1)" v-for="(image, index) in product.images" :key="index">
                     <img :src="image" />
                   </div>
                 </tabs>
@@ -42,9 +38,7 @@
                     <div>
                       <md-menu md-size="big" class="big" md-align-trigger>
                         <md-button md-menu-trigger id="big">
-                          <span
-                            :style="[activeSize ? { color: 'black' } : { color: 'grey' }]"
-                          >{{ selectedSize }}</span>
+                          <span :style="[activeSize ? { color: 'black' } : { color: 'grey' }]">{{ selectedSize }}</span>
                           <md-icon>keyboard_arrow_down</md-icon>
                         </md-button>
                         <md-menu-content>
@@ -55,7 +49,8 @@
                               selectedSize = size;
                             "
                             :key="size"
-                          >{{ size }}</md-menu-item>
+                            >{{ size }}</md-menu-item
+                          >
                         </md-menu-content>
                       </md-menu>
                     </div>
@@ -66,9 +61,7 @@
                     <div>
                       <md-menu md-size="big" class="big" md-align-trigger>
                         <md-button md-menu-trigger id="big">
-                          <span
-                            :style="[activeColor ? { color: 'black' } : { color: 'grey' }]"
-                          >{{ selectedColor }}</span>
+                          <span :style="[activeColor ? { color: 'black' } : { color: 'grey' }]">{{ selectedColor }}</span>
                           <md-icon>keyboard_arrow_down</md-icon>
                         </md-button>
                         <md-menu-content>
@@ -79,7 +72,8 @@
                               selectedColor = color;
                             "
                             :key="color"
-                          >{{ color }}</md-menu-item>
+                            >{{ color }}</md-menu-item
+                          >
                         </md-menu-content>
                       </md-menu>
                     </div>
@@ -89,48 +83,28 @@
                   <div class="md-layout-item" style="height: 100%">
                     <div>
                       <md-menu md-size="big" class="big" md-align-trigger>
-                        <md-input
-                          style="padding: 10px"
-                          type="number"
-                          id="big"
-                          min="0"
-                          :max="maxQuantity"
-                          v-model="selectedQuantity"
-                        ></md-input>
+                        <md-input style="padding: 10px" type="number" id="big" min="0" :max="maxQuantity" v-model="selectedQuantity"></md-input>
                       </md-menu>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                   <div class="md-layout-item">
-                    <span
-                      class="md-error errorspan"
-                      v-if="selectedSize === 'Select size' && sizeValidator"
-                    >* Required</span>
+                    <span class="md-error errorspan" v-if="selectedSize === 'Select size' && sizeValidator">* Required</span>
                   </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                   <div class="md-layout-item">
-                    <span
-                      class="md-error errorspan"
-                      v-if="selectedColor === 'Select color' && colorValidator"
-                    >* Required</span>
+                    <span class="md-error errorspan" v-if="selectedColor === 'Select color' && colorValidator">* Required</span>
                   </div>
                 </div>
               </div>
               <star-rating v-model="rating" :increment="0.5" :star-size="35" :inline="true"></star-rating>
               <div style="text-align-last: end;">
-                <md-button
-                  @click="addToCart"
-                  :class="{ 'float-left md-rose md-round': inStock, 'float-left md-round': !inStock }"
-                >
+                <md-button @click="addToCart" :class="{ 'float-left md-rose md-round': inStock, 'float-left md-round': !inStock }">
                   Add to Cart &#xA0;
                   <i class="material-icons">shopping_cart</i>
-                  <md-tooltip
-                    :class="{ ahashakeheartache: test }"
-                    v-if="!inStock"
-                    md-direction="top"
-                  >Out of stock</md-tooltip>
+                  <md-tooltip :class="{ ahashakeheartache: test }" v-if="!inStock" md-direction="top">Out of stock</md-tooltip>
                 </md-button>
               </div>
             </div>
@@ -148,10 +122,7 @@
                       <h4 class="media media-heading">
                         {{ review.user }}
                         <small>
-                          &#xB7; {{ review.creationDate | moment("from", "now", true) }}
-                          <span
-                            v-if="!review.creationDate"
-                          >a few seconds</span>ago
+                          &#xB7; {{ review.creationDate | moment("from", "now", true) }} <span v-if="!review.creationDate">a few seconds</span>ago
                         </small>
                       </h4>
                       <h6 class="text-muted"></h6>
@@ -162,26 +133,10 @@
                 <h3 class="title text-center">Post your Review</h3>
                 <div v-if="isAuthed" class="media media-post">
                   <div class="media-body">
-                    <md-field
-                      class="md-form-group"
-                      :class="getValidationClass('review')"
-                      slot="inputs"
-                    >
-                      <label
-                        style="padding-left: 50px"
-                        for="review"
-                      >Write some nice stuff or nothing......</label>
-                      <md-textarea
-                        style="padding-left: 50px"
-                        name="review"
-                        id="review"
-                        v-model="review"
-                      ></md-textarea>
-                      <span
-                        style="padding: 20px 0px 0px 50px"
-                        class="md-error"
-                        v-if="!$v.review.required"
-                      >Cannot post an empty review</span>
+                    <md-field class="md-form-group" :class="getValidationClass('review')" slot="inputs">
+                      <label style="padding-left: 50px" for="review">Write some nice stuff or nothing......</label>
+                      <md-textarea style="padding-left: 50px" name="review" id="review" v-model="review"></md-textarea>
+                      <span style="padding: 20px 0px 0px 50px" class="md-error" v-if="!$v.review.required">Cannot post an empty review</span>
                     </md-field>
                     <div style="margin: 30px 0; text-align-last: end;">
                       <md-button @click="validatereview" class="float-left md-primary md-round">
@@ -207,40 +162,30 @@
         <div class="related-products">
           <h3 class="title text-center">You may also be interested in:</h3>
           <div class="row">
-            <div
-              class="col-md-4"
-              v-for="product in recommendedproduct.slice(0,3)"
-              :key="product._id"
-            >
+            <div class="col-md-4" v-for="product in recommendedproduct.slice(0, 3)" :key="product._id">
               <div class="card card-product card-plain">
-                <div class="card-header card-header-image">
-                  <a href="#pablo">
-                    <img :src="product.images[0]" />
-                  </a>
-                </div>
-                <div class="card-body text-center">
-                  <h4 class="card-title">
-                    <a href="#pablo">{{ product.title }}</a>
-                  </h4>
-                  <!-- <p class="card-description">{{ product.description }}</p> -->
-                </div>
+                <router-link :to="'/products/' + product._id" exact>
+                  <div class="card-header card-header-image">
+                    <a href="#pablo">
+                      <img :src="product.images[0]" />
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <h4 class="card-title">
+                      <a href="#pablo">{{ product.title }}</a>
+                    </h4>
+                    <!-- <p class="card-description">{{ product.description }}</p> -->
+                  </div>
+                </router-link>
                 <div class="card-footer">
                   <div class="price-container">
                     <span class="price price-new">€ {{ product.price }}</span>
                   </div>
                   <div>
-                    <md-button
-                      class="md-rose md-just-icon md-simple"
-                      @click="addToWishlist"
-                      v-show="!updatedInWishlist"
-                    >
+                    <md-button class="md-rose md-just-icon md-simple" @click="addToWishlist" v-show="!updatedInWishlist">
                       <md-icon>favorite_border</md-icon>
                     </md-button>
-                    <md-button
-                      class="md-rose md-just-icon md-simple"
-                      @click="removeFromWishlist"
-                      v-show="updatedInWishlist"
-                    >
+                    <md-button class="md-rose md-just-icon md-simple" @click="removeFromWishlist" v-show="updatedInWishlist">
                       <md-icon>favorite</md-icon>
                     </md-button>
                   </div>
@@ -254,12 +199,7 @@
     <div id="notifications">
       <div v-if="successNotif" class="alert alertTop alert-success">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('successNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('successNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -270,12 +210,7 @@
       </div>
       <div v-if="reviewNotif" class="alert alertTop alert-success">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('reviewNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('reviewNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -287,12 +222,7 @@
       </div>
       <div v-if="dangerNotif" class="alert alertTop alert-danger">
         <div class="container">
-          <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            @click="removeNotify('dangerNotif')"
-          >
+          <button type="button" aria-hidden="true" class="close" @click="removeNotify('dangerNotif')">
             <md-icon>clear</md-icon>
           </button>
           <div class="alert-icon">
@@ -309,12 +239,7 @@ import { mapMutations, mapGetters } from "vuex";
 import { Tabs } from "@/components";
 import axios from "axios";
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  email,
-  minLength,
-  maxLength
-} from "vuelidate/lib/validators";
+import { required, email, minLength, maxLength } from "vuelidate/lib/validators";
 export default {
   name: "product-details",
   bodyClass: "product-page",
@@ -369,10 +294,7 @@ export default {
   methods: {
     ...mapMutations(["ADD_TO_CART"]),
     addToCart() {
-      if (
-        this.selectedSize === "Select size" ||
-        this.selectedColor === "Select color"
-      ) {
+      if (this.selectedSize === "Select size" || this.selectedColor === "Select color") {
         this.sizeValidator = true;
         this.colorValidator = true;
       } else if (!this.inStock) {
@@ -389,11 +311,7 @@ export default {
         };
         for (let i = 0; i < this.$store.state.cart.length; i++) {
           if (product.productId === this.$store.state.cart[i].productId) {
-            if (
-              product.selectedColor ===
-                this.$store.state.cart[i].selectedColor &&
-              product.selectedSize === this.$store.state.cart[i].selectedSize
-            ) {
+            if (product.selectedColor === this.$store.state.cart[i].selectedColor && product.selectedSize === this.$store.state.cart[i].selectedSize) {
               this.dangerNotif = true;
               return;
             }
@@ -405,9 +323,7 @@ export default {
     },
     async getrecommendedproducts() {
       try {
-        let mostviewed = await axios.get(
-          "https://prodigy-rbk.herokuapp.com/api/analytics/pageview"
-        );
+        let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
 
         function shuffle(array) {
           for (let i = array.length - 1; i > 0; i--) {
@@ -424,16 +340,11 @@ export default {
     submitReview() {
       let productId = window.location.pathname.slice(10);
       axios
-        .put(
-          `https://prodigy-rbk.herokuapp.com/api/products/${productId}/review`,
-          {
-            review: this.review
-          }
-        )
+        .put(`https://prodigy-rbk.herokuapp.com/api/products/${productId}/review`, {
+          review: this.review
+        })
         .then(response => {
-          this.product.reviews.push(
-            response.data.reviews[response.data.reviews.length - 1]
-          );
+          this.product.reviews.push(response.data.reviews[response.data.reviews.length - 1]);
           this.reviewNotif = true;
           this.review = null;
         });
@@ -474,9 +385,7 @@ export default {
     this.getrecommendedproducts();
     let productId = window.location.pathname.slice(10);
     this.$ga.page(`/${productId}`);
-    let { data } = await axios.get(
-      `https://prodigy-rbk.herokuapp.com/api/products/${productId}`
-    );
+    let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/products/${productId}`);
     data.availability.map(elem => {
       if (!!elem.quantity) {
         this.inStock = true;
@@ -499,18 +408,13 @@ export default {
   },
   watch: {
     selectedSize: function() {
-      this.colors = this.product.availability
-        .filter(el => el.size === this.selectedSize)
-        .map(elem => elem.color);
+      this.colors = this.product.availability.filter(el => el.size === this.selectedSize).map(elem => elem.color);
       this.selectedColor = this.inStock ? "Select color" : "Out of Stock";
       // this.selectedColor = "Select color";
     },
     selectedColor: function() {
       this.product.availability.forEach(elm => {
-        if (
-          this.selectedSize === elm.size &&
-          this.selectedColor === elm.color
-        ) {
+        if (this.selectedSize === elm.size && this.selectedColor === elm.color) {
           this.maxQuantity = elm.quantity;
           if (this.maxQuantity < this.selectedQuantity) {
             this.selectedQuantity = 1;
@@ -520,12 +424,9 @@ export default {
     },
     rating: function() {
       let productId = window.location.pathname.slice(10);
-      axios.put(
-        `https://prodigy-rbk.herokuapp.com/api/products/${productId}/rating`,
-        {
-          rating: this.rating
-        }
-      );
+      axios.put(`https://prodigy-rbk.herokuapp.com/api/products/${productId}/rating`, {
+        rating: this.rating
+      });
     }
   }
 };
