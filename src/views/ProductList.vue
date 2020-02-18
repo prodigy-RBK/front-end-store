@@ -313,8 +313,7 @@ export default {
 
               this.recommendedproduct = mostviewed.data;
             }
-          } catch (err) {
-          }
+          } catch (err) {}
         } catch (err) {
           let mostviewed = await axios.get(
             "https://prodigy-rbk.herokuapp.com/api/analytics/pageview"
@@ -358,11 +357,6 @@ export default {
     }
   },
   async beforeMount() {
-    let { data } = await axios.get(
-      `https://prodigy-rbk.herokuapp.com/api/products/allproducts`
-    );
-    this.ADD_PRODUCTS(data);
-    this.DISPLAY_PRODUCTS(data);
     this.fetchArticles();
     this.getrecommendedproducts();
   },

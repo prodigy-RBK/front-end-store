@@ -69,13 +69,13 @@
               <!-- Here you can add your items from the section-start of your toolbar -->
             </mobile-menu>
             <md-list>
-              <md-list-item>
-                <router-link to="/">
+              <md-list-item @click="getProducts">
+                <router-link to="/" exact>
                   <i class="fa fa-venus-mars"></i>
                   <p>All</p>
                 </router-link>
               </md-list-item>
-              <md-list-item>
+              <md-list-item @click="getProducts">
                 <router-link to="/men">
                   <i class="fa fa-mars"></i>
                   <p>Men</p>
@@ -218,9 +218,6 @@ export default {
       window.localStorage.vuex = JSON.stringify(newvuex);
       this.renderCount++;
     },
-    getProducts(){
-      console.log(window.location.pathname.split("/"))
-    },
     async sendtrigger(productid) {
       try {
         let { data } = await axios.get(
@@ -234,8 +231,7 @@ export default {
             eventLabel: data.iduser
           });
         }
-      } catch (err) {
-      }
+      } catch (err) {}
     },
     bodyClick() {
       let bodyClick = document.getElementById("bodyClick");
@@ -282,10 +278,33 @@ export default {
       if (element_id) {
         element_id.scrollIntoView({ block: "end", behavior: "smooth" });
       }
+    },
+    async getProducts() {
+      let gender = window.location.pathname.split("/")[1];
+      if (gender === "") {
+        this.getAllProducts();
+      } else {
+        gender =
+          gender[0].toUpperCase() +
+          window.location.pathname.split("/")[1].slice(1);
+        let { data } = await axios.get(
+          `https://prodigy-rbk.herokuapp.com/api/products/gender/${gender}`
+        );
+        this.$store.commit("ADD_PRODUCTS", data);
+        this.$store.commit("DISPLAY_PRODUCTS", data);
+      }
+    },
+    async getAllProducts() {
+      let { data } = await axios.get(
+        `https://prodigy-rbk.herokuapp.com/api/products/allproducts`
+      );
+      this.$store.commit("ADD_PRODUCTS", data);
+      this.$store.commit("DISPLAY_PRODUCTS", data);
     }
   },
   async beforeMount() {
     try {
+      await this.getAllProducts();
       await axios.get("https://prodigy-rbk.herokuapp.com/api/user/verifytoken");
       this.$root.$emit("login", true);
       this.$store.dispatch("UPDATE_USER_WISHLIST");
