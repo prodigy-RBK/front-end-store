@@ -31,17 +31,19 @@
           <div class="row">
             <div class="col-md-4" v-for="product in recommendedproduct.slice(0, 3)" :key="product._id">
               <div class="card card-product card-plain">
-                <div class="card-header card-header-image">
-                  <a href="#pablo">
-                    <img :src="product.images[0]" />
-                  </a>
-                </div>
-                <div class="card-body text-center">
-                  <h4 class="card-title">
-                    <a href="#pablo">{{ product.title }}</a>
-                  </h4>
-                  <!-- <p class="card-description">{{ product.description }}</p> -->
-                </div>
+                <router-link :to="'/products/' + product._id" exact>
+                  <div class="card-header card-header-image">
+                    <a href="#pablo">
+                      <img :src="product.images[0]" />
+                    </a>
+                  </div>
+                  <div class="card-body text-center">
+                    <h4 class="card-title">
+                      <a href="#pablo">{{ product.title }}</a>
+                    </h4>
+                    <!-- <p class="card-description">{{ product.description }}</p> -->
+                  </div>
+                </router-link>
                 <div class="card-footer">
                   <div class="price-container">
                     <span class="price price-new">€ {{ product.price }}</span>
@@ -253,45 +255,33 @@ export default {
       this.popularArticles2 = this.latestArticles.slice(3, 5);
     },
     async getrecommendedproducts() {
-      if (this.recommendedproduct.length === 0) {
+      try {
+        let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/user/verifytoken`);
         try {
-          let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/user/verifytoken`);
-
-          try {
-            let recprods = await axios.get("https://prodigy-rbk.herokuapp.com/api/recommendedproducts/getrecommprods", { params: { userid: data.iduser } });
-            if (recprods.data !== "noid") {
-              function shuffle(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                  let j = Math.floor(Math.random() * (i + 1));
-                  [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
+          let recprods = await axios.get("https://prodigy-rbk.herokuapp.com/api/recommendedproducts/getrecommprods", { params: { userid: data.iduser } });
+          if (recprods.data !== "noid") {
+            console.log("idexiste");
+            function shuffle(array) {
+              for (let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
               }
-              this.recommendedproduct = shuffle(recprods.data);
-            } else {
-              let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
-
-              this.recommendedproduct = mostviewed.data;
+              return array;
             }
-          } catch (err) {
-            console.log(err);
+            this.recommendedproduct = shuffle(recprods.data);
+          } else {
+            console.log("no id");
+            let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
+            this.recommendedproduct = mostviewed.data;
           }
         } catch (err) {
-          let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
-
-          this.recommendedproduct = mostviewed.data;
           console.log(err);
         }
-      } else {
-        console.log("done");
-        function shuffle(array) {
-          for (let i = array.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-          }
-          return array;
-        }
-        this.recommendedproduct = shuffle(this.recommendedproduct);
+      } catch (err) {
+        console.log("not logged in");
+        let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
+        this.recommendedproduct = mostviewed.data;
+        console.log(err);
       }
     },
     async addToWishlist() {
@@ -319,9 +309,6 @@ export default {
     }
   },
   async beforeMount() {
-    let { data } = await axios.get(`https://prodigy-rbk.herokuapp.com/api/products/allproducts`);
-    this.ADD_PRODUCTS(data);
-    this.DISPLAY_PRODUCTS(data);
     this.fetchArticles();
     this.getrecommendedproducts();
   },

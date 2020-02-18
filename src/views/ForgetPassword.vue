@@ -213,9 +213,8 @@ export default {
     submit: function(e) {
       this.sending = false;
       var token = window.location.pathname.split("/")[2];
-      console.log(token);
       axios
-        .post(`http://localhost:3000/api/user/updatePassword/${token}`, {
+        .post(`https://prodigy-rbk.herokuapp.com/api/user/updatePassword/${token}`, {
           password: this.password
         })
         .then(response => {
@@ -224,7 +223,6 @@ export default {
           }
         })
         .catch(function(error) {
-          console.log(error);
         });
     },
     getValidationClass(fieldName) {
