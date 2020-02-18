@@ -81,7 +81,7 @@
                   <p>Men</p>
                 </router-link>
               </md-list-item>
-              <md-list-item>
+              <md-list-item @click="getProducts">
                 <router-link to="/women">
                   <i class="fa fa-venus"></i>
                   <p>Women</p>
@@ -217,6 +217,9 @@ export default {
       delete newvuex["wishlist"];
       window.localStorage.vuex = JSON.stringify(newvuex);
       this.renderCount++;
+    },
+    getProducts(){
+      console.log(window.location.pathname.split("/"))
     },
     async sendtrigger(productid) {
       try {
