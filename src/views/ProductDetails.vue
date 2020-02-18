@@ -159,40 +159,32 @@
             </div>
           </div>
         </div>
-        <div class="related-products">
-          <h3 class="title text-center">You may also be interested in:</h3>
-          <div class="row">
-            <div class="col-md-4" v-for="product in intrestedin.slice(0, 3)" :key="product._id">
-              <div class="card card-product card-plain">
-                <router-link :to="'/products/' + product._id" exact>
-                  <div class="card-header card-header-image">
-                    <a href="#pablo">
-                      <img :src="product.images[0]" />
-                    </a>
-                  </div>
-                </router-link>
-                <router-link :to="'/products/' + product._id" exact>
-                  <div class="card-body text-center">
-                    <h4 class="card-title">
-                      <a href="#pablo">{{ product.title }}</a>
-                    </h4>
-                    <!-- <p class="card-description">{{ product.description }}</p> -->
-                  </div>
-                </router-link>
+      </div>
+    </div>
+    <div class="related-products">
+      <h3 class="title text-center">You may also be interested in:</h3>
+      <div class="row">
+        <div class="col-md-4" v-for="product in intrestedin.slice(0, 3)" :key="product._id">
+          <div class="card card-product card-plain">
+            <router-link :to="'/products/' + product._id" exact>
+              <div class="card-header card-header-image">
+                <a href="#pablo">
+                  <img :src="product.images[0]" />
+                </a>
+              </div>
+            </router-link>
+            <router-link :to="'/products/' + product._id" exact>
+              <div class="card-body text-center">
+                <h4 class="card-title">
+                  <a href="#pablo">{{ product.title }}</a>
+                </h4>
+                <!-- <p class="card-description">{{ product.description }}</p> -->
+              </div>
+            </router-link>
 
-                <div class="card-footer">
-                  <div class="price-container">
-                    <span class="price price-new">€ {{ product.price }}</span>
-                  </div>
-                  <div>
-                    <md-button class="md-rose md-just-icon md-simple" @click="addToWishlist" v-show="!updatedInWishlist">
-                      <md-icon>favorite_border</md-icon>
-                    </md-button>
-                    <md-button class="md-rose md-just-icon md-simple" @click="removeFromWishlist" v-show="updatedInWishlist">
-                      <md-icon>favorite</md-icon>
-                    </md-button>
-                  </div>
-                </div>
+            <div class="card-footer">
+              <div class="price-container">
+                <span class="price price-new">€ {{ product.price }}</span>
               </div>
             </div>
           </div>
