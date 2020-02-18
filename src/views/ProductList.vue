@@ -261,6 +261,7 @@ export default {
         try {
           let recprods = await axios.get("https://prodigy-rbk.herokuapp.com/api/recommendedproducts/getrecommprods", { params: { userid: data.iduser } });
           if (recprods.data !== "noid") {
+            console.log("idexiste");
             function shuffle(array) {
               for (let i = array.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * (i + 1));
@@ -268,23 +269,22 @@ export default {
               }
               return array;
             }
-          } catch (err) {}
-        } catch (err) {
-          let mostviewed = await axios.get(
-            "https://prodigy-rbk.herokuapp.com/api/analytics/pageview"
-          );
+            this.recommendedproduct = shuffle(recprods.data);
+          } else {
+            console.log("no id");
+            let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
 
-          this.recommendedproduct = mostviewed.data;
-        }
-      } else {
-        function shuffle(array) {
-          for (let i = array.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+            this.recommendedproduct = mostviewed.data;
           }
-          return array;
+        } catch (err) {
+          console.log(err);
         }
-        this.recommendedproduct = shuffle(this.recommendedproduct);
+      } catch (err) {
+        console.log("not logged in");
+        let mostviewed = await axios.get("https://prodigy-rbk.herokuapp.com/api/analytics/pageview");
+
+        this.recommendedproduct = mostviewed.data;
+        console.log(err);
       }
     },
     async addToWishlist() {
